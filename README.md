@@ -1,2 +1,2 @@
-# outer-strage
+# outer-storage
 of my brain
