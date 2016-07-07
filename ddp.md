@@ -1,0 +1,3 @@
+- [Live Chat App Using Meteor and the DDP Protocol - @juliancwirko](http://julian.io/live-chat-app-using-meteor-and-the-ddp-protocol/)
+- [meteor/DDP.md at devel · meteor/meteor](https://github.com/meteor/meteor/blob/devel/packages/ddp/DDP.md)
+- [Introduction to DDP | Pro Meteor](https://meteorhacks.com/introduction-to-ddp.html)
