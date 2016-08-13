@@ -1,0 +1,4 @@
+* idea
+** pm2で負荷分散
+** nginxでロードバランサ
+** awsでlambda->dynamodb
