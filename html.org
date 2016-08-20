@@ -1,0 +1,6 @@
+* html tips
+** ズーム禁止
+http://stackoverflow.com/a/4389976
+#+BEGIN_SRC html
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+#+END_SRC
