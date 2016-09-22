@@ -1,0 +1,36 @@
+* edison notes
+** edison_config
+#+BEGIN_SRC sh
+root@edison:~# cat /etc/systemd/system/default.target.wants/edison_config.service
+[Unit]
+Description=The Edison status and configuration service
+After=mdns.service
+
+[Service]
+ExecStart=/bin/su root -c 'node /usr/lib/edison_config_tools/edison-config-server.js'
+Restart=always
+RestartSec=10s
+Environment=NODE_ENV=production
+
+[Install]
+WantedBy=default.target
+#+END_SRC
+
+** Links
+   - [[http://matome.naver.jp/odai/2141942265524740001][Intel Edisonで何ができる？　入門編 - NAVER まとめ]]
+   - [[https://software.intel.com/en-us/iot/documentation?value=80494][Documentation | IoT | Intel® Software]]
+   - [[http://edison-lab.jp/examples/][Examples | Edison Lab (エジソン ラボ)]]
+   - [[http://qiita.com/hishi/items/b6c76a6cda8f7a825559][Intel Edisonでホームサーバ構築 (2) 家庭用100V電源の制御 - Qiita]]
+   - [[https://www.sparkfun.com/products/13045][SparkFun Block for Intel® Edison - Base - DEV-13045 - SparkFun Electronics]]
+     より小さいボード
+   - [[https://qiita.com/tags/Edison][Edisonに関する150件の投稿 - Qiita]]
+   - [[https://software.intel.com/en-us/iot/hardware/edison/dev-kit][The Intel® IoT Developer Kit for the Intel® Edison Module | Intel® Software]]
+   - [[https://software.intel.com/en-us/iot/tools-ide/ide/xdk][Intel® XDK | IoT | Intel® Software]]
+   - [[https://software.intel.com/en-us/iot/hardware/edison][Develop for the Intel® Edison Module | Intel® Software]]
+   - [[https://software.intel.com/en-us/articles/enabling-ibm-bluemix-on-intel-edison-using-mongodb-by-compose][Enabling IBM* Bluemix* on Intel® Edison Boards using MongoDB* by Compose | Intel® Software]]
+   - [[https://software.intel.com/en-us/articles/predicting-user-activity-in-devices-using-an-accelerometer-with-the-intel-edison][Predicting user activity in devices using an accelerometer with the Intel® Edison Board | Intel® Software]]
+   - [[https://software.intel.com/en-us/get-started-edison-osx][IoT - Get Started with the Intel® Edison Development Board on Mac OS X* | Intel® Software]]
+   - [[https://software.intel.com/en-us/intel-edison-board-user-guide][IoT - Intel® Edison Board User Guide | Intel® Software]]
+   - [[https://software.intel.com/en-us/node-js-templates-for-intel-xdk][IoT - Node.js* templates for the Intel® XDK | Intel® Software]]
+   - [[http://www.intel.com/content/www/us/en/support/boards-and-kits/000006377.html][Flashing the Intel® Edison Board via Mac* (Wi-Fi)]]
+   - [[http://www.intel.com/content/www/us/en/support/boards-and-kits/000005808.html?wapkw=331189][Hardware Guide for the Intel® Edison Compute Module]]
