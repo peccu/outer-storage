@@ -1,5 +1,6 @@
 * edison notes
-** edison_config (=/etc/systemd/system/default.target.wants/edison_config.service=)
+** edison_config
+   =/etc/systemd/system/default.target.wants/edison_config.service=
 #+BEGIN_SRC sh
 root@edison:~# cat /etc/systemd/system/default.target.wants/edison_config.service
 [Unit]
