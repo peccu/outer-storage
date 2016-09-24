@@ -35,3 +35,13 @@ WantedBy=default.target
    - [[https://software.intel.com/en-us/node-js-templates-for-intel-xdk][IoT - Node.js* templates for the Intel® XDK | Intel® Software]]
    - [[http://www.intel.com/content/www/us/en/support/boards-and-kits/000006377.html][Flashing the Intel® Edison Board via Mac* (Wi-Fi)]]
    - [[http://www.intel.com/content/www/us/en/support/boards-and-kits/000005808.html?wapkw=331189][Hardware Guide for the Intel® Edison Compute Module]]
+
+** backup/restore
+If you are using arduino kit...
+#+BEGIN_SRC sh
+# backup
+dd if=/dev/mmcblk0 of=/media/sdcard/edison2_bk.img
+# restore
+dd if=/media/sdcard/edison2_bk.img of=/dev/mmcblk0
+#+END_SRC
+cf. [[http://rwx.io/blog/2015/02/18/seting-up-an-edison/][Setting Up a New Intel Edison -]]
