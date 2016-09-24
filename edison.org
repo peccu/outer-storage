@@ -58,7 +58,7 @@ make
 sudo make install
 # this takes some minutes
 ros setup
-# this takes many time.....
+# this takes many time.....(51min)
 ros install sbcl
 #+END_SRC
 
