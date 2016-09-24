@@ -65,3 +65,61 @@ ros install sbcl
 ** Install Emacs
 cf. https://github.com/scorpiodawg/emacs-24.4-edison
 (How to install..?)
+
+** limit to public key auth
+   generate and transfer public key.
+
+   - in local PC
+#+BEGIN_SRC sh
+ssh-keygen
+scp ~/.ssh/id_rsa.pub edison:
+#+END_SRC
+
+   - in edison
+#+BEGIN_SRC sh
+mkdir .ssh
+chmod 700 .ssh
+cat ~/id_rsa.pub >> .ssh/authorized_keys
+#+END_SRC
+
+   - in local PC. connect with keys
+#+BEGIN_SRC sh
+ssh -i ~/.ssh/id_rsa root@edison
+#+END_SRC
+
+   - in other terminal connecting to edison
+#+BEGIN_SRC sh
+  root@edison:~# cp /etc/ssh/sshd_config{,.original}
+  root@edison:~# vi /etc/ssh/sshd_config
+  # edit disable password authentication
+  # PasswordAuthentication -> no
+  # PermitEmptyPasswords -> no
+  root@edison:~# diff -u /etc/ssh/sshd_config{.original,}
+  --- /etc/ssh/sshd_config.original
+  +++ /etc/ssh/sshd_config
+  @@ -58,8 +58,8 @@
+   #IgnoreRhosts yes
+
+   # To disable tunneled clear text passwords, change to no here!
+  -#PasswordAuthentication yes
+  -PermitEmptyPasswords yes
+  +PasswordAuthentication no
+  +PermitEmptyPasswords no
+
+   # Change to no to disable s/key passwords
+   #ChallengeResponseAuthentication yes
+  # then, restart sshd
+  root@edison:~# systemctl list-unit-files|grep ssh
+  sshd@.service                          static
+  sshdgenkeys.service                    enabled
+  sshd.socket                            enabled
+  root@edison:~# systemctl restart sshd.socket
+#+END_SRC
+
+   - test connection from new terminal
+#+BEGIN_SRC sh
+  % ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no root@edison
+  Permission denied (publickey,keyboard-interactive).
+  % ssh -i ~/.ssh/id_rsa root@edison
+  root@edison:~#
+#+END_SRC
