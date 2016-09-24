@@ -45,3 +45,20 @@ dd if=/dev/mmcblk0 of=/media/sdcard/edison2_bk.img
 dd if=/media/sdcard/edison2_bk.img of=/dev/mmcblk0
 #+END_SRC
 cf. [[http://rwx.io/blog/2015/02/18/seting-up-an-edison/][Setting Up a New Intel Edison -]]
+
+** Install SBCL with roswell
+I need no dependencies install.
+#+BEGIN_SRC sh
+# instractions from https://github.com/roswell/roswell/wiki/1.-Installation
+git clone -b release https://github.com/roswell/roswell.git
+cd roswell
+sh bootstrap
+./configure
+make
+sudo make install
+# this takes some minutes
+ros setup
+# this takes many time.....
+ros install sbcl
+#+END_SRC
+
