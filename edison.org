@@ -62,3 +62,6 @@ ros setup
 ros install sbcl
 #+END_SRC
 
+** Install Emacs
+cf. https://github.com/scorpiodawg/emacs-24.4-edison
+(How to install..?)
