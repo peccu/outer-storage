@@ -187,3 +187,23 @@ ssh -i ~/.ssh/id_rsa root@edison
        # if you want to view logs like tail -f
        root@edison:~# journalctl -u mongod -f
      #+END_SRC
+
+** tmux
+   add opkg repogitories.
+
+   cf. [[http://alextgalileo.altervista.org/edison-package-repo-configuration-instructions.html][Edison Package Repo Configuration Instructions]]
+*** edit /etc/opkg/base-feeds.conf
+    #+BEGIN_SRC conf
+      src/gz all      http://repo.opkg.net/edison/repo/all
+      src/gz edison   http://repo.opkg.net/edison/repo/edison
+      src/gz core2-32 http://repo.opkg.net/edison/repo/core2-32
+    #+END_SRC
+*** update
+    #+BEGIN_SRC sh
+      opkg update
+    #+END_SRC
+*** install tmux
+    #+BEGIN_SRC sh
+      opkg install tmux
+    #+END_SRC
+    =opkg search tmux= does not show packages.
