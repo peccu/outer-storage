@@ -124,3 +124,66 @@ ssh -i ~/.ssh/id_rsa root@edison
   % ssh -i ~/.ssh/id_rsa root@edison
   root@edison:~#
 #+END_SRC
+
+** mongodb
+*** install
+    cf. [[http://qiita.com/vivitter/items/f52a65a34f536af6004a][Intel EdisonにMongoDBをインストールする - Qiita]]
+
+    cf. [[http://www.instructables.com/id/Daycare-Monitoring-and-Tracking-System-Using-Intel/?ALLSTEPS][Daycare Monitoring and Tracking System Using Intel Edison Development Kit - All]]
+
+    go to [[https://www.mongodb.com/download-center][MongoDB Download Center | MongoDB]], select Linux 32-bit, get mongodb download url.
+    #+BEGIN_SRC sh
+      mkdir ~/downloads
+      cd ~/downloads
+      curl -O https://fastdl.mongodb.org/linux/mongodb-linux-i686-3.2.9.tgz
+      mkdir ~/bin
+      cd ~/bin
+      tar xzf ../downloads/mongodb-linux-i686-3.2.9.tgz
+      ln -s mongodb-linux-i686-3.2.9 mongodb
+      mkdir -p /data/db
+      # test launch
+      ~/bin/mongodb/bin/mongod --storageEngine=mmapv1
+    #+END_SRC
+*** add to systemd
+    cf. [[https://communities.intel.com/thread/102483][how do I launch MongoDB as a service? |Intel Communities]]
+
+**** create /etc/systemd/system/mongod.service and write below.
+     #+BEGIN_SRC conf
+       [Unit]
+       Description=Mongo is a scalable, document-oriented database.
+       After=syslog.target network.target
+
+       [Service]
+       ExecStart=/home/root/bin/mongodb/bin/mongod --storageEngine=mmapv1
+
+       [Install]
+       WantedBy=multi-user.target
+     #+END_SRC
+
+**** start service
+     #+BEGIN_SRC sh
+       root@edison:~# systemctl enable mongod
+       ln -s '/etc/systemd/system/mongod.service' '/etc/systemd/system/multi-user.target.wants/mongod.service'
+       root@edison:~# systemctl start mongod
+       root@edison:~# systemctl status mongod
+       ● mongod.service - Mongo is a scalable, document-oriented database.
+          Loaded: loaded (/etc/systemd/system/mongod.service; disabled)
+          Active: active (running) since Sun 2016-09-25 06:46:34 UTC; 17s ago
+        Main PID: 4875 (mongod)
+          CGroup: /system.slice/mongod.service
+                  └─4875 /home/root/bin/mongodb/bin/mongod --storageEngine=mmapv1
+
+       Sep 25 06:46:34 edison mongod[4875]: 2016-09-25T06:46:34.572+0000 I CONTROL  [initandlisten]
+       Sep 25 06:46:34 edison mongod[4875]: 2016-09-25T06:46:34.572+0000 I CONTROL  [initandlisten] ** NOTE: This is...inary.
+       Sep 25 06:46:34 edison mongod[4875]: 2016-09-25T06:46:34.572+0000 I CONTROL  [initandlisten] **       32 bit ...rnal).
+       Sep 25 06:46:34 edison mongod[4875]: 2016-09-25T06:46:34.572+0000 I CONTROL  [initandlisten] **       Note th...y off.
+       Sep 25 06:46:34 edison mongod[4875]: 2016-09-25T06:46:34.572+0000 I CONTROL  [initandlisten] **       See htt.../32bit
+       Sep 25 06:46:34 edison mongod[4875]: 2016-09-25T06:46:34.573+0000 I CONTROL  [initandlisten]
+       Sep 25 06:46:34 edison mongod[4875]: 2016-09-25T06:46:34.608+0000 I FTDC     [initandlisten] Initializing ful....data'
+       Sep 25 06:46:34 edison mongod[4875]: 2016-09-25T06:46:34.608+0000 I NETWORK  [HostnameCanonicalizationWorker]...worker
+       Sep 25 06:46:34 edison mongod[4875]: 2016-09-25T06:46:34.614+0000 I NETWORK  [initandlisten] waiting for conn... 27017
+       Sep 25 06:46:34 edison mongod[4875]: 2016-09-25T06:46:34.631+0000 W NETWORK  [HostnameCanonicalizationWorker]... known
+       Hint: Some lines were ellipsized, use -l to show in full.
+       # if you want to view logs like tail -f
+       root@edison:~# journalctl -u mongod -f
+     #+END_SRC
