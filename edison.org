@@ -207,3 +207,47 @@ ssh -i ~/.ssh/id_rsa root@edison
       opkg install tmux
     #+END_SRC
     =opkg search tmux= does not show packages.
+
+** set timezone
+   cf. [[http://qiita.com/CLCL/items/e991e23f4bdbca5ff28b][Intel Edisonの時刻合わせ（systemd-timesyncd,timedatectl） - Qiita]]
+   #+BEGIN_SRC sh
+     root@edison:~# timedatectl
+           Local time: Sun 2016-09-25 07:25:16 UTC
+       Universal time: Sun 2016-09-25 07:25:16 UTC
+             RTC time: Sun 2016-09-25 07:25:16
+            Time zone: Universal (UTC, +0000)
+          NTP enabled: yes
+     NTP synchronized: yes
+      RTC in local TZ: no
+           DST active: n/a
+     root@edison:~# timedatectl set-timezone Asia/Tokyo
+     root@edison:~# timedatectl
+           Local time: Sun 2016-09-25 16:27:41 JST
+       Universal time: Sun 2016-09-25 07:27:41 UTC
+             RTC time: Sun 2016-09-25 07:27:41
+            Time zone: Asia/Tokyo (JST, +0900)
+          NTP enabled: yes
+     NTP synchronized: yes
+      RTC in local TZ: no
+           DST active: n/a
+     root@edison:~# systemctl status systemd-timesyncd
+     ● systemd-timesyncd.service - Network Time Synchronization
+        Loaded: loaded (/lib/systemd/system/systemd-timesyncd.service; enabled)
+        Active: active (running) since Thu 2016-09-22 23:34:58 UTC; 2 days ago
+          Docs: man:systemd-timesyncd.service(8)
+      Main PID: 160 (systemd-timesyn)
+        Status: "Using Time Server 216.239.35.12:123 (time4.google.com)."
+        CGroup: /system.slice/systemd-timesyncd.service
+                └─160 /lib/systemd/systemd-timesyncd
+
+     Sep 25 02:07:41 edison systemd-timesyncd[160]: interval/delta/delay/jitter/drift 2048s/-0.016s/0.097s/0.047s/+35ppm
+     Sep 25 02:41:49 edison systemd-timesyncd[160]: interval/delta/delay/jitter/drift 2048s/-0.068s/0.097s/0.089s/+18ppm
+     Sep 25 03:15:57 edison systemd-timesyncd[160]: interval/delta/delay/jitter/drift 2048s/-0.043s/0.132s/0.092s/+8ppm
+     Sep 25 03:50:05 edison systemd-timesyncd[160]: interval/delta/delay/jitter/drift 2048s/-0.030s/0.155s/0.098s/+1ppm
+     Sep 25 04:24:14 edison systemd-timesyncd[160]: interval/delta/delay/jitter/drift 2048s/+0.024s/0.184s/0.093s/+9ppm
+     Sep 25 04:58:22 edison systemd-timesyncd[160]: interval/delta/delay/jitter/drift 2048s/+0.034s/0.087s/0.094s/+18ppm
+     Sep 25 05:32:30 edison systemd-timesyncd[160]: interval/delta/delay/jitter/drift 2048s/-0.022s/0.087s/0.050s/+12ppm
+     Sep 25 06:06:38 edison systemd-timesyncd[160]: interval/delta/delay/jitter/drift 2048s/-0.056s/0.164s/0.036s/+0ppm
+     Sep 25 06:40:46 edison systemd-timesyncd[160]: interval/delta/delay/jitter/drift 2048s/+0.065s/0.047s/0.095s/+15ppm
+     Sep 25 07:14:55 edison systemd-timesyncd[160]: interval/delta/delay/jitter/drift 2048s/-0.019s/0.086s/0.087s/+7ppm
+   #+END_SRC
