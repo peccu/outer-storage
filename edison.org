@@ -35,6 +35,7 @@ WantedBy=default.target
    - [[https://software.intel.com/en-us/node-js-templates-for-intel-xdk][IoT - Node.js* templates for the Intel® XDK | Intel® Software]]
    - [[http://www.intel.com/content/www/us/en/support/boards-and-kits/000006377.html][Flashing the Intel® Edison Board via Mac* (Wi-Fi)]]
    - [[http://www.intel.com/content/www/us/en/support/boards-and-kits/000005808.html?wapkw=331189][Hardware Guide for the Intel® Edison Compute Module]]
+   - [[http://qiita.com/vivitter/items/f52a65a34f536af6004a][Intel EdisonにMongoDBをインストールする - Qiita]]
 
 ** backup/restore
 If you are using arduino kit...
