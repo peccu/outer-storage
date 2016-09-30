@@ -1,0 +1,92 @@
+* Node.js
+** Uninstall Node.js
+   [[https://gist.github.com/TonyMtz/d75101d9bdf764c890ef][Uninstall nodejs from OSX Yosemite]]
+   #+BEGIN_SRC sh
+     # first:
+     lsbom -f -l -s -pf /var/db/receipts/org.nodejs.pkg.bom | while read f; do  sudo rm /usr/local/${f}; done
+     sudo rm -rf /usr/local/lib/node /usr/local/lib/node_modules /var/db/receipts/org.nodejs.*
+
+     # To recap, the best way (I've found) to completely uninstall node + npm is to do the following:
+
+     # go to /usr/local/lib and delete any node and node_modules
+     cd /usr/local/lib
+     sudo rm -rf node*
+
+     # go to /usr/local/include and delete any node and node_modules directory
+     cd /usr/local/include
+     sudo rm -rf node*
+
+     # if you installed with brew install node, then run brew uninstall node in your terminal
+     brew uninstall node
+
+     # check your Home directory for any "local" or "lib" or "include" folders, and delete any "node" or "node_modules" from there
+     # go to /usr/local/bin and delete any node executable
+     cd /usr/local/bin
+     sudo rm -rf /usr/local/bin/npm
+     sudo rm -rf /usr/local/bin/node
+     ls -las
+
+     # you may need to do the additional instructions as well:
+     sudo rm -rf /usr/local/share/man/man1/node.1
+     sudo rm -rf /usr/local/lib/dtrace/node.d
+     sudo rm -rf ~/.npm
+#+END_SRC
+
+*** my pattern
+    #+BEGIN_SRC sh
+      mv /usr/local/lib/node{,_}
+      mv /usr/local/lib/node_modules{,_}
+      mv /usr/local/share/man/man1/node.1{,_}
+      mv /usr/local/lib/dtrace/node.d{,_}
+      mv /usr/local/lib
+      mv /usr/local/bin/npm{,_}
+      mv /usr/local/bin/node{,_}
+      mv ~/.npm{,_}
+    #+END_SRC
+    then, =brew install node=
+
+* Meteor
+** Uninstall meteor
+   #+BEGIN_SRC sh
+     mv ~/.meteor{,_}
+     curl https://install.meteor.com/ | sh
+   #+END_SRC
+
+   [[http://stackoverflow.com/a/24688962/514411][How can I completely uninstall and then reinstall Meteor.js? - Stack Overflow]]
+   #+BEGIN_SRC sh
+Let’s start with the deletions, then we’ll move on to the reinstallations.
+
+   1. If you ever installed Meteorite, uninstall and delete it:
+   sudo mrt uninstall
+   sudo mrt uninstall --system
+   rm -rf ~/.meteorite
+   2. Then delete Meteor:
+   sudo rm /usr/local/bin/meteor
+   rm -rf ~/.meteor
+
+Now start over at the beginning:
+
+   1. Repair permissions if necessary:
+   sudo chown -R $(whoami) ~/.npm
+   2. Reinstall Meteor:
+   curl https://install.meteor.com/ | sh
+   3. Next check that your project has all its proper packages:
+   cd /path/to/your/project
+   meteor update
+   4. If your project still won’t compile, you can reset it (warning: deletes database):
+   cd /path/to/your/project
+   meteor reset
+
+   5. Still no luck? Recreate the Meteor project (warning: deletes database and the project’s memory of what packages you’ve installed):
+   cd /path/to/your/project
+   rm -rf ./.meteor
+   cd ..
+   meteor create project-new
+   rm ./project-new/project-new.*
+   mv ./project/* ./project-new/
+   cd ./project-new
+   #+END_SRC
+** switch meteor version
+   [[https://forums.meteor.com/t/how-do-you-downgrade-the-meteor-tool-from-1-4-to-1-3/28562/8][How do you downgrade the meteor tool from 1.4 to 1.3? - Meteor forums]]
+
+   =meteor --release 1.3.5.1 build= etc.
