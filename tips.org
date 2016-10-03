@@ -1,0 +1,9 @@
+* tips
+** view valid date from pem file
+   #+BEGIN_SRC sh
+     % openssl x509 -startdate -enddate -noout -in apns.pem
+     notBefore=Sep 20 01:01:06 2016 GMT
+     notAfter=Oct 20 01:01:06 2017 GMT
+   #+END_SRC
+   [bash - How to determine SSL cert expiration date from a PEM encoded certificate? - Stack Overflow](http://stackoverflow.com/a/21297927/514411)
+
