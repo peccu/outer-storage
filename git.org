@@ -1,0 +1,5 @@
+* git memo
+** fetch all and prune
+   #+BEGIN_SRC sh
+     git fetch --all --tags --prune
+   #+END_SRC
