@@ -3,3 +3,7 @@
    #+BEGIN_SRC sh
      git fetch --all --tags --prune
    #+END_SRC
+** remove merged branches
+   #+BEGIN_SRC sh
+     git branch --merged=develop|grep -v '*'|grep -v develop|grep -v master|xargs git branch -d
+   #+END_SRC
