@@ -1,0 +1,19 @@
+* subversion memo
+  #+BEGIN_SRC sh
+    #!/bin/bash
+    function release(){
+        version=$1
+        message=$2
+        echo $message|pbcopy
+        pushd targetDir
+        git checkout develop && git pull && git checkout master && git pull && git flow release start $version && git flow release finish $version && git push origin develop master $version
+        pushd ../svn-targetDir/
+        svn update
+        popd
+        rm -rf ../svn-targetDir/* ../svn-targetDir/.editorconfig ../svn-targetDir/.gitignore && git checkout-index -a -f --prefix=../svn-targetDir/
+        pushd ../svn-targetDir/
+        svn revert some-svn-tracked-changes
+        svn commit -m "$message"
+    }
+    release $1 $2
+  #+END_SRC
