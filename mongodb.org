@@ -1,0 +1,3 @@
+* mongodb
+** cheat sheet
+   - [[http://www.mongodbspain.com/en/2014/03/23/mongodb-cheat-sheet-quick-reference/][MongoDB Cheat Sheet – Quick Reference – MongoDB Spain]]
