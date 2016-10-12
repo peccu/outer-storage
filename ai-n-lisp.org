@@ -3,4 +3,12 @@
   - [Azure Machine Learningの新機能「Run selected」を試してみた。｜Azure Machine Learning ｜ | ナレコムazureレシピ](http://azure-recipe.kc-cloud.jp/2016/08/azure-ml-run-selected/)
   - [Google’s Cloud Machine Learning service is now in public beta | TechCrunch](https://techcrunch.com/2016/09/29/googles-cloud-machine-learning-service-is-now-in-public-beta/)
   - [Google Cloud Machine Learning: now open to all with new professional services and education programs | Google Cloud Big Data and Machine Learning Blog  |  Google Cloud Platform](https://cloud.google.com/blog/big-data/2016/09/google-cloud-machine-learning-now-open-to-all-with-new-professional-services-and-education-programs)
-  - http://www.ibm.com/watson/developercloud/doc/
+  - [[http://www.ibm.com/watson/developercloud/doc/][Table of Contents for Services Documentation]]
+  - [[https://console.ng.bluemix.net/catalog/services/retrieve-and-rank/][Retrieve and Rank - IBM Bluemix]]
+  - [[http://www.ibm.com/developerworks/jp/web/library/wa-develop-deploy-debug-app/][ブラウザーから離れることなく Node.js アプリを開発する]]
+  - [[http://www.ibm.com/developerworks/jp/web/library/wa-build-deploy-web-app-sailsjs-1-bluemix/][多忙な Java 開発者のための Sails.js ガイド: Sails を使用して基本的な Web アプリを作成してデプロイする]]
+  - [[http://www.ibm.com/developerworks/jp/cloud/library/cl-peopleinthenews-app/][IBM Watson で世界指折りの話題の人物を追跡する]]
+  - [[http://www.ibm.com/developerworks/jp/cloud/library/cl-build-a-bluemix-app-in-10-minutes-trs/][10 分間で感動的な Bluemix アプリを構築する！]]
+  - [[http://www.ibm.com/developerworks/jp/cloud/library/cl-add-language-translation-to-your-apps-with-watson-app/][IBM Watson を利用して言語翻訳機能をアプリケーションに追加する]]
+  - [[http://www.ibm.com/developerworks/jp/web/library/wa-watson-explorer-react-app/][React を使用して IBM Watson エクスプローラーを作成する]]
+  - [[http://www.ibm.com/developerworks/jp/analytics/library/ba-collect-analyze-social-data-app/][コードを 1 行も作成せずにソーシャル・データを収集して分析する]]
