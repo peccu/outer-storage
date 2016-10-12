@@ -1,0 +1,6 @@
+* Links
+  - [マシンラーニングが切り開く、より深いインサイトへの道](http://www.intel.co.jp/content/www/jp/ja/analytics/machine-learning/overview.html)
+  - [Azure Machine Learningの新機能「Run selected」を試してみた。｜Azure Machine Learning ｜ | ナレコムazureレシピ](http://azure-recipe.kc-cloud.jp/2016/08/azure-ml-run-selected/)
+  - [Google’s Cloud Machine Learning service is now in public beta | TechCrunch](https://techcrunch.com/2016/09/29/googles-cloud-machine-learning-service-is-now-in-public-beta/)
+  - [Google Cloud Machine Learning: now open to all with new professional services and education programs | Google Cloud Big Data and Machine Learning Blog  |  Google Cloud Platform](https://cloud.google.com/blog/big-data/2016/09/google-cloud-machine-learning-now-open-to-all-with-new-professional-services-and-education-programs)
+  - http://www.ibm.com/watson/developercloud/doc/
