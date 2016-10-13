@@ -1,0 +1,3 @@
+* google spreadsheet
+** calc rest work day of this month
+   NETWORKDAYS(TODAY(), EOMONTH(today(), 0))
