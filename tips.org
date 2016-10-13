@@ -6,4 +6,7 @@
      notAfter=Oct 20 01:01:06 2017 GMT
    #+END_SRC
    [[http://stackoverflow.com/a/21297927/514411][bash - How to determine SSL cert expiration date from a PEM encoded certificate? - Stack Overflow]]
-
+** dns server
+   dnsmasq. use alias from /etc/hosts
+** monitoring
+   monit. monitoring service and send mail or restart ,...
