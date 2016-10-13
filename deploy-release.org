@@ -1,0 +1,8 @@
+* deploy or release
+** update crontab for specific user
+   #+BEGIN_SRC sh
+     sudo crontab -u someUser -l > crontab_$(date +%Y%m%d_%H%M%S)
+     sudo crontab -u someUser crontab
+     sudo crontab -u someUser -l
+   #+END_SRC
+** exec sql
