@@ -39,3 +39,9 @@
 ***** access to http://192.168.0.X:2812
 *** hubot
 *** mail
+** line notify
+   https://notify-bot.line.me/my/
+   #+BEGIN_SRC sh
+     curl -X POST -H 'Authorization: Bearer tooookeeeeen' -d 'message=Hello World!' https://notify-api.line.me/api/notify
+   #+END_SRC
+   (if you use =-F= option instead of =-d= option, message will garbled with some environment (like in edison))
