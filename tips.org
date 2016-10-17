@@ -37,8 +37,50 @@
        monit           0:off   1:off   2:on    3:on    4:on    5:on    6:off
      #+END_SRC
 ***** access to http://192.168.0.X:2812
+***** add conf for wifi connection
+****** /etc/monit.d/monitrc
+       #+BEGIN_SRC sh
+         $ cat /etc/monit.d/monitrc
+         set logfile syslog facility log_daemon
+         check program pgm with path "/path/to/test-wifi.sh" with timeout 1000 seconds
+           start program = "/path/to/connect-wifi.sh"
+           if status != 0 then restart
+           if 5 restarts within 5 cycles then timeout
+      #+END_SRC
+****** test-wifi.sh
+       #+BEGIN_SRC sh
+         $ cat /path/to/test-wifi.sh
+         #!/bin/bash
+         curl -m 1 -I http://192.168.0.X
+         exit $?
+      #+END_SRC
+****** connect-wifi.sh
+       #+BEGIN_SRC sh
+         $ cat /path/to/connect-wifi.sh
+         #!/bin/bash
+         wlan=wlan0
+         SSID=SOME_SSID
+         /sbin/iwconfig $wlan essid $SSID
+         curl -X POST -d 'payload={"text":"wifi reconnected"}' https://chat-webhook/hashhashhash
+      #+END_SRC
+****** test and restart monit
+       #+BEGIN_SRC sh
+         $ sudo monit -t
+         Control file syntax OK
+         $ sudo /sbin/service monit restart
+         Stopping monit:                                            [  OK  ]
+         Starting monit: Starting monit daemon with http interface at [192.168.0.X:2812]
+                                                                    [  OK  ]
+       #+END_SRC
 *** hubot
 *** mail
+*** connect wi-fi by command
+    [[http://raspberrypi.stackexchange.com/a/5121][wireless - How to automatically reconnect WiFi? - Raspberry Pi Stack Exchange]]
+    #+BEGIN_SRC sh
+      wlan=wlan0
+      SSID=SOME_SSID
+      sudo /sbin/iwconfig $wlan essid $SSID
+    #+END_SRC
 ** line notify
    https://notify-bot.line.me/my/
    #+BEGIN_SRC sh
