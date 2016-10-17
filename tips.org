@@ -15,6 +15,7 @@
 ***** [[https://www.unixmen.com/install-and-configure-monit-on-centos-rhel-ubuntu-debian/][Install and Configure Monit on CentOS/RHEL/Ubuntu/Debian | Unixmen]]
 ***** [[https://www.howtoforge.com/tutorial/server-monitoring-with-munin-and-monit-on-centos/2/][Server monitoring with Munin and Monit on CentOS 7.2 - Page 2 - Page 2]]
 ***** [[http://qiita.com/ksworks/items/0f3bbfa9e0ba49b5ef06][CentOS 6.5にmonitをインストールしてプロセス監視をする - Qiita]]
+***** [[http://shanon-tech.blogspot.jp/2011/11/15monit.html][15分で始めるmonitによるサーバ監視 - SHANON　Engineer's　Blog]]
 **** logs
 ***** install
      #+BEGIN_SRC sh
