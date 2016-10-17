@@ -36,6 +36,8 @@ WantedBy=default.target
    - [[http://www.intel.com/content/www/us/en/support/boards-and-kits/000006377.html][Flashing the Intel® Edison Board via Mac* (Wi-Fi)]]
    - [[http://www.intel.com/content/www/us/en/support/boards-and-kits/000005808.html?wapkw=331189][Hardware Guide for the Intel® Edison Compute Module]]
    - [[http://qiita.com/vivitter/items/f52a65a34f536af6004a][Intel EdisonにMongoDBをインストールする - Qiita]]
+   - [[https://gist.github.com/pbosetti/027125c4ba066f51bf2c][Intel edison cross compiling tricks on OS X]]
+   - [[http://shawnhymel.com/809/cross-compiling-on-linux-for-the-edison/][Cross Compiling on Linux for the Edison | Shawn Hymel]]
 
 ** backup/restore
 If you are using arduino kit...
@@ -126,6 +128,7 @@ ssh -i ~/.ssh/id_rsa root@edison
 #+END_SRC
 
 ** mongodb
+   but, redis is already installed...
 *** install
     cf. [[http://qiita.com/vivitter/items/f52a65a34f536af6004a][Intel EdisonにMongoDBをインストールする - Qiita]]
 
