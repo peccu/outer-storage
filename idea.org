@@ -3,3 +3,7 @@
 ** nginxでロードバランサ
 ** awsでlambda->dynamodb
 ** github pagesでランディングページ兼デモページ(プロダクションページ？)
+** redis, reccomend,
+*** [[https://pacenotes.jp/2014/12/27/692][Edison KitにRedisインストール | Pacenotes]]
+*** [[http://maaash.jp/2013/06/redis-similarity-lua/][Redisを使ったレコメンド機能の実装 - maaash.jp]]
+*** [[http://try.redis.io/][Try Redis]]
