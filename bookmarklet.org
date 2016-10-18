@@ -1,0 +1,5 @@
+* bookmarklet
+** Hate '続きを読む'
+   #+BEGIN_SRC js
+     javascript:(function(){($("a:contains(続きを読む)")||$("a:contains(このページをスキップする)")||$("a:contains(つづきを読む)"))[0].click();})()
+   #+END_SRC
