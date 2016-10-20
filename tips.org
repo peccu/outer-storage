@@ -88,3 +88,14 @@
      curl -X POST -H 'Authorization: Bearer tooookeeeeen' -d 'message=Hello World!' https://notify-api.line.me/api/notify
    #+END_SRC
    (if you use =-F= option instead of =-d= option, message will garbled with some environment (like in edison))
+** mathjax
+   - [[http://meta.math.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference][MathJax basic tutorial and quick reference - Mathematics Meta Stack Exchange]]
+** router
+   - [[http://yabe.jp/gadgets/edgerouter-x/][EdgeRouter X がすごい | yabe.jp]]
+** remove empty directories
+   [[http://unix.stackexchange.com/a/46326][linux - how can I recursively delete empty directories in my home directory? - Unix & Linux Stack Exchange]]
+   This command removes only 1 layer. If directory has empty directories, it should exec again and again.
+   #+BEGIN_SRC sh
+     find ./target -type d -empty -delete
+     find ./target -type d -empty -print
+   #+END_SRC
