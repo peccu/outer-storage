@@ -90,3 +90,5 @@ Now start over at the beginning:
    [[https://forums.meteor.com/t/how-do-you-downgrade-the-meteor-tool-from-1-4-to-1-3/28562/8][How do you downgrade the meteor tool from 1.4 to 1.3? - Meteor forums]]
 
    =meteor --release 1.3.5.1 build= etc.
+** links
+   - [[http://qiita.com/hashrock/items/575e0be0a362e6c78dd1][MeteorはTwitter連携ログインを作るのがめちゃ楽 - Qiita]]
