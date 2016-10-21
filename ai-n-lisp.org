@@ -17,5 +17,6 @@
   - [[https://mldb.ai/][MLDB: the open-source Machine Learning Database]]
   - [[http://www.kdnuggets.com/2016/10/mldb-machine-learning-database.html][MLDB: The Machine Learning Database]]
   - [[http://gihyo.jp/dev/serial/01/machine-learning][機械学習 はじめよう：連載｜gihyo.jp … 技術評論社]]
+  - [[https://azure.microsoft.com/ja-jp/documentation/services/machine-learning/][Machine Learning のドキュメント | Microsoft Azure]]
 * 深層学習 機械学習プロフェッショナルシリーズ
   moved to [[file:deeplearning.org::*%E6%B7%B1%E5%B1%A4%E5%AD%A6%E7%BF%92%20%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92%E3%83%97%E3%83%AD%E3%83%95%E3%82%A7%E3%83%83%E3%82%B7%E3%83%A7%E3%83%8A%E3%83%AB%E3%82%B7%E3%83%AA%E3%83%BC%E3%82%BA%202016/10/06][深層学習 機械学習プロフェッショナルシリーズ]]
