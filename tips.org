@@ -99,3 +99,7 @@
      find ./target -type d -empty -delete
      find ./target -type d -empty -print
    #+END_SRC
+** install/uninstall bash on windows
+   lxrun /uninstall /full
+   lxrun /install
+   [[http://www.howtogeek.com/261188/how-to-uninstall-or-reinstall-windows-10s-ubuntu-bash-shell/][How to Uninstall (or Reinstall) Windows 10’s Ubuntu Bash Shell]]
