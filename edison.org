@@ -38,6 +38,9 @@ WantedBy=default.target
    - [[http://qiita.com/vivitter/items/f52a65a34f536af6004a][Intel EdisonにMongoDBをインストールする - Qiita]]
    - [[https://gist.github.com/pbosetti/027125c4ba066f51bf2c][Intel edison cross compiling tricks on OS X]]
    - [[http://shawnhymel.com/809/cross-compiling-on-linux-for-the-edison/][Cross Compiling on Linux for the Edison | Shawn Hymel]]
+   - [[http://qiita.com/CLCL/items/3df874ff08b5a7dc4c52][Intel Edisonの初期化後 毎回セットアップする作業をひとまとめ - Qiita]]
+   - [[http://qiita.com/yoneken/items/1b24f0dd8ae00579a0c2][スタートアップ Intel Edison - Qiita]]
+   - [[https://communities.intel.com/docs/DOC-23391][Easy start: Intel Edison as gateway for IoT and... |Intel Communities]]
 
 ** backup/restore
 If you are using arduino kit...
