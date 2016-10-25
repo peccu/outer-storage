@@ -41,4 +41,10 @@
      ,#+INCLUDE: "./sections/appendix-build-doc.org" :minlevel 1
 
      ,#+INCLUDE: "./sections/diagrams.org" :minlevel 1
+
+     ,* COMMENT
+       MathJax memo
+       [[http://meta.math.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference][MathJax basic tutorial and quick reference - Mathematics Meta Stack Exchange]]
+     # (org-open-file (org-html-export-to-html))
+     # (org-html-export-to-html)
    #+END_SRC
