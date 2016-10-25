@@ -33,3 +33,15 @@
                (find-file file)))
          (error "No recently-killed files to reopen")))
    #+END_SRC
+** live preview
+*** impatient-mode
+    [[http://stackoverflow.com/a/36189456/514411][how can I real-time preview markdown in Emacs? - Stack Overflow]]
+    - M-x package-install impatient-mode
+    - M-x httpd-start
+    - in some buffer you want to preview: M-x impatient-mode
+    - access http://localhost:8080/imp
+
+      list buffers which impatient-mode enable
+    - if you want to render markdown...
+      - define markdown-html(from Stack Overflow)
+      - M-x imp-set-user-filter RET markdown-html
