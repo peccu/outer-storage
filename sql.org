@@ -1,0 +1,9 @@
+* SQL
+** delete
+   delete from <table_name> where <condition>
+** update
+   update <table_name> set <col> = <val>, <col> = <val> where <condition>
+** insert
+   insert into <table_name> (<col>, <col>, <col>) values (<value>, <value>, <value>)
+
+   insert into <table_name> (<col>, <col>, <col>) select <col>, <col>, <col> from <table_name> where <condition>
