@@ -110,3 +110,25 @@
    gem install epdiff
    epdiff old.epub new.epub
    [[http://qiita.com/takahashim/items/dad97795213e9e570f30][EPUBファイルの差分を取る - Qiita]]
+** htaccess http <--> https redirect
+   [[http://d.hatena.ne.jp/mrgoofy33/20100914/1284414817][.htaccessでHTTPアクセスをSSLでリダイレクト(逆もアリ) - hogehoge foobar Blog Style5]]
+   #+BEGIN_SRC conf
+     # HTTPSページ用.htaccess
+     <IfModule mod_rewrite.c>
+         RewriteEngine on
+         RewriteCond %{HTTPS} off
+         RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [R,L]
+     </IfModule>
+     # HTTPページ用.htaccess
+
+     <IfModule mod_rewrite.c>
+         RewriteEngine on
+         RewriteCond %{HTTPS} on
+         RewriteRule ^(.*)$ http://%{HTTP_HOST}%{REQUEST_URI} [R,L]
+     </IfModule>
+   #+END_SRC
+
+   - [L]は、定義の最終行（Last）を意味します。この行以降のRewriteRuleは無視されます。一番最後の行に書きます。
+   - [L]を書かなくても動作します。
+   - [R]は、リダイレクトを行います。
+   - http://memorva.jp/memo/linux/mod_rewrite.php
