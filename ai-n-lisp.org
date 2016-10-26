@@ -24,6 +24,7 @@
 *** Microsoft Azure
     - [[http://azure-recipe.kc-cloud.jp/2016/08/azure-ml-run-selected/][Azure Machine Learningの新機能「Run selected」を試してみた。｜Azure Machine Learning ｜ | ナレコムazureレシピ]]
     - [[https://azure.microsoft.com/ja-jp/documentation/services/machine-learning/][Machine Learning のドキュメント | Microsoft Azure]]
+    - [[https://azure.microsoft.com/ja-jp/documentation/articles/machine-learning-create-experiment/][Machine Learning Studio での簡単な実験 | Microsoft Azure]]
 *** Oracle Advanced Analytics
     - [[https://www.oracle.com/database/advanced-analytics/index.html][Advanced Analytics | Database | Oracle]]
     - [[http://www.oracle.com/technetwork/database/options/advanced-analytics/ds-oracle-advanced-analytics-1510025.pdf][ORACLE ADVANCED ANALYTICS ENTERPRISE-WIDE PREDICTIVE ANALYTICS]] (pdf)
