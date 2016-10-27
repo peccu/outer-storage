@@ -139,4 +139,5 @@
    [[http://pastebin.com/xvhkZMU3][AppleScript merge PDFs in OS X - Pastebin.com]]
 ** GitHub contributions calendar
    https://github.com/users/peccu/contributions
+   (this svg should be added `xmlns="http://www.w3.org/2000/svg"` to svg tag)
    [[./contributions.svg]]
