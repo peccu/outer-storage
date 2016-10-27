@@ -8,6 +8,8 @@
    - [[https://mldb.ai/][MLDB: the open-source Machine Learning Database]]
    - [[http://www.kdnuggets.com/2016/10/mldb-machine-learning-database.html][MLDB: The Machine Learning Database]]
    - [[http://gihyo.jp/dev/serial/01/machine-learning][機械学習 はじめよう：連載｜gihyo.jp … 技術評論社]]
+** Deep Learning
+   - [[https://github.com/takitsuba/rnn_implementation_tutorial/blob/master/rnn_implementation_part01.ipynb][rnn_implementation_tutorial/rnn_implementation_part01.ipynb at master · takitsuba/rnn_implementation_tutorial]]
 ** Cloud Service
 *** IBM Watson
     - [[http://www.ibm.com/developerworks/jp/cloud/library/cl-peopleinthenews-app/][IBM Watson で世界指折りの話題の人物を追跡する]]
