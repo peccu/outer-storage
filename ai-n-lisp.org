@@ -9,6 +9,8 @@
    - [[http://www.kdnuggets.com/2016/10/mldb-machine-learning-database.html][MLDB: The Machine Learning Database]]
    - [[http://gihyo.jp/dev/serial/01/machine-learning][機械学習 はじめよう：連載｜gihyo.jp … 技術評論社]]
 ** Deep Learning
+   - [[http://www.deeplearningbook.org/][Deep Learning]]
+   - [[http://peterroelants.github.io/][Peter's Notes]]
    - [[https://github.com/takitsuba/rnn_implementation_tutorial/blob/master/rnn_implementation_part01.ipynb][rnn_implementation_tutorial/rnn_implementation_part01.ipynb at master · takitsuba/rnn_implementation_tutorial]]
 ** Cloud Service
 *** IBM Watson
