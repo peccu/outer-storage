@@ -137,3 +137,6 @@
     /System/Library/Automator/Combine\ PDF\ Pages.action/Contents/Resources/join.py --output output.pdf --verbose infile1.pdf infile2.pdf
    #+END_SRC
    [[http://pastebin.com/xvhkZMU3][AppleScript merge PDFs in OS X - Pastebin.com]]
+** GitHub contributions calendar
+   https://github.com/users/peccu/contributions
+   [[./contributions.svg]]
