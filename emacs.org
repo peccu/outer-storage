@@ -45,3 +45,5 @@
     - if you want to render markdown...
       - define markdown-html(from Stack Overflow)
       - M-x imp-set-user-filter RET markdown-html
+** concat 濁点、半濁点
+   C-x h M-x ucs-normalize-NFC-region
