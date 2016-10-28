@@ -1,0 +1,4 @@
+* links
+  not categorised...
+** Redis
+   - [[http://qiita.com/haminiku/items/43bafbb9d74ef3a1f74c][Redis 本番障害から学んだコードレビューの勘所 - Qiita]]
