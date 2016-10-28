@@ -3,3 +3,49 @@
    #+BEGIN_SRC js
      javascript:(function(){($("a:contains(続きを読む)")[0] || $("a:contains(このページをスキップする)")[0] || $("a:contains(つづきを読む)")[0]).click();})()
    #+END_SRC
+** send page to slack with incoming webhook
+   currently this supports only Qiita articles.
+    #+BEGIN_SRC js
+      javascript:(function(){
+          var hook_url = 'https://hooks.slack.com/services/AAABBBBBCCCC';
+          var icon = $('link[rel="shortcut icon"]').attr('href');
+          var fetch_og = function(key){
+              return $('meta[property="' + key + '"]').attr('content');
+          };
+          var site_name = fetch_og('og:site_name');
+          var title = fetch_og('og:title');
+          title = title || document.title;
+          var title_link = fetch_og('og:url');
+          var text=fetch_og('og:description');
+          text=text&&text.replace('&',' ').replace('<',' ').replace('>',' ');
+          var image_url = fetch_og('og:image');
+          var ts = new Date($('time[itemprop=datePublished]').attr('datetime')).getTime();
+
+          var payload = {
+              attachments: [
+                  {
+                      "fallback": "URL sharing.",
+                      "color": "#36a64f",
+                      "pretext": "URL were shared from bookmarklet.",
+                      "author_name": site_name,
+                      "author_icon": icon,
+                      "title": title,
+                      "title_link": title_link,
+                      "text": text,
+                      "image_url": image_url,
+                      "footer": site_name,
+                      "footer_icon": icon,
+                      "ts": ts
+                  }
+              ]
+          };
+
+          $.ajax({
+              type: 'POST',
+              url: hook_url,
+              data: 'payload=' + JSON.stringify(payload),
+              success: function (data) {
+              }
+          });
+      })()
+    #+END_SRC
