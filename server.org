@@ -3,8 +3,11 @@
 *** keyboard
     http://www.server-world.info/query?os=CentOS_7&p=keymap
     - show current info
+
       localectl
     - list types
+
       localectl list-keymap
     - select us (JIS -> jp106)
+
       localectl set-keymap us
