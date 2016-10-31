@@ -11,3 +11,15 @@
     - select us (JIS -> jp106)
 
       localectl set-keymap us
+*** add user
+    - useradd username
+    - passwd username
+    - usermod -G wheel username
+    - visudo # uncomment wheel
+    - ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no username@192.168.0.10
+    - # add conf to ~/.ssh/config
+    - ssh-keygen
+    - scp id_rsa-server.pub server:
+    - mkdir ~/.ssh
+    - chmod 755 .ssh
+    - mv id_rsa-server.pub ~/.ssh/authorized_keys
