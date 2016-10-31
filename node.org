@@ -52,6 +52,13 @@
      pm2 update
      pm2 save
    #+END_SRC
+** update nodebb
+   #+BEGIN_SRC sh
+     git fetch --all
+     git checkout v1.x.x
+     ./nodebb upgrade
+     pm2 restart nodebb
+   #+END_SRC
 * Meteor
 ** Uninstall meteor
    #+BEGIN_SRC sh
