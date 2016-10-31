@@ -44,7 +44,14 @@
       mv ~/.npm{,_}
     #+END_SRC
     then, =brew install node=
-
+** update pm2
+   #+BEGIN_SRC sh
+     sudo -E /usr/local/bin/npm i -g pm2@latest
+     sudo -E pm2 update
+     sudo -E pm2 startup centos
+     pm2 update
+     pm2 save
+   #+END_SRC
 * Meteor
 ** Uninstall meteor
    #+BEGIN_SRC sh
