@@ -23,3 +23,75 @@
     - mkdir ~/.ssh
     - chmod 755 .ssh
     - mv id_rsa-server.pub ~/.ssh/authorized_keys
+*** set network conf
+    use nmtui
+*** install vmware tools
+    - yum perl net-tools
+    - mkdir /mnt/cdrom
+    - mount /dev/cdrom /mnt/cdrom/
+    - cp /mnt/cdrom/VMwareTools*.tar.gz ~/Downloads
+    - tar xzf VMwareTools*.tar.gz
+    - cd vmware-tools-distrib/
+    - ./vmware-install.pl
+** systemd
+*** enable, start, status
+    systemctl enable servicename.service
+    systemctl start servicename.service
+    systemctl status servicename.service
+*** restart
+    systemctl daemon-reload # if config file was modified
+    systemctl restart servicename.service
+*** logs
+    journalctl -f -u servicename
+*** config file
+    /usr/lib/systemd/system/*.service
+**** node.js sample
+     #+BEGIN_SRC conf
+       [Unit]
+       Description=Sample server
+       After=network.target remote-fs.target nss-lookup.target nginx.target mongod.target
+
+       [Service]
+       ExecStart=/bin/node /path/to/main.js
+       Restart=always
+       RestartSec=2s
+       StandardOutput=syslog
+       StandardError=syslog
+       SyslogIdentifier=servicename
+       User=root
+       Environment=https_proxy=http://proxy.com:8080 http_proxy=http://proxy.com:8080 HTTPS_PROXY=http://proxy.com:8080 HTTP_PROXY=http://proxy.com:8080 MONGO_URL=mongodb://localhost:27017/sample ROOT_URL=https://sample.com PORT=3000
+
+       [Install]
+       WantedBy=multi-user.target
+     #+END_SRC
+** pm2
+*** set startup
+    sudo -E pm2 startup centos
+*** run and save
+    pm2 start path/to/pm2.json
+    pm2 save
+*** config file
+    path/to/pm2.json
+    #+BEGIN_SRC js
+      {
+          "apps": [{
+              "name": "sample",
+              "max_memory_restart": "1024M",
+              "log_date_format": "YYYY-MM-DD HH:mm:ss SSS",
+              "script": "/home/username/Code/sample/app.js",
+              "out_file": "/home/username/Code/sample/logs/pm2.app.log",
+              "error_file": "/home/username/Code/sample/logs/pm2.err.log",
+              "env": {
+                  "http_proxy": "http://proxy.com:8080",
+                  "https_proxy": "http://proxy.com:8080",
+                  "HTTP_PROXY": "http://proxy.com:8080",
+                  "HTTPS_PROXY": "http://proxy.com:8080"
+              }
+          }]
+      }
+    #+END_SRC
+** tips
+*** can't yum update
+    - /etc/yum.repos.d/CentOS-Base.repo
+
+      comment =mirrorlist=, uncomment =baseurl= in
