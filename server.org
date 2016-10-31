@@ -4,47 +4,52 @@
     http://www.server-world.info/query?os=CentOS_7&p=keymap
     - show current info
 
-      localectl
+      =localectl=
     - list types
 
-      localectl list-keymap
+      =localectl list-keymap=
     - select us (JIS -> jp106)
 
-      localectl set-keymap us
+      =localectl set-keymap us=
 *** add user
-    - useradd username
-    - passwd username
-    - usermod -G wheel username
-    - visudo # uncomment wheel
-    - ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no username@192.168.0.10
-    - # add conf to ~/.ssh/config
-    - ssh-keygen
-    - scp id_rsa-server.pub server:
-    - mkdir ~/.ssh
-    - chmod 755 .ssh
-    - mv id_rsa-server.pub ~/.ssh/authorized_keys
+    #+BEGIN_SRC sh
+      useradd username
+      passwd username
+      usermod -G wheel username
+      visudo # uncomment wheel
+      ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no username@192.168.0.10
+      # add conf to ~/.ssh/config
+      ssh-keygen
+      scp id_rsa-server.pub server:
+      mkdir ~/.ssh
+      chmod 755 .ssh
+      mv id_rsa-server.pub ~/.ssh/authorized_keys
+    #+END_SRC
 *** set network conf
-    use nmtui
+    =use nmtui=
 *** install vmware tools
-    - yum perl net-tools
-    - mkdir /mnt/cdrom
-    - mount /dev/cdrom /mnt/cdrom/
-    - cp /mnt/cdrom/VMwareTools*.tar.gz ~/Downloads
-    - tar xzf VMwareTools*.tar.gz
-    - cd vmware-tools-distrib/
-    - ./vmware-install.pl
+    #+BEGIN_SRC sh
+      yum perl net-tools
+      mkdir /mnt/cdrom
+      mount /dev/cdrom /mnt/cdrom/
+      cp /mnt/cdrom/VMwareTools*.tar.gz ~/Downloads
+      tar xzf VMwareTools*.tar.gz
+      cd vmware-tools-distrib/
+      ./vmware-install.pl
+    #+END_SRC
 ** systemd
 *** enable, start, status
-    systemctl enable servicename.service
-    systemctl start servicename.service
-    systemctl status servicename.service
+    - =systemctl enable servicename.service=
+    - =systemctl start servicename.service=
+    - =systemctl status servicename.service=
 *** restart
-    systemctl daemon-reload # if config file was modified
-    systemctl restart servicename.service
+    - if config file was modified
+    =systemctl daemon-reload=
+    - =systemctl restart servicename.service=
 *** logs
-    journalctl -f -u servicename
+    =journalctl -f -u servicename=
 *** config file
-    /usr/lib/systemd/system/*.service
+    =/usr/lib/systemd/system/*.service=
 **** node.js sample
      #+BEGIN_SRC conf
        [Unit]
@@ -66,12 +71,12 @@
      #+END_SRC
 ** pm2
 *** set startup
-    sudo -E pm2 startup centos
+    =sudo -E pm2 startup centos=
 *** run and save
-    pm2 start path/to/pm2.json
-    pm2 save
+    - =pm2 start path/to/pm2.json=
+    - =pm2 save=
 *** config file
-    path/to/pm2.json
+    =path/to/pm2.json=
     #+BEGIN_SRC js
       {
           "apps": [{
@@ -92,6 +97,6 @@
     #+END_SRC
 ** tips
 *** can't yum update
-    - /etc/yum.repos.d/CentOS-Base.repo
+    - =/etc/yum.repos.d/CentOS-Base.repo=
 
       comment =mirrorlist=, uncomment =baseurl= in
