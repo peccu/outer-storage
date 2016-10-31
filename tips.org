@@ -156,3 +156,8 @@
    dead
    - タグの付いてないイメージを消す
    docker images -f "dangling=true" -q | xargs docker rmi
+** list up yum installed files
+   [[http://stackoverflow.com/a/1766413/514411][linux - Determining the path that a yum package installed to - Stack Overflow]]
+   =rpm -ql packagename=
+** can't yum update
+   comment =mirrorlist=, uncomment =baseurl= in =/etc/yum.repos.d/CentOS-Base.repo=

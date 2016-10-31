@@ -100,8 +100,3 @@
     #+BEGIN_SRC sh
       sudo nginx -t -c /etc/nginx/nginx.conf && sudo sh -c 'systemctl restart nginx; journalctl -f -u nginx'
     #+END_SRC
-** tips
-*** can't yum update
-    - =/etc/yum.repos.d/CentOS-Base.repo=
-
-      comment =mirrorlist=, uncomment =baseurl= in
