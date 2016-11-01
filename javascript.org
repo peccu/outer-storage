@@ -1,0 +1,9 @@
+* JavaScript
+** map/reduce for DOM
+   [[http://jcla1.com/blog/javascript-mapreduce/][Javascript and MapReduce - Joseph Adams]]
+   #+BEGIN_SRC js
+     Array.prototype.slice.call(document.getElementsBy*****(selector))
+         .reduce(function(prev, cur, i, element){
+             return prev + cur.textContent;
+         }, "");
+   #+END_SRC
