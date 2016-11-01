@@ -1,0 +1,70 @@
+* feed tags
+** hatena blog
+*** url
+    =http://peccu.hatenablog.com/= -> =http://peccu.hatenablog.com/feed=
+*** tag
+    #+BEGIN_SRC html
+      <link rel="alternate" type="application/atom+xml" title="Atom" href="http://peccu.hatenablog.com/feed">
+      <link rel="alternate" type="application/rss+xml" title="RSS2.0" href="http://peccu.hatenablog.com/rss">
+    #+END_SRC
+*** selector
+    #+BEGIN_SRC js
+      $('link[title=Atom]').attr('href')
+      $('link[title=RSS2.0]').attr('href')
+    #+END_SRC
+** hatena diary
+*** url
+    =http://d.hatena.ne.jp/peccu/= -> =http://d.hatena.ne.jp/peccu/rss=
+*** tag
+    #+BEGIN_SRC html
+      <link rel="alternate" type="application/rss+xml" title="RSS" href="http://d.hatena.ne.jp/peccu/rss">
+      <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://d.hatena.ne.jp/peccu/rss2">
+    #+END_SRC
+*** selector
+    #+BEGIN_SRC js
+      document.querySelector('link[title=RSS]').href
+    #+END_SRC
+* content tags
+** hatena blog
+*** tag
+**** contents
+     #+BEGIN_SRC html
+       <div class="entry-content">
+       </div>
+     #+END_SRC
+**** code
+     - block
+       #+BEGIN_SRC html
+         <pre class="code lang-python" data-lang="python" data-unlink=""></pre>
+       #+END_SRC
+     - inline
+       #+BEGIN_SRC html
+         <code></code>
+       #+END_SRC
+*** selector
+    #+BEGIN_SRC js
+      $('.entry-content').text()
+    #+END_SRC
+** hatena diary
+*** tag
+**** contents
+     #+BEGIN_SRC html
+       <div class="entry-content">
+       </div>
+     #+END_SRC
+**** code
+     - block
+       #+BEGIN_SRC html
+         <pre class="code lang-python" data-lang="python" data-unlink=""></pre>
+       #+END_SRC
+     - inline
+       #+BEGIN_SRC html
+         <code></code>
+       #+END_SRC
+*** selector
+    #+BEGIN_SRC js
+      Array.prototype.slice.call(document.getElementsByClassName('section'))
+          .reduce(function(prev, cur, i, content){
+              return prev + cur.textContent;
+          }, "");
+    #+END_SRC
