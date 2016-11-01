@@ -59,6 +59,110 @@
      ./nodebb upgrade
      pm2 restart nodebb
    #+END_SRC
+** promise, scraping, crawling
+*** [[http://bluebirdjs.com/docs/getting-started.html][Getting Started | bluebird]]
+*** [[https://gist.github.com/ghiden/43d8919eaabab19a1bc5][To promisify csv-parse using Bluebird]]
+    #+BEGIN_SRC js
+      var fsp = require('fs-promise');
+      var parse = Promise.promisify(require('csv-parse'));
+      var parseCsv = function(accounts){
+          var options = {
+              columns: true
+          };
+          return parse(accounts, options);
+      };
+      return fsp.readFile(__dirname + '/' + csv, {encoding:'utf8'})
+          .then(parseCsv);
+    #+END_SRC
+*** [[https://www.npmjs.com/package/fs-promise][fs-promise]]
+    #+BEGIN_SRC js
+      var fsp = require('fs-promise');
+
+      fsp.writeFile(file('hello1'), 'hello world')
+        .then(function(){
+          return fsp.readFile(file('hello1'), {encoding:'utf8'});
+        })
+        .then(function(contents){});
+    #+END_SRC
+*** [[https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise/all][Promise.all() - JavaScript | MDN]]
+    #+BEGIN_SRC js
+      Promise.all([p1, p2, p3, p4, p5])
+          .then(values => {
+              console.log(values);
+          }).catch(reason => {
+              console.log(reason)
+          });
+    #+END_SRC
+*** [[https://github.com/request/request-promise][request/request-promise: The simplified HTTP request client 'request' with Promise support. Powered by Bluebird.]]
+    #+BEGIN_SRC js
+      var rp = require('request-promise');
+      var form = {
+          url: base + '/login',
+          form: {
+              'user': id,
+              'password': pass
+          },
+          json: true
+      };
+      var loginCb = function(res){
+          console.log(res);
+      };
+      return rp.post(form)
+          .then(loginCb);
+    #+END_SRC
+*** [[https://www.npmjs.com/package/cheerio-httpcli][cheerio-httpcli]]
+    #+BEGIN_SRC js
+      var client = require('cheerio-httpcli');
+      var login = function(result){
+          return result.$('.loginForm').submit({
+              user: user,
+              password: password
+          });
+      };
+      return client.fetch(url)
+          .then(login)
+          .then(function(result){
+              // response headers
+              console.log(result.response.headers);
+              // title tag
+              console.log(result.$('title').text());
+              // cookies
+              console.log(result.response.cookies);
+          })
+          .catch(function(error){
+              console.log(error);
+          });
+    #+END_SRC
+*** [[http://csv.adaltas.com/parse/examples/][CSV Parse Examples | Node.js CSV project]]
+*** [[https://www.webniraj.com/2015/03/16/nodejs-scraping-websites-using-request-and-cheerio/][NodeJS: Scraping Websites Using Request and Cheerio | Web Niraj]]
+    #+BEGIN_SRC js
+      // include the libraries we need
+      var request = require('request');
+      var cheerio = require('cheerio');
+
+      // set some defaults
+      req = request.defaults({
+          jar: true,                 // save cookies to jar
+          rejectUnauthorized: false,
+          followAllRedirects: true   // allow redirections
+      });
+
+      // POST data then scrape the page
+      req.post({
+          url: "http://www.example.com/",
+          form: { 'foo': 'bar' },
+          headers: {
+              'User-Agent': 'Super Cool Browser' // optional headers
+          }
+      }, function(err, resp, body) {
+
+          // load the html into cheerio
+          var $ = cheerio.load(body);
+
+          // do something with the page here
+
+      });
+    #+END_SRC
 * Meteor
 ** Uninstall meteor
    #+BEGIN_SRC sh
