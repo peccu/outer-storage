@@ -1,0 +1,43 @@
+#+TITLE: Information flow
+#+AUTHOR: Kentaro Shimatani
+#+EMAIL: peccul@gmail.com
+#+INCLUDE: "./org-html.org"
+
+* input
+* output
+#+BEGIN_SRC dot :noweb yes :file assets/graph.png :exports results
+digraph g {
+  <<dot-style>>
+  rankdir=LR;
+
+  input[label="Filtered input\n(unread)"];
+  unread[label="Inbox\nunread"];
+  long[label="long or many"];
+
+  input -> unread;
+  # unread -> long[label=""] -> unread[label="with reminder"];
+  unread -> long[dir = forward];
+  unread -> share;
+  unread -> output;
+  unread -> reference;
+  long -> reference;
+  long -> archived;
+  long -> share;
+  long -> output;
+  long -> unread[label="with reminder", dir = forward];
+  share -> archived;
+  output -> archived;
+  unread -> try;
+  long -> try;
+  try -> archived;
+}
+#+END_SRC
+
+#+RESULTS:
+[[file:assets/graph.png]]
+
+* COMMENT
+  MathJax memo
+  [[http://meta.math.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference][MathJax basic tutorial and quick reference - Mathematics Meta Stack Exchange]]
+# (org-open-file (org-html-export-to-html))
+# (org-html-export-to-html)
