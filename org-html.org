@@ -1,0 +1,31 @@
+#+BEGIN_COMMENT
+write your org like below
+(with css/style.css)
+
+#+TITLE: page title
+#+AUTHOR: Your name
+#+EMAIL: me@example.com
+#+INCLUDE: "./org-html.org"
+
+# (org-open-file (org-html-export-to-html))
+# (org-html-export-to-html)
+#+END_COMMENT
+
+#+LANGUAGE: en
+#+OPTIONS: toc:nil h:4 html-postamble:nil html-preamble:t tex:t f:t
+#+OPTIONS: prop:("VERSION")
+#+HTML_DOCTYPE: <!DOCTYPE html>
+#+HTML_HEAD: <link href="http://fonts.googleapis.com/css?family=Roboto+Slab:400,700|Inconsolata:400,700" rel="stylesheet" type="text/css" />
+#+HTML_HEAD: <link href="css/style.css" rel="stylesheet" type="text/css" />
+
+#+LINK: gh    https://github.com/
+#+LINK: rfc   https://tools.ietf.org/html/
+#+LINK: thing https://github.com/thi-ng/
+#+LINK: w3    https://w3.org/TR/
+#+LINK: wiki  https://en.wikipedia.org/wiki/
+
+#+HTML: <div class="outline-2" id="meta">
+| *Author* | {{{author}}} ({{{email}}}) |
+| *Date*   | {{{time(%Y-%m-%d %H:%M:%S)}}}  |
+#+HTML: </div>
+#+TOC: headlines 3
