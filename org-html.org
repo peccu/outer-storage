@@ -1,16 +1,3 @@
-#+BEGIN_COMMENT
-write your org like below
-(with css/style.css)
-
-#+TITLE: page title
-#+AUTHOR: Your name
-#+EMAIL: me@example.com
-#+INCLUDE: "./org-html.org"
-
-# (org-open-file (org-html-export-to-html))
-# (org-html-export-to-html)
-#+END_COMMENT
-
 #+LANGUAGE: en
 #+OPTIONS: toc:nil h:4 html-postamble:nil html-preamble:t tex:t f:t
 #+OPTIONS: prop:("VERSION")
@@ -29,3 +16,17 @@ write your org like below
 | *Date*   | {{{time(%Y-%m-%d %H:%M:%S)}}}  |
 #+HTML: </div>
 #+TOC: headlines 3
+
+* COMMENT HOW TO USE
+This is http://thi.ng/org-spec template.
+
+write your org like below (with css/style.css).
+#+BEGIN_SRC org
+  ,#+TITLE: page title
+  ,#+AUTHOR: Your name
+  ,#+EMAIL: me@example.com
+  ,#+INCLUDE: "./org-html.org"
+
+  # (org-open-file (org-html-export-to-html))
+  # (org-html-export-to-html)
+#+END_SRC
