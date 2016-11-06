@@ -82,3 +82,50 @@
           s.src = "//ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js";
       })()
     #+END_SRC
+** copy to clipboard
+   inspired by http://stackoverflow.com/a/31596687/514411 (remove jQuery dependency)
+   #+BEGIN_SRC js
+     javascript:(function(){
+         var copy = function(copyText, successCB){
+             if(!successCB){
+                 successCB = function(){
+                     alert("The text is on the clipboard, try to paste it!");
+                 };
+             }
+             var success = true;
+             var range = document.createRange();
+             var selection;
+
+             // For IE.
+             if(window.clipboardData){
+                 window.clipboardData.setData("Text", copyText);
+                 return;
+             }
+             // Create a temporary element off screen.
+             var tmpElem = document.createElement('div');
+             tmpElem.style.position = 'absolute';
+             tmpElem.style.left = '-1000px';
+             tmpElem.style.top = '-1000px';
+             tmpElem.innerText = copyText;
+             document.body.appendChild(tmpElem);
+
+             // Select temp element.
+             range.selectNodeContents(tmpElem);
+             selection = window.getSelection();
+             selection.removeAllRanges();
+             selection.addRange (range);
+
+             // Lets copy.
+             try{
+                 success = document.execCommand("copy", false, null);
+             }catch(e){
+                 copyToClipboardFF(copyText);
+             }
+             if(success){
+                 successCB();
+                 tmpElem.remove();
+             }
+         };
+         copy('some text you want');
+     })()
+   #+END_SRC
