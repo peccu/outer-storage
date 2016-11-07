@@ -24,6 +24,9 @@
     #+BEGIN_SRC js
       document.querySelector('link[title=RSS]').href
     #+END_SRC
+** reddit
+*** url
+    =https://www.reddit.com/user/peccu/= -> =https://www.reddit.com/user/peccu/.rss=
 * content tags
 ** hatena blog
 *** tag
