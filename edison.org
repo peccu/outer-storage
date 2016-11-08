@@ -72,6 +72,12 @@ ros install sbcl
 cf. https://github.com/scorpiodawg/emacs-24.4-edison
 (How to install..?)
 
+** Install lem
+   #+BEGIN_SRC sh
+     ros install sbcl-bin
+     ros use sbcl-bin
+     ros install cxxxr/lem
+   #+END_SRC
 ** limit to public key auth
    generate and transfer public key.
 
