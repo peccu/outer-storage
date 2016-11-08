@@ -210,3 +210,83 @@ Now start over at the beginning:
    =meteor --release 1.3.5.1 build= etc.
 ** links
    - [[http://qiita.com/hashrock/items/575e0be0a362e6c78dd1][MeteorはTwitter連携ログインを作るのがめちゃ楽 - Qiita]]
+* Express
+  [[http://expressjs.com/][Express - Node.js web application framework]]
+** initialize
+   #+BEGIN_SRC sh
+     npm i -g express-generator
+     express --view ejs -c less [appName]
+     cd appName
+     npm i
+   #+END_SRC
+** rendering
+*** route/users.js
+   #+BEGIN_SRC js
+           res.render('users', {
+             title: 'users',
+             users: result[0],
+             count: result[1]
+           });
+   #+END_SRC
+*** view/users.js
+    #+BEGIN_SRC html
+      <h1><%= title %></h1>
+      <p>Welcome to <%= title %></p>
+      <h3>user count is <%= count %>
+        <ul>
+          <% users.forEach(function(user){ %>
+            <%- include('user/show', {user: user}); %>
+          <% }); %>
+        </ul>
+    #+END_SRC
+*** view/user/show.js
+    #+BEGIN_SRC html
+      <li>name: <%= user.name %></li>
+    #+END_SRC
+* Ejs
+  [[http://ejs.co/][EJS -- Embedded JavaScript templates]]
+** tags
+   - script =<% %>= ::
+        #+BEGIN_SRC html
+          <% users.forEach(function(user){ %>
+              <%- include('user/show', {user: user}); %>
+          <% }); %>
+        #+END_SRC
+   - value(html escaped) `<%= %>` ::
+        #+BEGIN_SRC html
+          <%= user.name %>
+        #+END_SRC
+   - value(unescaped) =<%- %>= ::
+        #+BEGIN_SRC html
+          <%- user.name %>
+          <%- include('user/show', {user: user}); %>
+        #+END_SRC
+   - comment (not output to html) =<%# %>= ::
+   - output '=%=' =<%%= ::
+* mongodb
+** MongoClient
+   [[https://mongodb.github.io/node-mongodb-native/2.0/api/MongoClient.html][Class: MongoClient]]
+*** initialize
+    #+BEGIN_SRC sh
+      npm i -S mongodb
+    #+END_SRC
+*** use with promise
+    #+BEGIN_SRC js
+      var MongoClient = require('mongodb').MongoClient;
+      var con = MongoClient.connect('mongodb://localhost:27017/somedb');
+      con
+          .then(function(db){
+              var promises = [];
+              promises.push(db.collection('users').find().toArray());
+              promises.push(db.collection('users').count());
+              return Promise.all(promises);
+          })
+          .then(function(result){
+              // result[0] is users
+              // result[1] is count of users
+              console.log(result);
+          })
+          .catch(function(err){
+              throw err;
+          });
+    #+END_SRC
