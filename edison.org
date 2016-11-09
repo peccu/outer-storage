@@ -264,6 +264,7 @@ ssh -i ~/.ssh/id_rsa root@edison
      Sep 25 07:14:55 edison systemd-timesyncd[160]: interval/delta/delay/jitter/drift 2048s/-0.019s/0.086s/0.087s/+7ppm
    #+END_SRC
 ** set locale
+   [[http://qiita.com/masato_ka/items/5ff0373b7674ae79528d][Edisonに日本語UTF-8(ja_JP.UTF-8)のロケールを設定する。 - Qiita]]
    #+BEGIN_SRC sh
      root@edison:~# opkg install glibc-locale-ja
      root@edison:~# opkg install glibc-localedata-ja-jp
