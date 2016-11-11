@@ -7,3 +7,7 @@
    #+BEGIN_SRC sh
      git branch --merged=develop|grep -v '*'|grep -v develop|grep -v master|xargs git branch -d
    #+END_SRC
+** save credential
+   #+BEGIN_SRC sh
+     git config credential.helper store
+   #+END_SRC
