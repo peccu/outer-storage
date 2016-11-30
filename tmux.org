@@ -145,3 +145,6 @@
      # bind IC run-shell "sh -c \"tmux split-window -v -t 0 \\\"$( tmux list-panes -F '#{pane_active} #{pane_start_command}' | egrep ^1 | sed 's/^1 //' )\\\" \\; select-layout main-vertical \""
 
    #+END_SRC
+** save/restore windows and panes
+   [[http://count0.org/2013/08/19/tmuxinator-layout.html][tmuxinatorでpaneのレイアウトを指定する | count0.org]]
+   [[http://manpages.ubuntu.com/manpages/precise/en/man1/tmux.1.html#contenttoc6][Ubuntu Manpage: tmux — terminal multiplexer]]
