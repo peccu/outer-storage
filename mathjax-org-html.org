@@ -1,0 +1,66 @@
+from: [[https://github.com/mathjax/MathJax/blob/master/test/sample-dynamic-2.html][MathJax/sample-dynamic-2.html at master · mathjax/MathJax]]
+#+HTML: <script>
+#+HTML: var Preview = {
+#+HTML:   delay: 150,        // delay after keystroke before updating
+#+HTML:   preview: null,     // filled in by Init below
+#+HTML:   buffer: null,      // filled in by Init below
+#+HTML:   timeout: null,     // store setTimout id
+#+HTML:   mjRunning: false,  // true when MathJax is processing
+#+HTML:   mjPending: false,  // true when a typeset has been queued
+#+HTML:   oldText: null,     // used to check if an update is needed
+#+HTML:   Init: function () {
+#+HTML:     this.preview = document.getElementById("MathPreview");
+#+HTML:     this.buffer = document.getElementById("MathBuffer");
+#+HTML:   },
+#+HTML:   SwapBuffers: function () {
+#+HTML:     var buffer = this.preview, preview = this.buffer;
+#+HTML:     this.buffer = buffer; this.preview = preview;
+#+HTML:     buffer.style.visibility = "hidden"; buffer.style.position = "absolute";
+#+HTML:     preview.style.position = ""; preview.style.visibility = "";
+#+HTML:   },
+#+HTML:   Update: function () {
+#+HTML:     if (this.timeout) {clearTimeout(this.timeout)}
+#+HTML:     this.timeout = setTimeout(this.callback,this.delay);
+#+HTML:   },
+#+HTML:   CreatePreview: function () {
+#+HTML:     Preview.timeout = null;
+#+HTML:     if (this.mjPending) return;
+#+HTML:     var text = document.getElementById("MathInput").value;
+#+HTML:     if (text === this.oldtext) return;
+#+HTML:     if (this.mjRunning) {
+#+HTML:       this.mjPending = true;
+#+HTML:       MathJax.Hub.Queue(["CreatePreview",this]);
+#+HTML:     } else {
+#+HTML:       this.buffer.innerHTML = this.oldtext = text;
+#+HTML:       this.mjRunning = true;
+#+HTML:       MathJax.Hub.Queue(
+#+HTML:         ["Typeset",MathJax.Hub,this.buffer],
+#+HTML:         ["PreviewDone",this]
+#+HTML:       );
+#+HTML:     }
+#+HTML:   },
+#+HTML:   PreviewDone: function () {
+#+HTML:     this.mjRunning = this.mjPending = false;
+#+HTML:     this.SwapBuffers();
+#+HTML:   }
+#+HTML: };
+#+HTML: Preview.callback = MathJax.Callback(["CreatePreview",Preview]);
+#+HTML: Preview.callback.autoReset = true;  // make sure it can run more than once
+#+HTML: </script>
+#+HTML: <textarea id="MathInput" cols="60" rows="10" onkeyup="Preview.Update()" style="margin-top:5px">
+#+HTML: $$
+#+HTML: $$
+#+HTML: </textarea>
+#+HTML: <p>Configured delimiters:
+#+HTML: <ul>
+#+HTML: <li>TeX, inline mode: <code>\(...\)</code> or <code>$...$</code></li>
+#+HTML: <li>TeX, display mode: <code>\[...\]</code> or <code> $$...$$</code></li>
+#+HTML: <li>Asciimath: <code>`...`</code>.</li>
+#+HTML: </ul>
+#+HTML: </p>
+#+HTML: <p>Preview is shown here:</p>
+#+HTML: <div id="MathPreview" style="border:1px solid; padding: 3px; width:50%; margin-top:5px"></div>
+#+HTML: <div id="MathBuffer" style="border:1px solid; padding: 3px; width:50%; margin-top:5px; 
+#+HTML: visibility:hidden; position:absolute; top:0; left: 0"></div>
+#+HTML: <script> Preview.Init(); </script>
+[[http://meta.math.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference][MathJax basic tutorial and quick reference - Mathematics Meta Stack Exchange]]
