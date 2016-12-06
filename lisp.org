@@ -1,0 +1,10 @@
+* lisp (Common Lisp)
+** define function returns lambda
+   #+BEGIN_SRC lisp
+     (defun make-adder (adder)
+       (function (lambda (num)
+         (+ num adder))))
+     (funcall (make-adder 1) 2) ; => 3
+     (setf adder1 (make-adder 1))
+     (funcall adder1 2) ; => 3
+   #+END_SRC
