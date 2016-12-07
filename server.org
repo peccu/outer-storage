@@ -100,3 +100,92 @@
     #+BEGIN_SRC sh
       sudo nginx -t -c /etc/nginx/nginx.conf && sudo sh -c 'systemctl restart nginx; journalctl -f -u nginx'
     #+END_SRC
+** gitbucket
+   for CentOS 5.3
+*** install java8
+    cf. http://tecadmin.net/install-java-8-on-centos-rhel-and-fedora/
+
+    - download jdk from http://www.oracle.com/technetwork/java/javase/downloads/index.html
+    - [JDK]-> select accept -> download jdk-8u111-linux-i586.tar.gz
+
+    #+BEGIN_SRC sh
+      # in mac
+      $ scp jdk-8u111-linux-i586.tar.gz server:/opt/
+      # in server
+      $ cd /opt
+      $ tar xzf jdk-8u111-linux-i586.tar.gz
+      $ cd jdk1.8.0_111
+      $ alternatives --install /usr/bin/java java /opt/jdk1.8.0_111/bin/java 2
+      $ alternatives --config java
+      # select /opt/jdk1.8.0_111/bin/java
+      $ java -version
+      java version "1.8.0_111"
+      Java(TM) SE Runtime Environment (build 1.8.0_111-b14)
+      Java HotSpot(TM) Server VM (build 25.111-b14, mixed mode)
+    #+END_SRC
+*** install gitbucket
+    #+BEGIN_SRC sh
+      mkdir /root/gitbucket
+      cd /root/gitbucket
+      curl -L -o gitbucket_4.7.1.war https://github.com/gitbucket/gitbucket/releases/download/4.7.1/gitbucket.war
+      ln -s gitbucket_4.7.1.war gitbucket.war
+      sudo mkdir -p /opt/gitbucket
+      sudo /usr/bin/java -Dhttp.proxyHost=proxy.example.com -Dhttp.proxyPort=8080 -Dhttps.proxyHost=proxy.example.com -Dhttps.proxyPort=8080 -Dmail.smtp.starttls.enable=true -jar /root/gitbucket/gitbucket.war --gitbucket.home=/opt/gitbucket
+    #+END_SRC
+*** create launch script for pm2
+    in =/root/gitbucket/run_gitbucket.sh=
+    #+BEGIN_SRC sh
+      #!/bin/sh
+      /usr/bin/java \
+      -Dhttp.proxyHost=proxy.example.com \
+      -Dhttp.proxyPort=8080 \
+      -Dhttps.proxyHost=proxy.example.com \
+      -Dhttps.proxyPort=8080 \
+      -Dmail.smtp.starttls.enable=true \
+      -jar \
+      /root/gitbucket/gitbucket.war \
+      --gitbucket.home=/opt/gitbucket
+    #+END_SRC
+*** configure nginx
+    #+BEGIN_SRC conf
+      location /gitbucket {
+          access_log  /var/log/nginx/gitbucket_access.log;
+          # error_log    /var/log/nginx/gitbucket_debug.log debug;
+          error_log    /var/log/nginx/gitbucket_debug.log;
+
+          rewrite /gitbucket(/.*) $1 break;
+          proxy_pass              http://123.45.67.89:8080;
+          proxy_set_header        Host $host;
+          proxy_set_header        X-Real-IP $remote_addr;
+          proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_connect_timeout   150;
+          proxy_send_timeout      100;
+          proxy_read_timeout      100;
+          proxy_buffers           4 32k;
+          client_max_body_size    500m; # Big number is we can post big commits.
+          client_body_buffer_size 128k;
+      }
+    #+END_SRC
+*** install nodejs
+    #+BEGIN_SRC sh
+      # in server
+      $ mkdir ~/nodejs
+      # in mac
+      # download linux 32-bit binary from https://nodejs.org/ja/download/
+      # extract in mac and re-tar in mac then scp tar.gz
+      $ tar xzf node-v6.9.2-linux-x86.tar.xz
+      $ COPYFILE_DISABLE=1 tar czvf node-v6.9.2-linux-x86.tar.gz --exclude ".DS_Store" --exclude "*~" node-v6.9.2-linux-x86
+      $ scp node-v6.9.2-linux-x86.tar.gz svn:nodejs/
+      # in server
+      $ cd nodejs
+      $ tar xzf node-v6.9.2-linux-x86.tar.gz
+      $ cd
+      # /root/bin is in PATH
+      $ ln -s nodejs/node-v6.9.2-linux-x86/bin/ ./bin
+      $ npm i -g npm@latest
+      $ npm i -g pm2
+      $ pm2 startup centos
+    #+END_SRC
+*** launch by pm2
+    sudo pm2 start --name gitbucket /root/gitbucket/run_gitbucket.sh
+    sudo pm2 save
