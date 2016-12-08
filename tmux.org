@@ -1,4 +1,5 @@
 * tmux
+  I'm using =C-t= for prefix key.
 ** .tmux.conf
    #+BEGIN_SRC conf
      # reload this file
@@ -148,3 +149,11 @@
 ** save/restore windows and panes
    [[http://count0.org/2013/08/19/tmuxinator-layout.html][tmuxinatorでpaneのレイアウトを指定する | count0.org]]
    [[http://manpages.ubuntu.com/manpages/precise/en/man1/tmux.1.html#contenttoc6][Ubuntu Manpage: tmux — terminal multiplexer]]
+** list-windows
+   =C-t : list-windows=
+** swap pane
+   =C-t {=, =C-t }=
+** move window
+   =C-t .= then input dest window number.
+** choose buffer
+   C-t =
