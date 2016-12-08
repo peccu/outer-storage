@@ -189,3 +189,25 @@
 *** launch by pm2
     sudo pm2 start --name gitbucket /root/gitbucket/run_gitbucket.sh
     sudo pm2 save
+** tmux 2
+   https://tmux.github.io
+   https://raw.githubusercontent.com/tmux/tmux/master/README
+   #+BEGIN_SRC sh
+     $ git clone https://github.com/tmux/tmux.git
+     $ cd tmux
+     $ sh autogen.sh
+     $ sudo yum install libevent-devel ncurses-devel
+     $ ./configure && make
+     $ sudo make install
+   #+END_SRC
+   then quit all tmux processes.
+** install ruby with rbenv
+   #+BEGIN_SRC sh
+     git clone https://github.com/rbenv/rbenv.git ~/.rbenv
+     echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile
+     echo 'eval "$(rbenv init -)"' >> ~/.bash_profile
+     source ~/.bash_profile
+     git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
+     sudo yum install readline-devel
+     rbenv install 2.3.3
+   #+END_SRC
