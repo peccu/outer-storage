@@ -3,4 +3,6 @@
 ** [[https://zapier.com/][The best apps. Better together. - Zapier - Zapier]]
 ** [[http://wired.jp/2016/12/05/amazon-dash-poo-button/][難病を患う娘のために、父は「Amazon Dash Button」をハックした｜WIRED.jp]]
 ** [[http://qiita.com/jsoizo/items/3b8bba4160f41aef20f4][Amazon Dash ButtonをただのIoTボタンとして使う - Qiita]]
+** [[http://qiita.com/re-fort/items/da82c8f03eb49a6bb8e4][AmazonDashButtonとLineNotifyで気持ちを伝える - Qiita]]
+
 
