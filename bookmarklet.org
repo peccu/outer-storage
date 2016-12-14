@@ -3,7 +3,7 @@
    #+BEGIN_SRC js
      javascript:(function(){($("a:contains(続きを読む)")[0] || $("a:contains(このページをスキップする)")[0] || $("a:contains(つづきを読む)")[0]).click();})()
    #+END_SRC
-** load jquery
+** load js(jquery)
 *** only load
     #+BEGIN_SRC js
       javascript:(function(){
