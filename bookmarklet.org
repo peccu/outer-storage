@@ -270,3 +270,52 @@
 
      })()
    #+END_SRC
+** cookpad find recommend
+   #+BEGIN_SRC js
+     (function(){
+         var top = $('li a.recommend_premium_above_search_result').first().clone();
+         $(top).css('position', 'fixed');
+         $(top).css('top', '0');
+         $(top).css('left', '0');
+         $(top).css('z-index', '100');
+         $(top).css('float', 'left');
+         $('body').append(top);
+
+         $('.ext_ad_category_hijack').remove();
+         $('.ps_suggestions').remove();
+         $('.card_ui_infeed_ad').remove();
+         $('.packaged_ps_lead_wrapper').remove();
+         $('.ad').remove();
+         $('.pro_recipes_wrapper').remove();
+         $('.separated').remove();
+         $('.dish_suggestions').remove();
+         $('.fixed_ad').remove();
+         $('.card_content').remove();
+         $('.myfolder_button_container').remove();
+         $('.card_content').remove();
+         $('.video_label_wrapper').remove();
+
+         $('.card_image').css('display', 'inline');
+
+         $('#recipes a img').css('width', '86px');
+         $('#recipes a').insertBefore('#recipes');
+         $('#recipes').children().remove();
+
+         var s = document.createElement('script');
+         document.head.appendChild(s);
+         s.onload = function(){
+
+             $.ajax({
+                 url: $('a[rel=next]').attr('href'),
+                 success: function(data, status, jqXHR){console.log(data.response);},
+                 error: function(jqXHR, status, error){console.log(error);}
+             }).done(function( html ) {
+                 // $('#recipes a img', html).css('width', '86px');
+                 $('#recipes a', $(html)).insertBefore('.paginate');
+                 $('<h3>test</h3>').insertBefore('.paginate');
+             });
+         };
+         s.src = "//ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js";
+
+     })();
+   #+END_SRC
