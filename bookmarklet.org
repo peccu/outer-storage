@@ -273,49 +273,106 @@
 ** cookpad find recommend
    #+BEGIN_SRC js
      (function(){
-         var top = $('li a.recommend_premium_above_search_result').first().clone();
-         $(top).css('position', 'fixed');
-         $(top).css('top', '0');
-         $(top).css('left', '0');
-         $(top).css('z-index', '100');
-         $(top).css('float', 'left');
-         $('body').append(top);
+         var pickupTopRecipe = function(){
+             var top = $('li a.recommend_premium_above_search_result').first().clone();
+             $(top).css('position', 'fixed');
+             $(top).css('top', '0');
+             $(top).css('left', '0');
+             $(top).css('z-index', '100');
+             $(top).css('float', 'left');
+             $('body').append(top);
+         };
 
-         $('.ext_ad_category_hijack').remove();
-         $('.ps_suggestions').remove();
-         $('.card_ui_infeed_ad').remove();
-         $('.packaged_ps_lead_wrapper').remove();
-         $('.ad').remove();
-         $('.pro_recipes_wrapper').remove();
-         $('.separated').remove();
-         $('.dish_suggestions').remove();
-         $('.fixed_ad').remove();
-         $('.card_content').remove();
-         $('.myfolder_button_container').remove();
-         $('.card_content').remove();
-         $('.video_label_wrapper').remove();
+         var hideNoise = function(){
+             $('.ext_ad_category_hijack').remove();
+             $('.ps_suggestions').remove();
+             $('.card_ui_infeed_ad').remove();
+             $('.packaged_ps_lead_wrapper').remove();
+             $('.ad').remove();
+             $('.pro_recipes_wrapper').remove();
+             $('.separated').remove();
+             $('.dish_suggestions').remove();
+             $('.fixed_ad').remove();
+             $('.card_content').remove();
+             $('.myfolder_button_container').remove();
+             $('.card_content').remove();
+             $('.video_label_wrapper').remove();
+         };
 
-         $('.card_image').css('display', 'inline');
+         var gridImages = function(){
+             $('.card_image').css('display', 'inline');
+             $('#recipes a img').css('width', '86px');
+             $('#recipes a').insertBefore('#recipes');
+             $('#recipes').children().remove();
+         };
 
-         $('#recipes a img').css('width', '86px');
-         $('#recipes a').insertBefore('#recipes');
-         $('#recipes').children().remove();
+         // http://stackoverflow.com/a/8486188/514411
+         var getJsonFromUrl = function(search) {
+             var query = search.substr(1);
+             var result = {};
+             query.split("&").forEach(function(part) {
+                 var item = part.split("=");
+                 result[item[0]] = decodeURIComponent(item[1]);
+             });
+             return result;
+         };
+         var serialize = function(obj) {
+             var str = [];
+             for(var p in obj)
+                 if (obj.hasOwnProperty(p)) {
+                     str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                 }
+             return str.join("&");
+         };
 
-         var s = document.createElement('script');
-         document.head.appendChild(s);
-         s.onload = function(){
+         var incrementPageNo = function(){
+             var next = getJsonFromUrl($('a[rel=next]')[0].search);
+             var currentPage = +next.page - 1;
+             // update Text
+             var pageText = $('a[rel=next]').prev().text();
+             var nextPageText = pageText.replace(new RegExp(currentPage + '/'), next.page + '/');
+             $('a[rel=next]').prev().text(nextPageText);
+             // update href
+             next.page = +next.page + 1;
+             $('a[rel=next]')[0].search = '?' + serialize(next);
+         };
 
+         var loadNextPage = function(e){
+             e.preventDefault();
              $.ajax({
                  url: $('a[rel=next]').attr('href'),
                  success: function(data, status, jqXHR){console.log(data.response);},
                  error: function(jqXHR, status, error){console.log(error);}
              }).done(function( html ) {
                  // $('#recipes a img', html).css('width', '86px');
-                 $('#recipes a', $(html)).insertBefore('.paginate');
-                 $('<h3>test</h3>').insertBefore('.paginate');
+                 $('<div id="next"></div>').appendTo('body');
+                 $(html).appendTo('#next');
+                 $('#next .item_content').remove();
+                 $('#next .recipe_image').css('display', 'inline');
+                 $('#next a.recipe_link').insertBefore('#recipes');
+                 // $('#next').children().remove();
+                 // $(html).insertBefore('.paginate');
+                 incrementPageNo();
+                 // $('<h3>test</h3>').insertBefore('.paginate');
              });
          };
-         s.src = "//ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js";
+         $( "a" ).click(loadNextPage);
+
+         var loadJQ = function(cb){
+             var s = document.createElement('script');
+             document.head.appendChild(s);
+             s.onload = cb;
+             s.src = "//ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js";
+         };
+
+         var main = function(){
+             pickupTopRecipe();
+             hideNoise();
+             gridImages();
+             loadJQ(function(){});
+         };
+         main();
 
      })();
+
    #+END_SRC
