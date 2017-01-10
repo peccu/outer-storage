@@ -374,7 +374,7 @@
                  // $('<h3>test</h3>').insertBefore('.paginate');
              });
          };
-         $( "a" ).click(loadNextPage);
+         $('a[rel=next]').click(loadNextPage);
 
          var loadJQ = function(cb){
              var s = document.createElement('script');
