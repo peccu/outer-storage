@@ -210,4 +210,5 @@
      git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
      sudo yum install readline-devel
      rbenv install 2.3.3
+     rbenv global 2.3.3
    #+END_SRC
