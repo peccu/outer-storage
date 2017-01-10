@@ -23,6 +23,7 @@
     - [[http://www.ibm.com/developerworks/jp/analytics/library/ba-collect-analyze-social-data-app/][コードを 1 行も作成せずにソーシャル・データを収集して分析する]]
     - [[http://www.ibm.com/watson/developercloud/doc/][Table of Contents for Services Documentation]]
     - [[https://console.ng.bluemix.net/catalog/services/retrieve-and-rank/][Retrieve and Rank - IBM Bluemix]]
+    - [[http://qiita.com/zuhito/items/e9f39adc3f25951daf95][コーディング不要で画像認識APIを活用したアプリを開発する - Qiita]]
 *** Google Cloud Machine Learning
     - [[https://techcrunch.com/2016/09/29/googles-cloud-machine-learning-service-is-now-in-public-beta/][Google’s Cloud Machine Learning service is now in public beta | TechCrunch]]
     - [[https://cloud.google.com/blog/big-data/2016/09/google-cloud-machine-learning-now-open-to-all-with-new-professional-services-and-education-programs][Google Cloud Machine Learning: now open to all with new professional services and education programs | Google Cloud Big Data and Machine Learning Blog  |  Google Cloud Platform]]
