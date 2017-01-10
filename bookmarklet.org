@@ -26,6 +26,24 @@
       })()
 
     #+END_SRC
+*** loader
+    #+BEGIN_SRC js
+      javascript:(function(){
+          var loadScript = function(src, cb){
+              var s = document.createElement('script');
+              document.head.appendChild(s);
+              s.onload = cb;
+              s.src = src;
+          };
+          var loadStyle = function(src, cb){
+              var s = document.createElement('link');
+              document.head.appendChild(s);
+              s.onload = cb;
+              s.href = src;
+              s.rel = 'stylesheet';
+          };
+      })()
+    #+END_SRC
 ** send page to slack with incoming webhook
    currently this supports only Qiita articles.
     #+BEGIN_SRC js
@@ -372,7 +390,165 @@
              loadJQ(function(){});
          };
          main();
+     })();
 
+   #+END_SRC
+** add console
+   #+BEGIN_SRC js2
+     javascript:(function(){
+         var old = document.getElementById('console');
+         if(old){
+             old.parentElement.removeChild(old);
+             window.console = window._console;
+         }
+         var setStyle = function(){
+             var s = document.createElement('style');
+             s.innerHTML = ''
+                 + '    /* The console container element */'
+                 + '    #console {'
+                 + '      position: absolute;'
+                 + '      width: 660px;'
+                 + '      height: 480px;'
+                 + '      background-color:black;'
+                 + '    }'
+                 + '    /* The inner console element. */'
+                 + '    .jqconsole {'
+                 + '        padding: 10px;'
+                 + '    }'
+                 + '    /* The cursor. */'
+                 + '    .jqconsole-cursor {'
+                 + '        background-color: gray;'
+                 + '    }'
+                 + '    /* The cursor color when the console looses focus. */'
+                 + '    .jqconsole-blurred .jqconsole-cursor {'
+                 + '        background-color: #666;'
+                 + '    }'
+                 + '    /* The current prompt text color */'
+                 + '    .jqconsole-prompt {'
+                 + '        color: #0d0;'
+                 + '    }'
+                 + '    /* The command history */'
+                 + '    .jqconsole-old-prompt {'
+                 + '        color: #0b0;'
+                 + '        font-weight: normal;'
+                 + '    }'
+                 + '    /* The text color when in input mode. */'
+                 + '    .jqconsole-input {'
+                 + '        color: #dd0;'
+                 + '    }'
+                 + '    /* Previously entered input. */'
+                 + '    .jqconsole-old-input {'
+                 + '        color: #bb0;'
+                 + '        font-weight: normal;'
+                 + '    }'
+                 + '    /* The text color of the output. */'
+                 + '    .jqconsole-output {'
+                 + '        color: white;'
+                 + '    }'
+                 + '    /* The text color of the output. */'
+                 + '    .jqconsole-warning {'
+                 + '        color: yellow;'
+                 + '    }'
+                 + '    /* The text color of the output. */'
+                 + '    .jqconsole-error {'
+                 + '        color: red;'
+                 + '    }'
+                 + '    /* The text color of the output. */'
+                 + '    .jqconsole-info {'
+                 + '        color: blue;'
+                 + '    }'
+                 + '    /* The text color of the output. */'
+                 + '    .jqconsole-return {'
+                 + '        color: gray;'
+                 + '    }';
+             document.head.appendChild(s);
+         };
+         setStyle();
+
+         var loadScript = function(src, cb){
+             var s = document.createElement('script');
+             document.head.appendChild(s);
+             s.onload = cb;
+             s.src = src;
+         };
+         var loadStyle = function(src, cb){
+             var s = document.createElement('link');
+             document.head.appendChild(s);
+             s.onload = cb;
+             s.href = src;
+             s.rel = 'stylesheet';
+         };
+
+         var initConsole = function(){
+             var d = document.createElement('div');
+             d.id = 'console';
+             document.body.appendChild(d);
+             $('#console').draggable();
+             $('#console').resizable();
+             var jqconsole = $('#console').jqconsole('', '');
+
+             window._console = window.console;
+             var writeString = {
+                 log(string){
+                     jqconsole.Write(string + '\n', 'jqconsole-output');
+                     window._console.log(string);
+                 },
+                 warn(string){
+                     jqconsole.Write(string + '\n', 'jqconsole-warning');
+                     window._console.warn(string);
+                 },
+                 error(string){
+                     jqconsole.Write(string + '\n', 'jqconsole-error');
+                     window._console.error(string);
+                 },
+                 info(string){
+                     jqconsole.Write(string + '\n', 'jqconsole-info');
+                     window._console.info(string);
+                 },
+                 isJqConsole: true
+             };
+             if(!window.console.isJqConsole){
+                 window.console = writeString;
+             }
+
+             jqconsole.RegisterShortcut('A', function() {
+                 jqconsole.MoveToStart();
+             });
+             jqconsole.RegisterShortcut('E', function() {
+                 jqconsole.MoveToEnd();
+             });
+             var startPrompt = function(){
+                 jqconsole.RegisterMatching('(', ')', 'parents');
+                 var prompt = '> ';
+                 jqconsole.Write(prompt, 'jqconsole-prompt');
+                 var processInput = function(input){
+                     try{
+                         var result = eval(input);
+                         jqconsole.Write(result + '\n', 'jqconsole-return');
+                     }catch(err){
+                         console.log(err);
+                         jqconsole.Write('ERROR: ' + err.message + '\n', 'jqconsole-error');
+                     }
+                     startPrompt();
+                 };
+                 jqconsole.Prompt(true, processInput);
+             };
+             startPrompt();
+         };
+
+         var jquiCss = '//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css';
+         var jq = '//jscl-project.github.io/jquery.js';
+         var jqui = '//code.jquery.com/ui/1.12.1/jquery-ui.js';
+         var jqconsole = '//jscl-project.github.io/jqconsole.min.js';
+         loadStyle(jquiCss, function(){
+             loadScript(jq, function(){
+                 loadScript(jqui, function(){
+                     loadScript(jqconsole, function(){
+                         initConsole();
+                     });
+                 });
+             });
+         });
      })();
 
    #+END_SRC
