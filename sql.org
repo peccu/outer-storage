@@ -7,3 +7,9 @@
    insert into <table_name> (<col>, <col>, <col>) values (<value>, <value>, <value>)
 
    insert into <table_name> (<col>, <col>, <col>) select <col>, <col>, <col> from <table_name> where <condition>
+** datetime condition
+   <datetime_col> >= '20160000 00:00:00.000'
+   <datetime_col> < '20170000 00:00:00.000'
+** group by datetime (year, month)
+   http://stackoverflow.com/a/508806/514411
+   select year(<datetime_col>), count(*) from <table_name> group by year(<datetime_col>)
