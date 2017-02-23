@@ -47,3 +47,7 @@
       - M-x imp-set-user-filter RET markdown-html
 ** concat 濁点、半濁点
    C-x h M-x ucs-normalize-NFC-region
+** exec command
+   #+BEGIN_SRC emacs-lisp
+     (async-shell-command "pwd")
+   #+END_SRC
