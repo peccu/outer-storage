@@ -1,0 +1,16 @@
+* around Common Lisp
+** Links
+   - [[https://github.com/jasom/parenscriptx/][jasom/parenscriptx: Parenscript Macros to aid generating react code]]
+   - [[https://gist.github.com/cmoore/a34033658d691785c5a2][An example of the syntax.]]
+   - [[http://michaeljforster.tumblr.com/post/135442858967/dont-panic-react-with-common-lisp][Michael J. Forster, Don’t Panic! React with Common Lisp]]
+   - [[https://www.reddit.com/r/lisp/comments/3xeszn/dont_panic_react_with_common_lisp/][Don't Panic! React with Common Lisp : lisp]]
+* Vue.js
+** Links
+   - [[http://www.valuecoders.com/blog/technology-and-apps/vue-js-comparison-angular-react/][Vue.js Is Good, But Is It Better Than Angular Or React? - Valuecoders -Expert Remote Teams for your Web & Mobile Needs]]
+   - [[http://pixeljets.com/blog/why-we-chose-vuejs-over-react/][Why we chose Vue.js over React]]
+   - [[https://github.com/jasom/parenscriptx/][jasom/parenscriptx: Parenscript Macros to aid generating react code]]
+   - [[http://qiita.com/nyamadori/items/b4aaf1db0df45e492888][Sails.js と Vue.js で API ファースト + リアルタイムな Web アプリケーションをさくっと作る - Qiita]]
+   - [[http://www.infiniteloop.co.jp/blog/2014/06/5min_vuejs/][5分でわかるVue.jsと、jQueryで頑張ってはいけない理由 | 株式会社インフィニットループ技術ブログ]]
+* design
+** Links
+   - [[https://aerotwist.com/blog/flip-your-animations/][Aerotwist - FLIP Your Animations]]
