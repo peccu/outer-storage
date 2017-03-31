@@ -1,0 +1,20 @@
+* AppleScript
+** in js
+   #+BEGIN_SRC js
+     #!/usr/bin/osascript -l JavaScript
+     // https://developer.apple.com/library/content/documentation/LanguagesUtilities/Conceptual/MacAutomationScriptingGuide/DisplayNotifica!
+     tions.html
+     var app = Application.currentApplication()
+
+     app.includeStandardAdditions = true
+
+     app.displayNotification("All graphics have been converted.", {
+         withTitle: "My Graphic Processing Script",
+         subtitle: "Processing is complete.",
+         soundName: "Frog"
+     })
+
+     // http://qiita.com/zakuroishikuro/items/1b02378bf9e940602d87
+     ObjC.import('stdlib');
+     $.exit(0);
+   #+END_SRC
