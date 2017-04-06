@@ -161,3 +161,28 @@
    =rpm -ql packagename=
 ** can't yum update
    comment =mirrorlist=, uncomment =baseurl= in =/etc/yum.repos.d/CentOS-Base.repo=
+** screencast (mov) to gif
+   [[https://gist.github.com/dergachev/4627207][OS X Screencast to animated GIF]]
+   #+BEGIN_SRC sh
+     ffmpeg -i in.mov -s 1006x530 -pix_fmt rgb24 -r 10 -f gif - | gifsicle --optimize=3 --delay=3 > out.gif
+   #+END_SRC
+
+   [[http://stackoverflow.com/a/11236144/514411][How can I get the resolution (width and height) for a video file from a linux command line? - Stack Overflow]]
+   #+BEGIN_SRC sh
+     ffprobe -v quiet -print_format json -show_streams mew-yasnippet.mov|jq '.streams[0].width'
+     ffprobe -v quiet -print_format json -show_streams mew-yasnippet.mov|jq '.streams[0].height'
+   #+END_SRC
+   Then,
+   #+BEGIN_SRC sh
+     function mov2gif(){
+         if [ -z $1 ] ; then
+             echo usage: $0 file
+             return
+         fi
+         INFILE=$1
+         OUTFILE=${INFILE%.*}.gif
+         WIDTH=$(ffprobe -v quiet -print_format json -show_streams mew-yasnippet.mov|jq '.streams[0].width')
+         HEIGHT=$(ffprobe -v quiet -print_format json -show_streams mew-yasnippet.mov|jq '.streams[0].height')
+         ffmpeg -i $INFILE -s ${WIDTH}x$HEIGHT -pix_fmt rgb24 -r 10 -f gif - | gifsicle --optimize=3 --delay=3 > $OUTFILE
+     }
+   #+END_SRC
