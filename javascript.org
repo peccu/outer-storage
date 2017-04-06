@@ -42,3 +42,65 @@
      d.getUTCSeconds() // Returns the seconds, according to universal time (from 0-59)
      var zerofillMonth = ('00' + (d.getUTCMonth() + 1)).slice(-2);
    #+END_SRC
+** electron
+*** copy and paste
+    - [[https://pracucci.com/atom-electron-enable-copy-and-paste.html][Electron - Enable copy and paste]]
+    - [[https://github.com/electron/electron/blob/master/docs/api/menu.md][electron/menu.md at master · electron/electron]]
+**** create menul.js
+     #+BEGIN_SRC js
+       const {app, Menu} = require('electron');
+
+       var init = function(){
+           var template = [
+               {
+                   label: "Application",
+                   submenu: [
+                       { label: "About Application", selector: "orderFrontStandardAboutPanel:" },
+                       { type: "separator" },
+                       { label: "Quit", accelerator: "Command+Q", click: function() { app.quit(); }}
+                   ]},
+               {
+                   label: "Edit",
+                   submenu: [
+                       { label: "Undo", accelerator: "CmdOrCtrl+Z", selector: "undo:" },
+                       { label: "Redo", accelerator: "Shift+CmdOrCtrl+Z", selector: "redo:" },
+                       { type: "separator" },
+                       { label: "Cut", accelerator: "CmdOrCtrl+X", selector: "cut:" },
+                       { label: "Copy", accelerator: "CmdOrCtrl+C", selector: "copy:" },
+                       { label: "Paste", accelerator: "CmdOrCtrl+V", selector: "paste:" },
+                       { label: "Select All", accelerator: "CmdOrCtrl+A", selector: "selectAll:" }
+                   ]}
+           ];
+
+           Menu.setApplicationMenu(Menu.buildFromTemplate(template));
+       };
+
+       module.exports = {
+           init: init
+       };
+     #+END_SRC
+**** load and call Menu.init() in index.js
+     #+BEGIN_SRC js
+       import Menu from './menu';
+
+       function createWindow(){
+           /**
+            ,* Initial window options
+            ,*/
+           mainWindow = new BrowserWindow({
+               height: 600,
+               width: 800
+           });
+
+           mainWindow.loadURL(winURL);
+
+           mainWindow.on('closed', () => {
+               mainWindow = null;
+           });
+
+           Menu.init();
+
+           // eslint-disable-next-line no-console
+           console.log('mainWindow opened');
+       }
+     #+END_SRC
