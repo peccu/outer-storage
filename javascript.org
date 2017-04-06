@@ -42,6 +42,13 @@
      d.getUTCSeconds() // Returns the seconds, according to universal time (from 0-59)
      var zerofillMonth = ('00' + (d.getUTCMonth() + 1)).slice(-2);
    #+END_SRC
+** on enter keyup for IME
+   [[https://garafu.blogspot.jp/2015/09/javascript-ime-enter-event.html][JavaScript における 日本語入力 確定 (Enter) イベント - galife]]
+   enter key doesn't fire keypress event if IME is ON and stil inputting (not confirmed).
+   #+BEGIN_SRC html
+     <!-- in Vue -->
+     <input v-on:keyup.enter="wrong" v-on:keypress.enter="correct"/>
+   #+END_SRC
 ** electron
 *** copy and paste
     - [[https://pracucci.com/atom-electron-enable-copy-and-paste.html][Electron - Enable copy and paste]]
