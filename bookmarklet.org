@@ -44,6 +44,16 @@
           };
       })()
     #+END_SRC
+*** load webpacked js hosted by =npm run dev=
+    #+BEGIN_SRC js
+      var loadScript = function(src, cb){
+        var s = document.createElement('script');
+        document.head.appendChild(s);
+        s.onload = cb;
+        s.src = src;
+      };
+      loadScript('http://localhost:8080/app.js')
+    #+END_SRC
 ** send page to slack with incoming webhook
    currently this supports only Qiita articles.
     #+BEGIN_SRC js
