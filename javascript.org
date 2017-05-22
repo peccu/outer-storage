@@ -112,3 +112,31 @@
            console.log('mainWindow opened');
        }
      #+END_SRC
+** add semantic-ui with webpack
+   - install jquery and semantic-ui(with instruction and gulp build)
+   - update configuration below
+   #+BEGIN_SRC diff
+     --- a/build/webpack.base.conf.js
+     +++ b/build/webpack.base.conf.js
+     @@ -1,5 +1,6 @@
+      var path = require('path')
+      var utils = require('./utils')
+     +var webpack = require('webpack')
+      var config = require('../config')
+      var vueLoaderConfig = require('./vue-loader.conf')
+
+     @@ -25,6 +26,13 @@ module.exports = {
+            '@': resolve('src')
+          }
+        },
+     +  plugins: [
+     +    new webpack.ProvidePlugin({
+     +      $: 'jquery',
+     +      jQuery: 'jquery',
+     +      'window.jQuery': 'jquery'
+     +    })
+     +  ],
+        module: {
+          rules: [
+            {
+   #+END_SRC
