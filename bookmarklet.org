@@ -403,6 +403,16 @@
      })();
 
    #+END_SRC
+** send to google keep
+   #+BEGIN_SRC js2
+     javascript:void(function(){
+         var w = 430;
+         var h = 600;
+         var t = (screen.height ? (screen.height - h) / 4 : 0);
+         var l = (screen.width ? (screen.width - w) / 2 : 0);
+         var win = window.open('https://drive.google.com/keep/','google-keep','width='+w+',height='+h+',top='+t+',left='+l+',location=no,personalbar=no,menubar=no,status=no,resizable=yes,scrollbars=yes');
+     })();
+   #+END_SRC
 ** add console
    #+BEGIN_SRC js2
      javascript:(function(){
