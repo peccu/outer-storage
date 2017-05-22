@@ -32,6 +32,7 @@
    #+BEGIN_SRC js
      // https://www.w3schools.com/jsref/jsref_obj_date.asp
      var d = new Date();
+     d.getTime() // Returns UNIX Time?
      d.getUTCDate() // Returns the day of the month, according to universal time (from 1-31)
      d.getUTCDay() // Returns the day of the week, according to universal time (from 0-6)
      d.getUTCFullYear() // Returns the year, according to universal time
