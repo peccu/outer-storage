@@ -1,3 +1,55 @@
 * mongodb
 ** cheat sheet
    - [[http://www.mongodbspain.com/en/2014/03/23/mongodb-cheat-sheet-quick-reference/][MongoDB Cheat Sheet – Quick Reference – MongoDB Spain]]
+** get collections
+   #+BEGIN_SRC js
+     db.getCollectionNames()
+   #+END_SRC
+** dump/restore
+*** dump
+    output to ./dump/rocketchat specified collection
+    #+BEGIN_SRC sh
+      mongodump -h localhost --port 27017 -d rocketchat -c _raix_push_notifications
+      mongodump -h localhost --port 27017 -d rocketchat -c avatars.chunks
+      mongodump -h localhost --port 27017 -d rocketchat -c avatars.files
+      mongodump -h localhost --port 27017 -d rocketchat -c instances
+      mongodump -h localhost --port 27017 -d rocketchat -c meteor_accounts_loginServiceConfiguration
+      mongodump -h localhost --port 27017 -d rocketchat -c meteor_oauth_pendingCredentials
+      mongodump -h localhost --port 27017 -d rocketchat -c meteor_oauth_pendingRequestTokens
+      mongodump -h localhost --port 27017 -d rocketchat -c migrations
+      mongodump -h localhost --port 27017 -d rocketchat -c rocketchat__trash
+      mongodump -h localhost --port 27017 -d rocketchat -c rocketchat_cron_history
+      mongodump -h localhost --port 27017 -d rocketchat -c rocketchat_custom_emoji
+      mongodump -h localhost --port 27017 -d rocketchat -c rocketchat_custom_sounds
+      mongodump -h localhost --port 27017 -d rocketchat -c rocketchat_import
+      mongodump -h localhost --port 27017 -d rocketchat -c rocketchat_integration_history
+      mongodump -h localhost --port 27017 -d rocketchat -c rocketchat_integrations
+      mongodump -h localhost --port 27017 -d rocketchat -c rocketchat_livechat_custom_field
+      mongodump -h localhost --port 27017 -d rocketchat -c rocketchat_livechat_department
+      mongodump -h localhost --port 27017 -d rocketchat -c rocketchat_livechat_department_agents
+      mongodump -h localhost --port 27017 -d rocketchat -c rocketchat_livechat_external_message
+      mongodump -h localhost --port 27017 -d rocketchat -c rocketchat_livechat_inquiry
+      mongodump -h localhost --port 27017 -d rocketchat -c rocketchat_livechat_office_hour
+      mongodump -h localhost --port 27017 -d rocketchat -c rocketchat_livechat_page_visited
+      mongodump -h localhost --port 27017 -d rocketchat -c rocketchat_livechat_trigger
+      mongodump -h localhost --port 27017 -d rocketchat -c rocketchat_message
+      mongodump -h localhost --port 27017 -d rocketchat -c rocketchat_oauth_apps
+      mongodump -h localhost --port 27017 -d rocketchat -c rocketchat_oembed_cache
+      mongodump -h localhost --port 27017 -d rocketchat -c rocketchat_permissions
+      mongodump -h localhost --port 27017 -d rocketchat -c rocketchat_raw_imports
+      mongodump -h localhost --port 27017 -d rocketchat -c rocketchat_reports
+      mongodump -h localhost --port 27017 -d rocketchat -c rocketchat_roles
+      mongodump -h localhost --port 27017 -d rocketchat -c rocketchat_room
+      mongodump -h localhost --port 27017 -d rocketchat -c rocketchat_settings
+      mongodump -h localhost --port 27017 -d rocketchat -c rocketchat_smarsh_history
+      mongodump -h localhost --port 27017 -d rocketchat -c rocketchat_statistics
+      mongodump -h localhost --port 27017 -d rocketchat -c rocketchat_subscription
+      mongodump -h localhost --port 27017 -d rocketchat -c rocketchat_uploads
+      mongodump -h localhost --port 27017 -d rocketchat -c system.indexes
+      mongodump -h localhost --port 27017 -d rocketchat -c users
+      mongodump -h localhost --port 27017 -d rocketchat -c usersSessions
+
+    #+END_SRC
+    =mongodump -h localhost --port 27017 -d rocketchat=
+*** restore
+    =mongorestore --db rocketchat ./dump/rocketchat=
