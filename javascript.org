@@ -15,7 +15,7 @@
        key2: 'value2',
        key3: 'value3'
      };
-     // retuce
+     // reduce
      Object.keys(o).reduce(function (previous, key) {
        return previous + key + '=' + o[key] + '&';
      }, '');
