@@ -7,6 +7,13 @@
               return prev + cur.textContent;
           }, "");
     #+END_SRC
+*** [[http://blog.sushi.money/entry/2017/04/19/114028][querySelectorAllしてmapしたいとき...すると短い - hitode909の日記]]
+    #+BEGIN_SRC js
+      // in devtool
+      $$('a').map(a => a.href)
+      // other env
+      Array.from(document.querySelectorAll('a'), a => a.href)
+    #+END_SRC
 ** map/reduce for Object
    [[http://stackoverflow.com/a/15748853/514411][arrays - Javascript reduce() on Object - Stack Overflow]]
    #+BEGIN_SRC js
