@@ -169,3 +169,29 @@
    =C-t $=
 ** rename window
    =C-t ,=
+** reload session(for upgrade tmux)
+   [[https://unix.stackexchange.com/questions/122238/protocol-version-mismatch-client-8-server-6-when-trying-to-upgrade][tmux - protocol version mismatch (client 8, server 6) when trying to upgrade - Unix & Linux Stack Exchange]]
+   [[https://stackoverflow.com/questions/38295615/complete-tmux-reset][osx - Complete tmux reset - Stack Overflow]]
+   #+BEGIN_SRC sh
+     # update tmux
+     # dl source, ./configure, make, sudo make install
+     % tmux -V
+     tmux 1.6
+     # update path
+     % hash -r
+     % tmux -V
+     tmux 2.5
+     % tmux ls
+     protocol version mismatch (client 8, server 6)
+     lost server
+     # find running tmux
+     % pgrep tmux
+     1904
+     # kill server
+     % /proc/1904/exe kill-server
+     # then you can use new tmux
+     % tmux
+   #+END_SRC
+** toggle zoom
+   =C-t z=
+   [[https://www.sitepoint.com/10-killer-tmux-tips/][10 Killer Tmux Tips — SitePoint]]
