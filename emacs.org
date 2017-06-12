@@ -51,3 +51,7 @@
    #+BEGIN_SRC emacs-lisp
      (async-shell-command "pwd")
    #+END_SRC
+** change coding charset
+   #+BEGIN_SRC shell
+     emacs --batch --eval "(progn (find-file \"path/to/file\") (set-buffer-file-coding-system 'shift_jis)(basic-save-buffer))"
+   #+END_SRC
