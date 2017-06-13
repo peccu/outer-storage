@@ -186,3 +186,8 @@
          ffmpeg -i $INFILE -s ${WIDTH}x$HEIGHT -pix_fmt rgb24 -r 10 -f gif - | gifsicle --optimize=3 --delay=3 > $OUTFILE
      }
    #+END_SRC
+** ls date format
+   [[https://unix.stackexchange.com/a/275730][date - Set ls -l time format - Unix & Linux Stack Exchange]]
+   #+BEGIN_SRC sh
+     ls -l --time-style=long-iso
+   #+END_SRC
