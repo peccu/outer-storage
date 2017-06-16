@@ -1,0 +1,10 @@
+* mysql
+** no header and no table
+   add =-NB=
+   [[https://stackoverflow.com/a/16592892/514411][Change output format for MySQL command line results to CSV - Stack Overflow]]
+   -N tells it not to print column headers. -B is "batch mode", and uses tabs to separate fields.
+** eval in command line
+   =-e "sql"=
+** table size
+   [[https://stackoverflow.com/a/1733523/514411][How to get size of mysql database? - Stack Overflow]]
+   =select Sum(data_length + index_length) 'size' from information_schema.tables group by table_schema;=
