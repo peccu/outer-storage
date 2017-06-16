@@ -4,6 +4,7 @@
 ** get dbs
    #+BEGIN_SRC js
      show dbs
+     db.adminCommand('listDatabases')
    #+END_SRC
 ** get collections
    #+BEGIN_SRC js
