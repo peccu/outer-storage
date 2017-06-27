@@ -156,3 +156,10 @@
           rules: [
             {
    #+END_SRC
+** promise
+   #+BEGIN_SRC js
+     new Promise((resolve, reject) => {
+       // something async
+       resolve('result')
+     })
+   #+END_SRC
