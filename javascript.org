@@ -1,9 +1,165 @@
 * JavaScript
 ** map/reduce for DOM
-   [[http://jcla1.com/blog/javascript-mapreduce/][Javascript and MapReduce - Joseph Adams]]
+*** [[http://jcla1.com/blog/javascript-mapreduce/][Javascript and MapReduce - Joseph Adams]]
+    #+BEGIN_SRC js
+      Array.prototype.slice.call(document.getElementsBy*****(selector))
+          .reduce(function(prev, cur, i, element){
+              return prev + cur.textContent;
+          }, "");
+    #+END_SRC
+*** [[http://blog.sushi.money/entry/2017/04/19/114028][querySelectorAllしてmapしたいとき...すると短い - hitode909の日記]]
+    #+BEGIN_SRC js
+      // in devtool
+      $$('a').map(a => a.href)
+      // other env
+      Array.from(document.querySelectorAll('a'), a => a.href)
+    #+END_SRC
+** map/reduce for Object
+   [[http://stackoverflow.com/a/15748853/514411][arrays - Javascript reduce() on Object - Stack Overflow]]
    #+BEGIN_SRC js
-     Array.prototype.slice.call(document.getElementsBy*****(selector))
-         .reduce(function(prev, cur, i, element){
-             return prev + cur.textContent;
-         }, "");
+     var o = {
+       key1: 'value1',
+       key2: 'value2',
+       key3: 'value3'
+     };
+     // reduce
+     Object.keys(o).reduce(function (previous, key) {
+       return previous + key + '=' + o[key] + '&';
+     }, '');
+     // => "key1=value1&key2=value2&key3=value3&"
+
+     // map
+     // element means `o`s key  (`keys(o)`s element)
+     Object.keys(o).map(function (element, index, array) {
+       return element + '=' + o[element];
+     }).join('&');
+     // => "key1=value1&key2=value2&key3=value3"
+   #+END_SRC
+** date
+   #+BEGIN_SRC js
+     // https://www.w3schools.com/jsref/jsref_obj_date.asp
+     var d = new Date();
+     d.getTime() // Returns UNIX Time?
+     d.getUTCFullYear() // Returns the year, according to universal time
+     d.getUTCMonth() // Returns the month, according to universal time (from 0-11)
+     d.getUTCDate() // Returns the day of the month, according to universal time (from 1-31)
+     d.getUTCDay() // Returns the day of the week, according to universal time (from 0-6)
+     d.getUTCHours() // Returns the hour, according to universal time (from 0-23)
+     d.getUTCMinutes() // Returns the minutes, according to universal time (from 0-59)
+     d.getUTCSeconds() // Returns the seconds, according to universal time (from 0-59)
+     d.getUTCMilliseconds() // Returns the milliseconds, according to universal time (from 0-999)
+     var zerofillMonth = ('00' + (d.getUTCMonth() + 1)).slice(-2);
+
+     var ymdhms = function(d){
+       return d.getUTCFullYear() + '/'
+         + d.getUTCMonth() + '/'
+         + d.getUTCDate() + ' '
+         + d.getUTCHours() + ':'
+         + d.getUTCMinutes() + ':'
+         + d.getUTCSeconds();
+     };
+   #+END_SRC
+** on enter keyup for IME
+   [[https://garafu.blogspot.jp/2015/09/javascript-ime-enter-event.html][JavaScript における 日本語入力 確定 (Enter) イベント - galife]]
+   enter key doesn't fire keypress event if IME is ON and stil inputting (not confirmed).
+   #+BEGIN_SRC html
+     <!-- in Vue -->
+     <input v-on:keyup.enter="wrong" v-on:keypress.enter="correct"/>
+   #+END_SRC
+** electron
+*** copy and paste
+    - [[https://pracucci.com/atom-electron-enable-copy-and-paste.html][Electron - Enable copy and paste]]
+    - [[https://github.com/electron/electron/blob/master/docs/api/menu.md][electron/menu.md at master · electron/electron]]
+**** create menul.js
+     #+BEGIN_SRC js
+       const {app, Menu} = require('electron');
+
+       var init = function(){
+           var template = [
+               {
+                   label: "Application",
+                   submenu: [
+                       { label: "About Application", selector: "orderFrontStandardAboutPanel:" },
+                       { type: "separator" },
+                       { label: "Quit", accelerator: "Command+Q", click: function() { app.quit(); }}
+                   ]},
+               {
+                   label: "Edit",
+                   submenu: [
+                       { label: "Undo", accelerator: "CmdOrCtrl+Z", selector: "undo:" },
+                       { label: "Redo", accelerator: "Shift+CmdOrCtrl+Z", selector: "redo:" },
+                       { type: "separator" },
+                       { label: "Cut", accelerator: "CmdOrCtrl+X", selector: "cut:" },
+                       { label: "Copy", accelerator: "CmdOrCtrl+C", selector: "copy:" },
+                       { label: "Paste", accelerator: "CmdOrCtrl+V", selector: "paste:" },
+                       { label: "Select All", accelerator: "CmdOrCtrl+A", selector: "selectAll:" }
+                   ]}
+           ];
+
+           Menu.setApplicationMenu(Menu.buildFromTemplate(template));
+       };
+
+       module.exports = {
+           init: init
+       };
+     #+END_SRC
+**** load and call Menu.init() in index.js
+     #+BEGIN_SRC js
+       import Menu from './menu';
+
+       function createWindow(){
+           /**
+            ,* Initial window options
+            ,*/
+           mainWindow = new BrowserWindow({
+               height: 600,
+               width: 800
+           });
+
+           mainWindow.loadURL(winURL);
+
+           mainWindow.on('closed', () => {
+               mainWindow = null;
+           });
+
+           Menu.init();
+
+           // eslint-disable-next-line no-console
+           console.log('mainWindow opened');
+       }
+     #+END_SRC
+** add semantic-ui with webpack
+   - install jquery and semantic-ui(with instruction and gulp build)
+   - update configuration below
+   #+BEGIN_SRC diff
+     --- a/build/webpack.base.conf.js
+     +++ b/build/webpack.base.conf.js
+     @@ -1,5 +1,6 @@
+      var path = require('path')
+      var utils = require('./utils')
+     +var webpack = require('webpack')
+      var config = require('../config')
+      var vueLoaderConfig = require('./vue-loader.conf')
+
+     @@ -25,6 +26,13 @@ module.exports = {
+            '@': resolve('src')
+          }
+        },
+     +  plugins: [
+     +    new webpack.ProvidePlugin({
+     +      $: 'jquery',
+     +      jQuery: 'jquery',
+     +      'window.jQuery': 'jquery'
+     +    })
+     +  ],
+        module: {
+          rules: [
+            {
+   #+END_SRC
+** promise
+   #+BEGIN_SRC js
+     new Promise((resolve, reject) => {
+       // something async
+       resolve('result')
+     })
    #+END_SRC

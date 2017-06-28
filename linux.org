@@ -1,0 +1,3 @@
+* linux tips
+** [[https://stackoverflow.com/a/18004259/514411][bash - Trying to redirect 'git gc' output - Stack Overflow]]
+   =script -q -c 'git gc' | sed 's/\r.*//g' > log=

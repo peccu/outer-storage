@@ -1,0 +1,58 @@
+* SVG
+** path cheat sheet
+*** [[https://gist.github.com/spoike/a524526aab5bb42ee229][Cheatsheet for SVG paths]]
+**** Straight line commands
+|--------+-------------------+--------|
+| M or m | moveto            | (x y)+ |
+|--------+-------------------+--------|
+| Z or z | close path        | (none) |
+|--------+-------------------+--------|
+| L or l | lineto            | (x y)+ |
+|--------+-------------------+--------|
+| H or h | horizontal lineto | (x)+   |
+|--------+-------------------+--------|
+| V or v | vertical lineto   | (y)+   |
+|--------+-------------------+--------|
+
+**** Curve commands
+|--------+----------------------------+--------------------|
+| C or c | Bézier curveto             | (x1 y1 x2 y2 x y)+ |
+|--------+----------------------------+--------------------|
+| S or s | Shorthand Bézier curveto   | (x2 y2 x y)+       |
+|--------+----------------------------+--------------------|
+| Q or q | Quadratic bézier curveto   | (x1 y1 x y)+       |
+|--------+----------------------------+--------------------|
+| T or t | Shorthand/Smooth Quadratic |                    |
+|        | bézier curveto             | (x y)+             |
+|--------+----------------------------+--------------------|
+| A or a | Elliptical arc             | (rx ry             |
+|        |                            | x-axis-rotation    |
+|        |                            | large-arc-flag     |
+|        |                            | sweep-flag x y)+   |
+|--------+----------------------------+--------------------|
+
+**** Notes
+     Uppercase commands uses absolute positions, lowercase commands uses relative positions.
+
+     For further descriptions check: http://www.w3.org/TR/SVG/paths.html#PathDataClosePathCommand
+
+**** Examples
+***** Simple Triangle
+      #+BEGIN_SRC web
+        <path fill="white" d="M 0,200 h 200 L 100,0 z" />
+      #+END_SRC
+
+      See http://codepen.io/spoike/pen/ogMGoJ
+***** Cloud
+      #+BEGIN_SRC web
+        <!-- Note: Needs to be scaled up because it is 2x4 px -->
+        <path 
+            fill="#333333"
+            d="M 1,2
+               h 2
+               c 1,0,1,-1.4,0,-1.4
+               a 1.075,1.1,1,0,0,-2,0.3
+               c -0.8,0,-0.8,1.1,0,1.1
+               z" />
+      #+END_SRC
+      See http://codepen.io/spoike/pen/NPBbpN

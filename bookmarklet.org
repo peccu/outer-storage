@@ -44,6 +44,16 @@
           };
       })()
     #+END_SRC
+*** load webpacked js hosted by =npm run dev=
+    #+BEGIN_SRC js
+      var loadScript = function(src, cb){
+        var s = document.createElement('script');
+        document.head.appendChild(s);
+        s.onload = cb;
+        s.src = src;
+      };
+      loadScript('http://localhost:8080/app.js')
+    #+END_SRC
 ** send page to slack with incoming webhook
    currently this supports only Qiita articles.
     #+BEGIN_SRC js
@@ -393,6 +403,16 @@
      })();
 
    #+END_SRC
+** send to google keep
+   #+BEGIN_SRC js2
+     javascript:void(function(){
+         var w = 430;
+         var h = 600;
+         var t = (screen.height ? (screen.height - h) / 4 : 0);
+         var l = (screen.width ? (screen.width - w) / 2 : 0);
+         var win = window.open('https://drive.google.com/keep/','google-keep','width='+w+',height='+h+',top='+t+',left='+l+',location=no,personalbar=no,menubar=no,status=no,resizable=yes,scrollbars=yes');
+     })();
+   #+END_SRC
 ** add console
    #+BEGIN_SRC js2
      javascript:(function(){
@@ -551,4 +571,73 @@
          });
      })();
 
+   #+END_SRC
+** shorten amazon url with affiliate tag
+   #+BEGIN_SRC js
+     javascript:(function(){
+       // cf: http://www.takewari.com/amazon_url_shortener.html
+       var getAsin = function(target){
+         if( target.match( /(http:\/\/[^\/]*\/).*product-description\/([^\/|\?]*)/i)) return [ RegExp.$1, RegExp.$2];
+         if( target.match( /(http:\/\/[^\/]*\/).*dp\/([^\/|\?]*)/i)) return [ RegExp.$1, RegExp.$2];
+         if( target.match( /(http:\/\/[^\/]*\/).*product\/([^\/|\?]*)/i)) return [ RegExp.$1, RegExp.$2];
+         if( target.match( /(http:\/\/[^\/]*\/).*-\/([^\/|\?]*)/)) return [ RegExp.$1, RegExp.$2];
+         if( target.match( /(http:\/\/[^\/]*\/).*ISBN=([^\/|\?]*)/i)) return [ RegExp.$1, RegExp.$2];
+         if( target.match( /(http:\/\/[^\/]*\/).*ASIN\/([^\/|\?]*)/i)) return [ RegExp.$1, RegExp.$2];
+         if( target.match( /(www[^\/]*\/).*product-description\/([^\/|\?]*)/i)) return [ RegExp.$1, RegExp.$2];
+         if( target.match( /(www[^\/]*\/).*dp\/([^\/|\?]*)/i)) return [ RegExp.$1, RegExp.$2];
+         if( target.match( /(www[^\/]*\/).*product\/([^\/|\?]*)/i)) return [ RegExp.$1, RegExp.$2];
+         if( target.match( /(www[^\/]*\/).*-\/([^\/|\?]*)/)) return [ RegExp.$1, RegExp.$2];
+         if( target.match( /(www[^\/]*\/).*ISBN=([^\/|\?]*)/i)) return [ RegExp.$1, RegExp.$2];
+         if( target.match( /(www[^\/]*\/).*ASIN\/([^\/|\?]*)/i)) return [ RegExp.$1, RegExp.$2];
+       };
+
+       var getShortUrl = function(url){
+         var asin = getAsin(url);
+         if(!asin || asin.length === 0){
+           return url;
+         }
+         var short = asin[0] + 'dp/' + asin[1];
+         return short;
+       };
+
+       var copy = function(copyText, successCB){
+         if(!successCB){
+           successCB = function(text){
+             alert("The text is on the clipboard, try to paste it!\nCopied:\n\n" + text);
+           };
+         }
+         if(window.clipboardData){
+           window.clipboardData.setData("Text", copyText);
+           return;
+         }
+         var tmpElem=document.createElement('div');
+         tmpElem.style.position = 'absolute';
+         tmpElem.style.left = '-1000px';
+         tmpElem.style.top = '-1000px';
+         tmpElem.innerText = copyText;
+         document.body.appendChild(tmpElem);
+
+         var range = document.createRange();
+         range.selectNodeContents(tmpElem);
+
+         var selection;
+         selection = window.getSelection();
+         selection.removeAllRanges();
+         selection.addRange(range);
+
+         var success = true;
+         try{
+           success = document.execCommand("copy", false, null);
+         }
+         catch(e){
+           copyToClipboardFF(copyText);
+         }
+         if(success){
+           successCB(copyText);
+           tmpElem.remove();
+         }
+       };
+
+       copy(getShortUrl(location.href) + '/?tag=peccu-22');
+     })()
    #+END_SRC

@@ -4,3 +4,12 @@ http://stackoverflow.com/a/4389976
 #+BEGIN_SRC html
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 #+END_SRC
+** LESS CSS
+   #+BEGIN_SRC html
+     <link rel="stylesheet/less" type="text/css" href="css/style.less" />
+     <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/2.7.1/less.min.js"></script>
+   #+END_SRC
+** base tag
+   #+BEGIN_SRC html
+     <base href="/">
+   #+END_SRC

@@ -1,0 +1,16 @@
+* Vue.js
+** Links
+   - [[http://www.valuecoders.com/blog/technology-and-apps/vue-js-comparison-angular-react/][Vue.js Is Good, But Is It Better Than Angular Or React? - Valuecoders -Expert Remote Teams for your Web & Mobile Needs]]
+   - [[http://pixeljets.com/blog/why-we-chose-vuejs-over-react/][Why we chose Vue.js over React]]
+   - [[https://github.com/jasom/parenscriptx/][jasom/parenscriptx: Parenscript Macros to aid generating react code]]
+   - [[http://qiita.com/edwardkenfox/items/6f4aa591485d2a270841][Vue.jsを使う際のベストプラクティスについて考える - Qiita]]
+** Lazy loading
+   - [[https://router.vuejs.org/en/advanced/lazy-loading.html][Lazy Loading · GitBook]]
+   - [[https://webpack.js.org/guides/code-splitting-require/][Code Splitting - Using require.ensure]]
+   - [[https://github.com/tomcon/london-vuejs-3-talk/blob/master/simple-extended/app/app-loader.js][london-vuejs-3-talk/app-loader.js at master · tomcon/london-vuejs-3-talk]]
+   - [[https://github.com/vuejs/vue-loader/blob/master/lib/loader.js][vue-loader/loader.js at master · vuejs/vue-loader]]
+   - [[https://forum-archive.vuejs.org/topic/5042/compiling-individual-vue-components-with-webpack/3][Compiling individual Vue components with webpack | Vue.js Discussion]]
+   - [[https://vue-loader.vuejs.org/en/start/spec.html][Vue Component Spec · GitBook]]
+** frameworks
+   - [[http://quasar-framework.org/guide/index.html][Getting Started - Quasar Framework]]
+   - [[http://vuejsexamples.com/][Vue.js Examples]]

@@ -145,6 +145,14 @@
      # # prefix Insert で main-vertical レイアウトのまま、新たなペインを生成
      # bind IC run-shell "sh -c \"tmux split-window -v -t 0 \\\"$( tmux list-panes -F '#{pane_active} #{pane_start_command}' | egrep ^1 | sed 's/^1 //' )\\\" \\; select-layout main-vertical \""
 
+     # https://github.com/tmux-plugins/tpm
+     set -g @plugin 'tmux-plugins/tpm'
+     set -g @plugin 'tmux-plugins/tmux-resurrect'
+     set -g @plugin 'tmux-plugins/tmux-resurrect-auto'
+     set -g @plugin 'tmux-plugins/tmux-continuum'
+     set -g @continuum-restore 'on'
+
+     run '~/.tmux/plugins/tpm/tpm'
    #+END_SRC
 ** save/restore windows and panes
    [[http://count0.org/2013/08/19/tmuxinator-layout.html][tmuxinatorでpaneのレイアウトを指定する | count0.org]]
@@ -156,4 +164,34 @@
 ** move window
    =C-t .= then input dest window number.
 ** choose buffer
-   C-t =
+   =C-t ==
+** rename session
+   =C-t $=
+** rename window
+   =C-t ,=
+** reload session(for upgrade tmux)
+   [[https://unix.stackexchange.com/questions/122238/protocol-version-mismatch-client-8-server-6-when-trying-to-upgrade][tmux - protocol version mismatch (client 8, server 6) when trying to upgrade - Unix & Linux Stack Exchange]]
+   [[https://stackoverflow.com/questions/38295615/complete-tmux-reset][osx - Complete tmux reset - Stack Overflow]]
+   #+BEGIN_SRC sh
+     # update tmux
+     # dl source, ./configure, make, sudo make install
+     % tmux -V
+     tmux 1.6
+     # update path
+     % hash -r
+     % tmux -V
+     tmux 2.5
+     % tmux ls
+     protocol version mismatch (client 8, server 6)
+     lost server
+     # find running tmux
+     % pgrep tmux
+     1904
+     # kill server
+     % /proc/1904/exe kill-server
+     # then you can use new tmux
+     % tmux
+   #+END_SRC
+** toggle zoom
+   =C-t z=
+   [[https://www.sitepoint.com/10-killer-tmux-tips/][10 Killer Tmux Tips — SitePoint]]
