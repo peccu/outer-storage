@@ -191,3 +191,6 @@
    #+BEGIN_SRC sh
      ls -l --time-style=long-iso
    #+END_SRC
+** check port
+   - netstat -tup tcp
+   - lsof -i :4444
