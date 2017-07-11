@@ -194,3 +194,4 @@
 ** check port
    - netstat -tup tcp
    - lsof -i :4444
+   - sudo lsof -PiTCP -sTCP:LISTEN
