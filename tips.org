@@ -192,6 +192,7 @@
      ls -l --time-style=long-iso
    #+END_SRC
 ** check port
+   [[https://apple.stackexchange.com/a/117648][terminal - How can I list my open network ports with netstat? - Ask Different]]
    - netstat -tup tcp
    - lsof -i :4444
    - sudo lsof -PiTCP -sTCP:LISTEN
