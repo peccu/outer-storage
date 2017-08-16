@@ -48,6 +48,7 @@
      d.getUTCMinutes() // Returns the minutes, according to universal time (from 0-59)
      d.getUTCSeconds() // Returns the seconds, according to universal time (from 0-59)
      d.getUTCMilliseconds() // Returns the milliseconds, according to universal time (from 0-999)
+     d.toISOString(); // Returns the date as a string, using the ISO standard (like '2017-08-16T05:43:03.416Z')
      var zerofillMonth = ('00' + (d.getUTCMonth() + 1)).slice(-2);
 
      var ymdhms = function(d){
