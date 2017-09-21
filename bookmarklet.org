@@ -298,6 +298,50 @@
 
      })()
    #+END_SRC
+** send to chat
+*** without jq
+    #+BEGIN_SRC js
+      var hooks = {
+          'bot-test': 'https://compass.tgl.jp/hooks/ASjCEPYtDGX2yXyyb/PDDCmzeatQSkRsCAKG6jzj4gDZMPJWL3wu8LWpjqYgrYxCJK',
+          'techteatalk': 'https://compass.tgl.jp/hooks/J3XdPSDRQgffTMLRo/Q9hut27sPwZhToTyKRMzKxiJXu9gGXsWxcYHc9XgsjQhNwyk',
+          'feed': 'https://compass.tgl.jp/hooks/fmy6CMyEvToMjaiqS/vGbna7bc8KreYwAWuEbvPReBhNRDp9jBAD8QXZSxzcbDYw7b',
+          '雑談': 'https://compass.tgl.jp/hooks/fwQExKym4vpNtoRie/bTy6wuSJLkQ5Jxr2yv7qYEZGz8Z63vsSpkmwN4x7bmJTz34c'
+      };
+      $.ajax({
+        url: hooks['bot-test'],
+        data: {
+          "icon_emoji":":deciduous_tree:",
+          "text":":seedling: ["+document.title+"]("+location.href+")",
+        },
+        method: 'POST'
+      });
+    #+END_SRC
+*** with jq
+    #+BEGIN_SRC js
+      javascript:(function(){
+          var s = document.createElement('script');
+          document.head.appendChild(s);
+          s.onload = function(){
+              console.log('loaded');
+              var hooks = {
+                  'bot-test': 'https://compass.tgl.jp/hooks/ASjCEPYtDGX2yXyyb/PDDCmzeatQSkRsCAKG6jzj4gDZMPJWL3wu8LWpjqYgrYxCJK',
+                  'techteatalk': 'https://compass.tgl.jp/hooks/J3XdPSDRQgffTMLRo/Q9hut27sPwZhToTyKRMzKxiJXu9gGXsWxcYHc9XgsjQhNwyk',
+                  'feed': 'https://compass.tgl.jp/hooks/fmy6CMyEvToMjaiqS/vGbna7bc8KreYwAWuEbvPReBhNRDp9jBAD8QXZSxzcbDYw7b',
+                  '雑談': 'https://compass.tgl.jp/hooks/fwQExKym4vpNtoRie/bTy6wuSJLkQ5Jxr2yv7qYEZGz8Z63vsSpkmwN4x7bmJTz34c'
+              };
+              $.ajax({
+                  url: hooks['bot-test'],
+                  data: {
+                      "icon_emoji":":deciduous_tree:",
+                      "text":":seedling: ["+document.title+"]("+location.href+")",
+                  },
+                  method: 'POST'
+              });
+
+          };
+          s.src = "//ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js";
+      })()
+    #+END_SRC
 ** cookpad find recommend
    #+BEGIN_SRC js
      (function(){
@@ -640,4 +684,87 @@
 
        copy(getShortUrl(location.href) + '/?tag=peccu-22');
      })()
+   #+END_SRC
+** qrcode with centering float flex box
+   #+BEGIN_SRC js
+     javascript:(function(){
+       var idname = 'qrplaceholder';
+       var createPlaceholder = function(){
+         var c = document.createElement('div');
+         c.style.width = '100%25';
+         c.style.height = '100%25';
+         c.style.position = 'fixed';
+         c.style.display = 'flex';
+         c.style.top = '0';
+         c.style.backgroundColor = 'rgba(0, 0, 0, 0.1)';
+         c.zIndex = 10000;
+         c.onclick = function(){
+           document.body.removeChild(c);
+         };
+         var d = document.createElement('div');
+         d.id = idname;
+         d.style.width = '266px';
+         d.style.height = '266px';
+         d.style.marginTop = '10px';
+         d.style.zIndex = 9999;
+         d.style.margin = 'auto';
+         c.appendChild(d);
+         document.body.appendChild(c);
+       };
+
+       var showSvg = function(){
+         try {
+           var qrcode = new QRCode({
+             content: window.location.href,
+             width: 256,
+             height: 256,
+             padding: 4
+           });
+           document.getElementById(idname).innerHTML = qrcode.svg();
+         }
+         catch (e) {
+           alert(e.message);
+         }
+       };
+
+       var loadJS = function(onload){
+         var s = document.createElement('script');
+         document.head.appendChild(s);
+         s.onload = onload;
+         s.src = '//papnkukn.github.io/qrcode-svg/javascripts/qrcode.js';
+       };
+
+       loadJS(function(){
+         createPlaceholder();
+         showSvg();
+       });
+     })()
+   #+END_SRC
+*** minify
+    #+BEGIN_SRC js
+      javascript:(function(){var a='qrplaceholder';var b=function(){var c=document.createElement('div');c.style.width='100%';c.style.height='100%';c.style.position='fixed';c.style.display='flex';c.style.top='0';c.style.backgroundColor='rgba(0, 0, 0, 0.1)';c.zIndex=10000;c.onclick=function(){document.body.removeChild(c);};var d=document.createElement('div');d.id=a;d.style.width='266px';d.style.height='266px';d.style.marginTop='10px';d.style.zIndex=9999;d.style.margin='auto';c.appendChild(d);document.body.appendChild(c);};var e=function(){try{var f=new QRCode({content:window.location.href,width:256,height:256,padding:4});document.getElementById(a).innerHTML=f.svg();}catch(e){alert(e.message);}};var g=function(h){var s=document.createElement('script');document.head.appendChild(s);s.onload=h;s.src='//papnkukn.github.io/qrcode-svg/javascripts/qrcode.js';};g(function(){b();e();});})()
+    #+END_SRC
+** add flex centering box
+   #+BEGIN_SRC js
+     var createPlaceholder = function(width, height){
+       var c = document.createElement('div');
+       c.style.width = '100%25';
+       c.style.height = '100%25';
+       c.style.position = 'fixed';
+       c.style.display = 'flex';
+       c.style.top = '0';
+       c.style.backgroundColor = 'rgba(0, 0, 0, 0.1)';
+       c.zIndex = 10000;
+       c.onclick = function(){
+         document.body.removeChild(c);
+       };
+       var d = document.createElement('div');
+       d.id = idname;
+       d.style.width = width;
+       d.style.height = height;
+       d.style.zIndex = 9999;
+       d.style.margin = 'auto';
+       c.appendChild(d);
+       document.body.appendChild(c);
+     };
    #+END_SRC
