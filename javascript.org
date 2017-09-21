@@ -164,3 +164,8 @@
        resolve('result')
      })
    #+END_SRC
+** uniquify
+   #+BEGIN_SRC js
+     var arr = [1,2,3,2,1];
+     var unique = arr.filter((v, i, a) => a.indexOf(v) === i);
+   #+END_SRC
