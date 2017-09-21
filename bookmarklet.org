@@ -746,7 +746,7 @@
     #+END_SRC
 ** add flex centering box
    #+BEGIN_SRC js
-     var createPlaceholder = function(width, height){
+     var createPlaceholder = function(idname, width, height){
        var c = document.createElement('div');
        c.style.width = '100%25';
        c.style.height = '100%25';
@@ -768,3 +768,9 @@
        document.body.appendChild(c);
      };
    #+END_SRC
+*** usage
+    #+BEGIN_SRC js
+      createPlaceholder('flex', '100px', '100px');
+      document.getElementById('flex').innerHTML = '<h1>yeah!</h1>';
+      document.getElementById('flex').style.backgroundColor = 'white';
+    #+END_SRC
