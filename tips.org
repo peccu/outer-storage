@@ -196,3 +196,12 @@
    - netstat -tup tcp
    - lsof -i :4444
    - sudo lsof -PiTCP -sTCP:LISTEN
+** get weekday
+   [[https://stackoverflow.com/a/46024878/514411][bash - How can we get weekday based on given date in unix - Stack Overflow]]
+   #+BEGIN_SRC shell-script
+     $ date -j -f '%m-%d-%Y' "09-01-2017" +'%A'
+     Friday
+     $ date -j -f '%m-%d-%Y' "09-01-2017" +'%a'
+     Fri
+   #+END_SRC
+
