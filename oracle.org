@@ -1,3 +1,17 @@
 * oracle
 ** show tables
    =SELECT owner, table_name FROM dba_tables=
+** &で入力できる。(置換変数。DEFINEで定義ORプロンプトで入力)
+   →define mail=hogehoge
+   →select ... some_column = '&mail'
+   defineで定義済置換変数を参照できる
+** @fileでファイルを実行
+   →@file hoge fuga とすると、&1=hoge、&2=fuga となる
+** PL/SQLとSQL*Plusで値のやり取りをするならバインド変数
+   →:mail の形。var mail 型名 などと宣言
+   →print mail で表示
+** PL/SQLでfor文とか
+** edit fileでエディタで編集できる。
+   →実行は@file
+** update format
+   col 列名 format 9999
