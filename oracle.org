@@ -14,4 +14,17 @@
 ** edit fileでエディタで編集できる。
    →実行は@file
 ** update format
+   set pagesize 200
+   set linesize 1000
+   [[https://docs.oracle.com/cd/B19306_01/server.102/b14357/ch6.htm][Formatting SQL*Plus Reports]]
    col 列名 format 9999
+   col 列名 format A5
+** string date to date
+   http://www.sqlines.com/oracle-to-sql-server/to_date
+   TO_DATE(colname, 'YYYY-MM-DD')
+** weekday/weekend
+   [[https://asktom.oracle.com/pls/apex/f?p=100:11:::NO:RP:P11_QUESTION_ID:9534725800346231781][Ask TOM "How to find out if the date is a weekend or weekda..."]]
+   case when to_char(d,'DY') in ('SAT','SUN') then 'Weekend' end
+** null to default value
+   select decode(colname, null, 'default value', colname) from t
+
