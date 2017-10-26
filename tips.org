@@ -204,4 +204,16 @@
      $ date -j -f '%m-%d-%Y' "09-01-2017" +'%a'
      Fri
    #+END_SRC
+** exec command each lines from pipe
+   [[https://stackoverflow.com/a/2711008/514411][bash - How to apply shell command to each line of a command output? - Stack Overflow]]
+   #+BEGIN_SRC sh
+     cat $1 | while read line
+     do
+       echo $line | somecommand
+     done
+   #+END_SRC
+** split file by size
+   [[https://stackoverflow.com/a/2016918/514411][bash - How to split a large text file into smaller files with equal number of lines? - Stack Overflow]]
+   =split -l 20000 -a 3 somefile somefile.=
 
+   =-a= means suffix length
