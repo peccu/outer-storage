@@ -1,0 +1,8 @@
+* Elasticsearch, ELK stack
+** query string
+*** [[https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html#query-string-syntax][Query String Query | Elasticsearch Reference 5.6 | Elastic]]
+** date math
+*** [[https://www.elastic.co/guide/en/elasticsearch/reference/current/common-options.html#date-math][Common options | Elasticsearch Reference 5.6 | Elastic]]
+** number type
+*** [[https://www.elastic.co/guide/en/elasticsearch/reference/current/number.html][Numeric datatypes | Elasticsearch Reference 5.6 | Elastic]]
+
