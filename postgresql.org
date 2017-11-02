@@ -1,0 +1,14 @@
+* PostgreSQL
+** show databases
+   =\l=
+   [[https://stackoverflow.com/a/769706/514411][Show tables in PostgreSQL - Stack Overflow]]
+** choose database
+   =\c database-name=
+** show tables
+   =\dt=
+   =SELECT * FROM pg_catalog.pg_tables;=
+** command help
+   =\?=
+** connect to docker postgres
+   =docker run -it --rm --link some-postgres:postgres postgres:9.4 psql -h postgres -U postgres-username=
+
