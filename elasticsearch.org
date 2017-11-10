@@ -5,4 +5,27 @@
 *** [[https://www.elastic.co/guide/en/elasticsearch/reference/current/common-options.html#date-math][Common options | Elasticsearch Reference 5.6 | Elastic]]
 ** number type
 *** [[https://www.elastic.co/guide/en/elasticsearch/reference/current/number.html][Numeric datatypes | Elasticsearch Reference 5.6 | Elastic]]
+** powershell
+*** Invoke-RestMethod
+    [[https://discuss.elastic.co/t/curl-commands-on-windows/32833/7][cURL commands on Windows - Elasticsearch - Discuss the Elastic Stack]]
+    #+BEGIN_SRC powershell
+      Invoke-RestMethod -Uri 'http://1.2.3.4:9200/_search' -Method 'POST' -Body '
+      {
+        "query": {
+          "match_all": { }
+        }
+      }'
 
+
+      $username = "elastic"
+      $currentPassword = "changeme"
+      $newPassword = "elasticpassword"
+      $bytes = [Text.Encoding]::UTF8.GetBytes(("{0}:{1}" -f $username, $currentPassword))
+      $authHeaderValue = [Convert]::ToBase64String($bytes)
+
+      $response = Invoke-RestMethod "http://localhost:9200/_xpack/security/user/elastic/_password" -Method Post `
+                                      -Headers @{Authorization=("Basic {0}" -f $authHeaderValue)} `
+                                      -Body "{`
+          `"password`" : `"$newPassword`"
+      }"
+    #+END_SRC
