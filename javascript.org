@@ -250,3 +250,34 @@
        }
      }
    #+END_SRC
+** store/restore options
+   #+BEGIN_SRC js
+     var optionStore = function(key, formname, optionname){
+       var target = document[formname][optionname].options;
+       var aDom = Array.prototype.slice.call(target);
+       var selection = aDom.map(function(e){
+         return {value: e.value, title: e.title}
+       });
+       var json = JSON.stringify(selection);
+       localStorage.setItem(key, json);
+     };
+     optionStore('storekey', 'form-name', 'option-field-name');
+
+     // view
+     JSON.parse(localStorage.getItem('storekey'))
+
+
+     var optionRestore = function(key, formname, optionname){
+       var options = JSON.parse(localStorage.getItem(key));
+       var target = document[formname][optionname].options;
+       options.map(function(e){
+         var a = document.createElement('option');
+         a.value = e.value;
+         a.title = e.title;
+         a.innerText = e.title;
+         target.add(a, target.length - 1);
+       });
+       // localStorage.setItem(key, []);
+     };
+     optionRestore('storekey', 'form-name', 'option-field-name');
+   #+END_SRC
