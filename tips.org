@@ -217,3 +217,12 @@
    =split -l 20000 -a 3 somefile somefile.=
 
    =-a= means suffix length
+** create basic auth header
+   [[https://stackoverflow.com/questions/3044315/how-to-set-the-authorization-header-using-curl#comment69464812_36979985][oauth - How to set the authorization header using curl - Stack Overflow]]
+   #+BEGIN_SRC sh
+     # usage `basic user:password`
+     # => -H "Authorization: Basic dXNlcjpwYXNzd29yZA=="
+     function basic(){
+       echo -H \"Authorization: Basic $(echo -ne $1 | base64)\"
+     }
+   #+END_SRC
