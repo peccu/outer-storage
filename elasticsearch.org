@@ -29,3 +29,22 @@
           `"password`" : `"$newPassword`"
       }"
     #+END_SRC
+** logical condition
+| logic | elasticsearch              |
+|-------+----------------------------|
+| AND   | {"bool": {"must": [A,B]}   |
+| OR    | {"bool": {"should": [A,B]} |
+| NOT   | {"bool": {"must_not": A}   |
+*** sample
+    #+BEGIN_SRC js
+      {
+        "query": {
+          "bool":{
+            "must": [
+              {"query_string": {"query": "key:pattern"}},
+              {"range": {"date": {"gte": "2017-11-27T00:00:00.000+09:00", "lte": "2017-11-28T00:00:00.000+09:00"}}}
+            ]
+          }
+        }
+      }
+    #+END_SRC
