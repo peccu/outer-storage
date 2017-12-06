@@ -295,6 +295,7 @@
      ].map(loader);
    #+END_SRC
 ** js sequencial loader
+   [[https://stackoverflow.com/questions/16230886/trying-to-fire-the-onload-event-on-script-tag][javascript - Trying to fire the onload event on script tag - Stack Overflow]]
    #+BEGIN_SRC js2
      'use strict';
      const loader = function(queue, cb){
