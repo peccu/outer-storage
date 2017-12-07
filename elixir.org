@@ -1,0 +1,8 @@
+* elixir
+** with mongodb links
+   - [[https://github.com/checkiz/elixir-mongo][checkiz/elixir-mongo: MongoDB driver for Elixir]]
+   - [[https://qiita.com/darui_kara/items/0f8eca49ed6032dda14b][続！ElixirでMongoDBに接続するだけの簡単なお仕事です！！ - Qiita]]
+   - [[https://elixirforum.com/t/mongodb-with-phoenix-ecto/2134/18][MongoDB with Phoenix & Ecto - Dedicated Sections / Ecto - Elixir Forum]]
+   - [[https://tomjoro.github.io/2017-02-09-ecto3-mongodb-phoenix/][Phoenix with Ecto and MongoDb]]
+   - [[https://github.com/ankhers/mongodb][ankhers/mongodb: MongoDB driver for Elixir]]
+
