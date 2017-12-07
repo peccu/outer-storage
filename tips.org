@@ -226,3 +226,12 @@
        echo -H \"Authorization: Basic $(echo -ne $1 | base64)\"
      }
    #+END_SRC
+** run powershell script with docker
+   #+BEGIN_SRC bash
+     # docker run -v $PWD:/home --rm microsoft/powershell pwsh foo.ps
+     # Usage: pwsh path/to/some.ps
+     function pwsh(){
+       file=$1
+       docker run -v $(cd "$(dirname "$file")"; pwd):/home --rm microsoft/powershell pwsh home/$(basename $file)
+     }
+   #+END_SRC
