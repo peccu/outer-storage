@@ -152,6 +152,8 @@
              if(success){
                  successCB();
                  tmpElem.remove();
+             }else{
+               prompt('something failed in copy', copyText);
              }
          };
          copy('some text you want');
