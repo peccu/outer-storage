@@ -1,0 +1,4 @@
+* css
+** clickable dom over dom (z-index)
+   [[https://stackoverflow.com/questions/6740242/click-link-below-a-higher-z-index-div][html - click link below a higher z-index div - Stack Overflow]]
+   =pointer-events: none=
