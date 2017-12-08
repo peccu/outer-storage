@@ -235,3 +235,13 @@
        docker run -v $(cd "$(dirname "$file")"; pwd):/home --rm microsoft/powershell pwsh home/$(basename $file)
      }
    #+END_SRC
+** scrape with curl and pup
+*** fetch with id and pass
+    [[https://stackoverflow.com/a/12399126/514411][linux - CURL to access a page that requires a login from a different page - Stack Overflow]]
+   
+    #+BEGIN_SRC shell-script
+      curl -c cookie.txt --user "basicid:password" -d "LoginName=someuser" -d "password=somepass" https://oursite/a
+      curl -b cookie.txt https://oursite/b
+    #+END_SRC
+*** and parse/select html
+    [[https://github.com/ericchiang/pup][ericchiang/pup: Parsing HTML at the command line]]
