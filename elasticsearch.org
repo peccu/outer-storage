@@ -52,3 +52,10 @@
    #+BEGIN_SRC shell-script
      ES_JAVA_OPTS="-Dhttp.proxyHost=proxy.example.com -Dhttp.proxyPort=8080 -Dhttps.proxyHost=proxy.example.com -Dhttps.proxyPort=8080" ./bin/elasticsearch-plugin install x-pack
    #+END_SRC
+** list index sizes
+   #+BEGIN_SRC shell-script
+     export ELASTIC_CURL_OPT=localhost:9200
+     curl -XGET "$ELASTIC_CURL_URL/_stats" \
+       | jq '(.indices|to_entries[]|{key: .key, bytes: .value.primaries.store.size_in_bytes})' \
+       | less
+   #+END_SRC
