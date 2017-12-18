@@ -249,3 +249,10 @@
    [[https://wiki.scribus.net/canvas/How_to_make_a_booklet#Method_A-1:_using_psutils_only][How to make a booklet - Scribus Wiki]]
    But, I don't need any options to specify size or scale.
    =pdftops input.pdf - |psbook |psnup -2 |ps2pdf - booklet.pdf=
+** restart PM2 daemon
+   #+BEGIN_SRC shell-script
+     # like to apply changing ulimit by /etc/security/limit.conf and check ulimit -n
+     pm2 save
+     pm2 kill
+     pm2 resurrect
+   #+END_SRC
