@@ -48,3 +48,7 @@
         }
       }
     #+END_SRC
+** install plugin behind proxy
+   #+BEGIN_SRC shell-script
+     ES_JAVA_OPTS="-Dhttp.proxyHost=proxy.example.com -Dhttp.proxyPort=8080 -Dhttps.proxyHost=proxy.example.com -Dhttps.proxyPort=8080" ./bin/elasticsearch-plugin install x-pack
+   #+END_SRC
