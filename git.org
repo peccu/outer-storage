@@ -11,3 +11,6 @@
    #+BEGIN_SRC sh
      git config credential.helper store
    #+END_SRC
+** highlight whitespace
+   =git config --global color.diff.whitespace "red reverse"=
+   [[https://stackoverflow.com/a/5259137/514411][colors - Coloring white space in git-diff's output - Stack Overflow]]
