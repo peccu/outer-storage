@@ -256,3 +256,7 @@
      pm2 kill
      pm2 resurrect
    #+END_SRC
+** color less
+   =less -R=
+   sometime command looks tty condition
+   [[https://stackoverflow.com/a/5259137/514411][colors - Coloring white space in git-diff's output - Stack Overflow]]
