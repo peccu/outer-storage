@@ -338,3 +338,27 @@
    #+BEGIN_SRC js
      document.getElementById('app').classList.remove('loading');
    #+END_SRC
+** detect event
+*** te
+    #+BEGIN_SRC js
+      $._data($("#click1").get(0), "events");
+    #+END_SRC
+** prevent page move/unload
+   - [[https://developer.mozilla.org/en-US/docs/Web/API/WindowEventHandlers/onbeforeunload][WindowEventHandlers.onbeforeunload - Web APIs | MDN]]
+   - [[https://stackoverflow.com/questions/11844256/alert-for-unsaved-changes-in-form][javascript - Alert for unsaved changes in form - Stack Overflow]]
+   #+BEGIN_SRC js
+     var modified = false;
+     window.addEventListener('beforeunload', function (e) {
+       if(!modified){
+         return;
+       }
+       var message = "You have unsaved changes on this page. Do you want to leave this page and discard your changes or stay on this page?";
+       e.returnValue = message;
+       return message;
+     });
+     document.querySelectorAll('input').forEach(function(input) {
+       input.addEventListener('change', function (e) {
+         window.modified = true;
+       });
+     });
+   #+END_SRC
