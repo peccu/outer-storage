@@ -362,3 +362,71 @@
        });
      });
    #+END_SRC
+** sequencial promise queue
+*** sample
+    #+BEGIN_SRC js
+      var proceed = function(){
+        console.log('proceeding queue length', queue.length);
+        var p = queue.shift();
+        if(!p){
+          return;
+        }
+        return new Promise(p)
+          .then(proceed)
+          .catch(function(){
+            queue.unshift(p);
+            return proceed();
+          });
+      };
+      var retry = true;
+      var queue = [1,2,3].map(e => {
+        return function(resolve, reject){
+          console.log('promise created', [e, (new Date()).getTime()]);
+          setTimeout(function(){
+            console.log('promose called', [e, (new Date()).getTime()]);
+            if(e == 2 && retry){
+              console.log('promose reject', [e, (new Date()).getTime()]);
+              retry = false;
+              return reject(e);
+            }
+            console.log('promose resolve', [e, (new Date()).getTime()]);
+            return resolve(e);
+          }, 1000);
+        };
+      });
+      proceed().then(function(){
+        console.log('finished');
+      });
+    #+END_SRC
+*** template
+    #+BEGIN_SRC js
+      var proceed = function(){
+        var p = queue.shift();
+        if(!p){
+          return;
+        }
+        return new Promise(p)
+          .then(proceed)
+          .catch(function(){
+            queue.unshift(p);
+            return proceed();
+          });
+      };
+
+      var queue = [1,2,3].map(e => {
+        return function(resolve, reject){
+
+          console.log('promise created', [e, (new Date()).getTime()]);
+
+          setTimeout(function(){
+            return resolve(e);
+          }, 1000);
+
+        };
+      });
+
+      proceed().then(function(){
+        console.log('finished');
+      });
+
+    #+END_SRC
