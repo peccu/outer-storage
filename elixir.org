@@ -5,4 +5,28 @@
    - [[https://elixirforum.com/t/mongodb-with-phoenix-ecto/2134/18][MongoDB with Phoenix & Ecto - Dedicated Sections / Ecto - Elixir Forum]]
    - [[https://tomjoro.github.io/2017-02-09-ecto3-mongodb-phoenix/][Phoenix with Ecto and MongoDb]]
    - [[https://github.com/ankhers/mongodb][ankhers/mongodb: MongoDB driver for Elixir]]
-
+** phoenix dev/prod
+   from slack #phoenix 9/3 17:14, @m1dnight
+*** dev
+    #+BEGIN_SRC shell-script
+      git pull origin master
+      mix deps.get
+      cd assets
+      npm install
+      node_modules/brunch/bin/brunch build
+      cd ..
+      iex -S mix phoenix.server
+    #+END_SRC
+*** prod
+    #+BEGIN_SRC shell-script
+      export MIX_ENV=prod
+      git pull origin master
+      mix deps.get --only prod
+      mix compile
+      cd assets
+      npm install --production
+      node_modules/brunch/bin/brunch build --production
+      cd ..
+      mix phx.digest
+      mix ecto.migrate
+    #+END_SRC
