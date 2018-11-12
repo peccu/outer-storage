@@ -1,3 +1,12 @@
 * linux tips
 ** [[https://stackoverflow.com/a/18004259/514411][bash - Trying to redirect 'git gc' output - Stack Overflow]]
    =script -q -c 'git gc' | sed 's/\r.*//g' > log=
+** curl post types
+*** application/x-www-form-urlencoded
+**** =curl -X POST -d 'foo=bar&bar=baz' url=
+*** multipart/form-data
+**** =curl -X POST -F 'foo=bar' -F 'bar=baz' -F attachment=@path/to/file url=
+     https://stackoverflow.com/a/19148720/514411
+*** application/json
+**** =curl -X POST -H 'Content-Type: application/json' -d 'foo=bar&bar=baz' url=
+     https://stackoverflow.com/a/7173011/514411
