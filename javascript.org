@@ -367,9 +367,13 @@
     #+BEGIN_SRC js
       var proceed = function(){
         console.log('proceeding queue length', queue.length);
+        if(queue.length <= 0){
+          return null;
+        }
         var p = queue.shift();
         if(!p){
-          return;
+          console.log('not promise');
+          return proceed();
         }
         return new Promise(p)
           .then(proceed)
@@ -401,9 +405,12 @@
 *** template
     #+BEGIN_SRC js
       var proceed = function(){
+        if(queue.length <= 0){
+          return null;
+        }
         var p = queue.shift();
         if(!p){
-          return;
+          return proceed();
         }
         return new Promise(p)
           .then(proceed)
@@ -416,8 +423,6 @@
       var queue = [1,2,3].map(e => {
         return function(resolve, reject){
 
-          console.log('promise created', [e, (new Date()).getTime()]);
-
           setTimeout(function(){
             return resolve(e);
           }, 1000);
@@ -428,7 +433,6 @@
       proceed().then(function(){
         console.log('finished');
       });
-
     #+END_SRC
 ** read and write xml
    #+BEGIN_SRC js2
