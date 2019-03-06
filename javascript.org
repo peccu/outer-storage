@@ -465,3 +465,28 @@
        });
      });
    #+END_SRC
+** get local ip
+*** os
+    #+BEGIN_SRC js2
+      function getLocalIP () {
+        const ifs = require('os').networkInterfaces();
+        return Object.keys(ifs).reduce(
+          (a, e, i) => {
+            const interface = ifs[e].filter(f=>f.family == 'IPv4' && !f.internal);
+            if(interface.length == 0){
+              return a;
+            }
+            a.push(interface.pop());
+            return a;
+          },
+          []
+        ).reduce(
+          (a, e) => e.address,
+          '');
+      }
+    #+END_SRC
+*** ip package
+    #+BEGIN_SRC js2
+      var ip = require('ip');
+      ip.address();
+    #+END_SRC
