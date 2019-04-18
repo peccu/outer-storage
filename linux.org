@@ -10,3 +10,101 @@
 *** application/json
 **** =curl -X POST -H 'Content-Type: application/json' -d 'foo=bar&bar=baz' url=
      https://stackoverflow.com/a/7173011/514411
+** snake, camel, pascal, kebab
+   #+BEGIN_SRC sh
+     #!/bin/bash
+
+     # sed version
+     function pascal_sed(){
+         # PascalCase
+         sed -e 's/\(^\|-\|_\| \|\.\|\/\)\(\w\)/\U\2/g'
+     }
+     function camel_sed(){
+         # camelCase
+         sed -e 's/\(-\|_\| \|\.\|\/\)\(\w\)/\U\2/g'
+     }
+     function snake_sed(){
+         # snake_case
+         sed -e 's/\(-\|_\| \|\.\|\/\)/_/g'
+     }
+     function kebab_sed(){
+         # kebab-case
+         sed -e 's/\(-\|_\| \|\.\|\/\)/-/g'
+     }
+     function snake.line_sed(){
+         # snake_case.line
+         # / => .
+         sed -e 's/\(-\|_\| \|\.\)/_/g'| sed -e 's/\//./g'
+     }
+
+     # perl version
+     function pascal_perl(){
+         # PascalCase
+         perl -pe 's/(^|-|_| |\.|\/)(\w)/\U$2/g'
+     }
+     function camel_perl(){
+         # camelCase
+         perl -pe 's/(-|_| |\.|\/)(\w)/\U$2/g'
+     }
+     function snake_perl(){
+         # snake_case
+         perl -pe 's/(-|_| |\.|\/)/_/g'
+     }
+     function kebab_perl(){
+         # kebab-case
+         perl -pe 's/(-|_| |\.|\/)/-/g'
+     }
+     function snake.line_perl(){
+         # snake_case.line
+         # / => .
+         perl -pe 's/(-|_| |\.)/_/g'| perl -pe 's/\//./g'
+     }
+
+     CAMEL=camel_sed
+     PASCAL=pascal_sed
+     SNAKE=snake_sed
+     KEBAB=kebab_sed
+     SNAKE_LINE=snake.line_sed
+
+     # BSD sed can't use \U \L
+     if [ "$(echo sample_text|pascal_sed)" = 'sample_text' ]
+     then
+         CAMEL=camel_perl
+         PASCAL=pascal_perl
+         SNAKE=snake_perl
+         KEBAB=kebab_perl
+         SNAKE_LINE=snake.line_perl
+     fi
+
+     function camelcase(){
+         $CAMEL
+     }
+     function pascalcase(){
+         $PASCAL
+     }
+     function snakecase(){
+         $SNAKE
+     }
+     function kebabcase(){
+         $KEBAB
+     }
+     function snake.line(){
+         $SNAKE_LINE
+     }
+
+     # function test_string(){
+     #     echo 'module/foo-bar_baz.boo/line'
+     # }
+     # echo Input
+     # test_string
+     # echo camelCase
+     # test_string | camelcase
+     # echo PascalCase
+     # test_string | pascalcase
+     # echo snake_case
+     # test_string | snakecase
+     # echo kebab-case
+     # test_string | kebabcase
+     # echo snake_case.line
+     # test_string | snake.line
+   #+END_SRC
