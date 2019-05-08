@@ -542,6 +542,10 @@
       // create blob from string
       // const blob=new Blob([data], {type: 'octet/stream'});
     #+END_SRC
+** reverse array functionary
+   #+BEGIN_SRC js
+     [].concat(myArray).reverse()
+   #+END_SRC
 ** read and write xml
    #+BEGIN_SRC js2
      // https://tutorialedge.net/javascript/nodejs/editing-xml-files-with-nodejs/
