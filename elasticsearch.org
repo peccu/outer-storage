@@ -59,3 +59,7 @@
        | jq '(.indices|to_entries[]|{key: .key, bytes: .value.primaries.store.size_in_bytes})' \
        | less
    #+END_SRC
+** delete index
+   #+BEGIN_SRC shell-script
+   curl -XDELETE http://localhost:9200/.kibana
+   #+END_SRC
