@@ -434,6 +434,114 @@
         console.log('finished');
       });
     #+END_SRC
+** fetch
+   [[https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch][Using Fetch - Web APIs | MDN]]
+*** simple
+    #+BEGIN_SRC js
+      fetch('http://example.com/movies.json')
+        .then(function(response) {
+          return response.json();
+        })
+        .then(function(myJson) {
+          console.log(myJson);
+        });
+    #+END_SRC
+*** request object
+    #+BEGIN_SRC js
+      postData('http://example.com/answer', {answer: 42})
+        .then(data => console.log(data)) // JSON from `response.json()` call
+        .catch(error => console.error(error))
+
+      function postData(url, data) {
+        // Default options are marked with *
+        return fetch(url, {
+          body: JSON.stringify(data), // must match 'Content-Type' header
+          cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+          credentials: 'same-origin', // include, same-origin, *omit
+          headers: {
+            'user-agent': 'Mozilla/4.0 MDN Example',
+            'content-type': 'application/json'
+          },
+          method: 'POST', // *GET, POST, PUT, DELETE, etc.
+          mode: 'cors', // no-cors, cors, *same-origin
+          redirect: 'follow', // *manual, follow, error
+          referrer: 'no-referrer', // *client, no-referrer
+        })
+          .then(response => response.json()) // parses response to JSON
+      }
+    #+END_SRC
+*** post json
+    #+BEGIN_SRC js
+      var url = 'https://example.com/profile';
+      var data = {username: 'example'};
+
+      fetch(url, {
+        method: 'POST', // or 'PUT'
+        body: JSON.stringify(data), // data can be `string` or {object}!
+        headers: new Headers({
+          'Content-Type': 'application/json'
+        })
+      }).then(res => res.json())
+        .catch(error => console.error('Error:', error))
+        .then(response => console.log('Success:', response));
+    #+END_SRC
+*** post file from input tag
+    #+BEGIN_SRC js
+      var formData = new FormData();
+      var fileField = document.querySelector("input[type='file']");
+
+      formData.append('username', 'abc123');
+      formData.append('avatar', fileField.files[0]);
+
+      fetch('https://example.com/profile/avatar', {
+        method: 'PUT',
+        body: formData
+      })
+        .then(response => response.json())
+        .catch(error => console.error('Error:', error))
+        .then(response => console.log('Success:', response));
+    #+END_SRC
+*** set header and request object
+    #+BEGIN_SRC js
+      var myHeaders = new Headers();
+
+      var myInit = { method: 'GET',
+                     headers: myHeaders,
+                     mode: 'cors',
+                     cache: 'default' };
+
+      var myRequest = new Request('flowers.jpg', myInit);
+
+      fetch(myRequest)
+        .then(function(response) {
+          return response.blob();
+        }).then(function(myBlob) {
+          var objectURL = URL.createObjectURL(myBlob);
+          myImage.src = objectURL;
+        });
+    #+END_SRC
+*** fetch and download
+    #+BEGIN_SRC js2
+      // https://stackoverflow.com/a/42274086/514411
+      const download_by_blob=function(blob,filename){
+        const a=document.createElement('a');
+        document.body.appendChild(a);
+        a.style='display: none';
+        const url=window.URL.createObjectURL(blob);
+        a.href=url;
+        a.download=filename;
+        a.click();
+        window.URL.revokeObjectURL(url);
+        a.remove();
+      };
+      const fetch_download=function(url, filename){
+        fetch(url)
+          .then(e=>e.blob())
+          .then(blob => download_by_blob(blob, filename));
+      };
+      // create blob from string
+      // const blob=new Blob([data], {type: 'octet/stream'});
+    #+END_SRC
 ** read and write xml
    #+BEGIN_SRC js2
      // https://tutorialedge.net/javascript/nodejs/editing-xml-files-with-nodejs/
