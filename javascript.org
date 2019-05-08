@@ -546,6 +546,91 @@
    #+BEGIN_SRC js
      [].concat(myArray).reverse()
    #+END_SRC
+** create modal from js
+   #+BEGIN_SRC js2
+     /*
+       # References
+
+       - https://medium.com/@andrejsabrickis/a-fullscreen-modal-with-fixed-header-footer-and-a-scrollable-content-1656845c8171
+     ,*/
+     const genmodal = (id) => {
+       let modal = document.getElementById(id);
+       if(!modal){
+         modal = document.createElement('div');
+         modal.id = id;
+         document.body.appendChild(modal);
+         window[id + '__close'] = function(e){e.parentNode.parentNode.parentNode.classList.remove('open');};
+       }
+       modal.classList.add(id + '__modal');
+       modal.classList.add('open');
+       modal.innerHTML = `<div class="${id}__modal__header"><h4>header<button onclick="${id}__close(this)">x</button></h4></div>
+         <div class="${id}__modal__content">content</div>
+         <div class="${id}__modal__footer">footer</div>`;
+     };
+
+     const genmodalstyle = (id) => {
+       let modalStyle = document.getElementById(id + '_style');
+       if(!modalStyle){
+         modalStyle = document.createElement('style');
+         modalStyle.type = 'text/css';
+         modalStyle.id = id + '_style';
+         document.head.appendChild(modalStyle);
+       }
+       modalStyle.innerHTML = `.${id}__modal {
+           display: none;
+           background-color: rgba(5, 179, 255, 0.63);
+           position: fixed;
+           z-index: 10;
+           top: 10vh;
+           height: 80vh;
+           left: 10vw;
+           width: 80vw;
+           padding: 20px;
+         }
+         .${id}__modal.open {
+           display: grid;
+           grid-template-rows: 100px auto 100px;
+         }
+         .${id}__modal__content {
+           overflow-y: auto;
+         }`;
+     };
+
+     const attachVue = (id) => {
+       return new Vue({
+         el: '#' + id
+       });
+     };
+
+     const start = () => {
+       const id = 'myModal';
+       genmodal(id);
+       genmodalstyle(id);
+       window.debugmodal = attachVue(id);
+     };
+
+
+     var v = new Vue({
+       el: "#app",
+       name: "modal",
+       data: {
+         header: "Modal Header",
+         modal: { open: false },
+         modal2: { open: false },
+         modal3: { open: false },
+         form: {
+           note: {
+             multiline: true
+           }
+         }
+       },
+       methods: {
+         genModal() {
+           start();
+         }
+       }
+     });
+   #+END_SRC
 ** read and write xml
    #+BEGIN_SRC js2
      // https://tutorialedge.net/javascript/nodejs/editing-xml-files-with-nodejs/
