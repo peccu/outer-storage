@@ -823,6 +823,179 @@
        copy(window.document.title + '\t' + window.location.href);
      })()
    #+END_SRC
+** copy link as json
+   #+BEGIN_SRC js
+     javascript:(function(){
+       var copy = function(copyText, successCB){
+         if(!successCB){
+           successCB = function(text){
+             alert("The text is on the clipboard, try to paste it!\nCopied:\n\n" + text);
+           };
+         }
+         if(window.clipboardData){
+           window.clipboardData.setData("Text", copyText);
+           return;
+         }
+         var tmpElem=document.createElement('pre');
+         tmpElem.style.position = 'absolute';
+         tmpElem.style.left = '-1000px';
+         tmpElem.style.top = '-1000px';
+         tmpElem.innerText = copyText;
+         document.body.appendChild(tmpElem);
+
+         var range = document.createRange();
+         range.selectNodeContents(tmpElem);
+
+         var selection;
+         selection = window.getSelection();
+         selection.removeAllRanges();
+         selection.addRange(range);
+
+         var success = true;
+         try{
+           success = document.execCommand("copy", false, null);
+         }
+         catch(e){
+           copyToClipboardFF(copyText);
+         }
+         if(success){
+           successCB(copyText);
+           tmpElem.remove();
+         }else{
+           prompt('something failed in copy', copyText);
+         }
+       };
+       var string = `  {\n
+         title: '${window.document.title}',\n
+         url: '${window.location.href}',\n
+         description: '',\n
+         keyword: [],\n
+         category: [['']],\n
+         active: {\n
+         },\n
+         target: '_blank'\n
+       },\n
+     `;
+       copy(string);
+     })()
+   #+END_SRC
+** load copy
+   #+BEGIN_SRC js
+     javascript:(function(window){
+       var copy = function(copyText, successCB){
+         if(!successCB){
+           successCB = function(text){
+             alert('The text is on the clipboard, try to paste it!\nCopied:\n\n' + text);
+           };
+         }
+         if(window.clipboardData){
+           window.clipboardData.setData('Text', copyText);
+           return;
+         }
+         var tmpElem=document.createElement('pre');
+         tmpElem.style.position = 'absolute';
+         tmpElem.style.left = '-1000px';
+         tmpElem.style.top = '-1000px';
+         tmpElem.innerText = copyText;
+         document.body.appendChild(tmpElem);
+
+         var range = document.createRange();
+         range.selectNodeContents(tmpElem);
+
+         var selection;
+         selection = window.getSelection();
+         selection.removeAllRanges();
+         selection.addRange(range);
+
+         var success = true;
+         try{
+           success = document.execCommand('copy', false, null);
+         }
+         catch(e){
+           copyToClipboardFF(copyText);
+         }
+         if(success){
+           successCB(copyText);
+           tmpElem.remove();
+         }else{
+           prompt('something failed in copy', copyText);
+         }
+       };
+       window.copy = copy;
+     })(window)
+   #+END_SRC
+** update style css
+   #+BEGIN_SRC js2
+     javascript:(function(){
+       var headers = Array.prototype.slice.call(document.querySelectorAll('.table-responsive tr th'));
+       var widths = headers.map(e => e.offsetWidth).slice(0, 5);
+       var offsets = widths.map((w, i) => widths.slice(0, i).reduce((a, b) => a + b, 0));
+       var sticky_styles = offsets.map((w, i) => `.o_assign_table_ui_apps tr.sticky-column td:nth-child(${i + 1}), .o_assign_table_ui_apps tr.sticky-column th:nth-child(${i + 1}) {
+       position: -webkit-sticky;
+       position: sticky;
+       left: ${w}px;
+     }
+     `);
+       var sticky_style = sticky_styles.join('\n');
+
+       var target_id = 'custom-style';
+       var old = document.getElementById(target_id);
+       if(old){
+         old.parentElement.removeChild(old);
+       }
+       var setStyle = function(){
+         var s = document.createElement('style');
+         s.id = target_id;
+         s.innerHTML = sticky_style;;
+         document.head.appendChild(s);
+       };
+       setStyle();
+     })();
+   #+END_SRC
+** copy
+   #+BEGIN_SRC js2
+     javascript:(function(){
+       const copy = function(copyText, successCB){
+         if(!successCB){
+           successCB = function(text){
+             alert('The text is on the clipboard, try to paste it!\nCopied:\n\n' + text);
+           };
+         }
+         if(window.clipboardData){
+           window.clipboardData.setData('Text', copyText);
+           return;
+         }
+         let tmpElem=document.createElement('pre');
+         tmpElem.style.position = 'absolute';
+         tmpElem.style.left = '-1000px';
+         tmpElem.style.top = '-1000px';
+         tmpElem.innerText = copyText;
+         document.body.appendChild(tmpElem);
+
+         let range = document.createRange();
+         range.selectNodeContents(tmpElem);
+
+         let selection;
+         selection = window.getSelection();
+         selection.removeAllRanges();
+         selection.addRange(range);
+
+         let success = true;
+         try{
+           success = document.execCommand('copy', false, null);
+         }
+         catch(e){
+           copyToClipboardFF(copyText);
+         }
+         if(success){
+           successCB(copyText);
+           tmpElem.remove();
+         }else{
+           prompt('something failed in copy', copyText);
+         }
+       };
+     })();
+   #+END_SRC
 ** action box floating box with shadow
    #+BEGIN_SRC js
      var add = (id, elm)=>{
