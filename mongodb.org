@@ -58,3 +58,10 @@
     =mongodump -h localhost --port 27017 -d rocketchat=
 *** restore
     =mongorestore --db rocketchat ./dump/rocketchat=
+** set smallfiles
+*** [[https://stackoverflow.com/questions/24427472/how-to-configure-storage-smallfiles-on-mongodb][How to configure storage.smallFiles on mongodb - Stack Overflow]]
+    =/usr/local/etc/mongod.conf=
+    #+BEGIN_SRC yaml
+      storage:
+         smallFiles: true
+    #+END_SRC

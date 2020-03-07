@@ -1,0 +1,5 @@
+* odoo
+** mail from domain
+*** set domain to mail.catchall.domain in System Parameters
+** reporting with docker
+*** set =http://localhost:8069= to report.url in System Parameters

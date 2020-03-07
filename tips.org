@@ -191,3 +191,72 @@
    #+BEGIN_SRC sh
      ls -l --time-style=long-iso
    #+END_SRC
+** check port
+   [[https://apple.stackexchange.com/a/117648][terminal - How can I list my open network ports with netstat? - Ask Different]]
+   - netstat -tup tcp
+   - lsof -i :4444
+   - sudo lsof -PiTCP -sTCP:LISTEN
+** get weekday
+   [[https://stackoverflow.com/a/46024878/514411][bash - How can we get weekday based on given date in unix - Stack Overflow]]
+   #+BEGIN_SRC shell-script
+     $ date -j -f '%m-%d-%Y' "09-01-2017" +'%A'
+     Friday
+     $ date -j -f '%m-%d-%Y' "09-01-2017" +'%a'
+     Fri
+   #+END_SRC
+** exec command each lines from pipe
+   [[https://stackoverflow.com/a/2711008/514411][bash - How to apply shell command to each line of a command output? - Stack Overflow]]
+   #+BEGIN_SRC sh
+     cat $1 | while read line
+     do
+       echo $line | somecommand
+     done
+   #+END_SRC
+** split file by size
+   [[https://stackoverflow.com/a/2016918/514411][bash - How to split a large text file into smaller files with equal number of lines? - Stack Overflow]]
+   =split -l 20000 -a 3 somefile somefile.=
+
+   =-a= means suffix length
+** create basic auth header
+   [[https://stackoverflow.com/questions/3044315/how-to-set-the-authorization-header-using-curl#comment69464812_36979985][oauth - How to set the authorization header using curl - Stack Overflow]]
+   #+BEGIN_SRC sh
+     # usage `basic user:password`
+     # => -H "Authorization: Basic dXNlcjpwYXNzd29yZA=="
+     function basic(){
+       echo -H \"Authorization: Basic $(echo -ne $1 | base64)\"
+     }
+   #+END_SRC
+** run powershell script with docker
+   #+BEGIN_SRC bash
+     # docker run -v $PWD:/home --rm microsoft/powershell pwsh foo.ps
+     # Usage: pwsh path/to/some.ps
+     function pwsh(){
+       file=$1
+       docker run -v $(cd "$(dirname "$file")"; pwd):/home --rm microsoft/powershell pwsh home/$(basename $file)
+     }
+   #+END_SRC
+** scrape with curl and pup
+*** fetch with id and pass
+    [[https://stackoverflow.com/a/12399126/514411][linux - CURL to access a page that requires a login from a different page - Stack Overflow]]
+   
+    #+BEGIN_SRC shell-script
+      curl -c cookie.txt --user "basicid:password" -d "LoginName=someuser" -d "password=somepass" https://oursite/a
+      curl -b cookie.txt https://oursite/b
+    #+END_SRC
+*** and parse/select html
+    [[https://github.com/ericchiang/pup][ericchiang/pup: Parsing HTML at the command line]]
+** create booklet pdf
+   [[https://wiki.scribus.net/canvas/How_to_make_a_booklet#Method_A-1:_using_psutils_only][How to make a booklet - Scribus Wiki]]
+   But, I don't need any options to specify size or scale.
+   =pdftops input.pdf - |psbook |psnup -2 |ps2pdf - booklet.pdf=
+** restart PM2 daemon
+   #+BEGIN_SRC shell-script
+     # like to apply changing ulimit by /etc/security/limit.conf and check ulimit -n
+     pm2 save
+     pm2 kill
+     pm2 resurrect
+   #+END_SRC
+** color less
+   =less -R=
+   sometime command looks tty condition
+   [[https://stackoverflow.com/a/5259137/514411][colors - Coloring white space in git-diff's output - Stack Overflow]]

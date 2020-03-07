@@ -1,0 +1,65 @@
+* Elasticsearch, ELK stack
+** query string
+*** [[https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html#query-string-syntax][Query String Query | Elasticsearch Reference 5.6 | Elastic]]
+** date math
+*** [[https://www.elastic.co/guide/en/elasticsearch/reference/current/common-options.html#date-math][Common options | Elasticsearch Reference 5.6 | Elastic]]
+** number type
+*** [[https://www.elastic.co/guide/en/elasticsearch/reference/current/number.html][Numeric datatypes | Elasticsearch Reference 5.6 | Elastic]]
+** powershell
+*** Invoke-RestMethod
+    [[https://discuss.elastic.co/t/curl-commands-on-windows/32833/7][cURL commands on Windows - Elasticsearch - Discuss the Elastic Stack]]
+    #+BEGIN_SRC powershell
+      Invoke-RestMethod -Uri 'http://1.2.3.4:9200/_search' -Method 'POST' -Body '
+      {
+        "query": {
+          "match_all": { }
+        }
+      }'
+
+
+      $username = "elastic"
+      $currentPassword = "changeme"
+      $newPassword = "elasticpassword"
+      $bytes = [Text.Encoding]::UTF8.GetBytes(("{0}:{1}" -f $username, $currentPassword))
+      $authHeaderValue = [Convert]::ToBase64String($bytes)
+
+      $response = Invoke-RestMethod "http://localhost:9200/_xpack/security/user/elastic/_password" -Method Post `
+                                      -Headers @{Authorization=("Basic {0}" -f $authHeaderValue)} `
+                                      -Body "{`
+          `"password`" : `"$newPassword`"
+      }"
+    #+END_SRC
+** logical condition
+| logic | elasticsearch              |
+|-------+----------------------------|
+| AND   | {"bool": {"must": [A,B]}   |
+| OR    | {"bool": {"should": [A,B]} |
+| NOT   | {"bool": {"must_not": A}   |
+*** sample
+    #+BEGIN_SRC js
+      {
+        "query": {
+          "bool":{
+            "must": [
+              {"query_string": {"query": "key:pattern"}},
+              {"range": {"date": {"gte": "2017-11-27T00:00:00.000+09:00", "lte": "2017-11-28T00:00:00.000+09:00"}}}
+            ]
+          }
+        }
+      }
+    #+END_SRC
+** install plugin behind proxy
+   #+BEGIN_SRC shell-script
+     ES_JAVA_OPTS="-Dhttp.proxyHost=proxy.example.com -Dhttp.proxyPort=8080 -Dhttps.proxyHost=proxy.example.com -Dhttps.proxyPort=8080" ./bin/elasticsearch-plugin install x-pack
+   #+END_SRC
+** list index sizes
+   #+BEGIN_SRC shell-script
+     export ELASTIC_CURL_OPT=localhost:9200
+     curl -XGET "$ELASTIC_CURL_URL/_stats" \
+       | jq '(.indices|to_entries[]|{key: .key, bytes: .value.primaries.store.size_in_bytes})' \
+       | less
+   #+END_SRC
+** delete index
+   #+BEGIN_SRC shell-script
+   curl -XDELETE http://localhost:9200/.kibana
+   #+END_SRC

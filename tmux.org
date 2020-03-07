@@ -1,5 +1,7 @@
 * tmux
   I'm using =C-t= for prefix key.
+** cf.
+   [[https://gist.github.com/MohamedAlaa/2961058][tmux shortcuts & cheatsheet]]
 ** .tmux.conf
    #+BEGIN_SRC conf
      # reload this file

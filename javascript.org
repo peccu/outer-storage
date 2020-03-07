@@ -48,6 +48,7 @@
      d.getUTCMinutes() // Returns the minutes, according to universal time (from 0-59)
      d.getUTCSeconds() // Returns the seconds, according to universal time (from 0-59)
      d.getUTCMilliseconds() // Returns the milliseconds, according to universal time (from 0-999)
+     d.toISOString(); // Returns the date as a string, using the ISO standard (like '2017-08-16T05:43:03.416Z')
      var zerofillMonth = ('00' + (d.getUTCMonth() + 1)).slice(-2);
 
      var ymdhms = function(d){
@@ -163,3 +164,530 @@
        resolve('result')
      })
    #+END_SRC
+** uniquify
+   #+BEGIN_SRC js
+     var arr = [1,2,3,2,1];
+     var unique = arr.filter((v, i, a) => a.indexOf(v) === i);
+   #+END_SRC
+** cursor management
+   #+BEGIN_SRC js2
+     let region = null
+
+     // http://blog.vishalon.net/javascript-getting-and-setting-caret-position-in-textarea
+     function getCaretPosition (ctrl) {
+       // IE < 9 Support
+       if (document.selection) {
+         ctrl.focus()
+         var range = document.selection.createRange()
+         var rangelen = range.text.length
+         range.moveStart('character', -ctrl.value.length)
+         var start = range.text.length - rangelen
+         return {
+           target: ctrl,
+           start: start,
+           end: start + rangelen
+         }
+       } else if (ctrl.selectionStart || ctrl.selectionStart === '0') {
+         // IE >=9 and other browsers
+         return {
+           target: ctrl,
+           start: ctrl.selectionStart,
+           end: ctrl.selectionEnd
+         }
+       } else {
+         return {
+           target: ctrl,
+           start: 0,
+           end: 0
+         }
+       }
+     }
+
+     function setCaretPosition (ctrl, start, end) {
+       // IE >= 9 and other browsers
+       if (ctrl.setSelectionRange) {
+         ctrl.focus()
+         ctrl.setSelectionRange(start, end)
+       } else if (ctrl.createTextRange) {
+         // IE < 9
+         var range = ctrl.createTextRange()
+         range.collapse(true)
+         range.moveEnd('character', end)
+         range.moveStart('character', start)
+         range.select()
+       }
+     }
+
+     var vue = {
+       beforeUpdate () {
+         if (region !== null) {
+           console.log('before save update', [region.start, region.end])
+           region = getCaretPosition(region.target)
+           console.log('save before update', [region.start, region.end])
+         }
+       },
+
+       updated () {
+         console.log('updated')
+         // ここで一瞬更新前のnodeの状態になるので、カーソル位置が入力前の位置になってしまうのではないか？
+         if (region == null || region.start !== region.end) {
+           return
+         }
+         console.log('set to region', [region.start, region.end])
+         setCaretPosition(region.target, region.start, region.end)
+       },
+
+       methods: {
+         update: _.debounce(function ($ev) {
+           if ($ev) {
+             region = getCaretPosition($ev.target)
+             console.log('region updated in this.update()', region)
+           }
+           if (region) {
+             console.log('now current region', [region.start, region.end])
+           }
+         }, 800),
+       }
+     }
+   #+END_SRC
+** store/restore options
+   #+BEGIN_SRC js
+     var optionStore = function(key, formname, optionname){
+       var target = document[formname][optionname].options;
+       var aDom = Array.prototype.slice.call(target);
+       var selection = aDom.map(function(e){
+         return {value: e.value, title: e.title}
+       });
+       var json = JSON.stringify(selection);
+       localStorage.setItem(key, json);
+     };
+     optionStore('storekey', 'form-name', 'option-field-name');
+
+     // view
+     JSON.parse(localStorage.getItem('storekey'))
+
+
+     var optionRestore = function(key, formname, optionname){
+       var options = JSON.parse(localStorage.getItem(key));
+       var target = document[formname][optionname].options;
+       options.map(function(e){
+         var a = document.createElement('option');
+         a.value = e.value;
+         a.title = e.title;
+         a.innerText = e.title;
+         target.add(a, target.length - 1);
+       });
+       // localStorage.setItem(key, []);
+     };
+     optionRestore('storekey', 'form-name', 'option-field-name');
+   #+END_SRC
+** js nocache loader
+   [[https://stackoverflow.com/a/14897894/514411][jquery - Load external <script> without cache using Javascript - Stack Overflow]]
+   #+BEGIN_SRC js2
+     'use strict';
+     const loader = function(src){
+       var scr = document.createElement("script");
+       scr.src = src + "?ts=" + new Date().getTime();
+       document.getElementsByTagName("head")[0].appendChild(scr);
+     };
+     [
+       './script.js'
+     ].map(loader);
+   #+END_SRC
+** js sequencial loader
+   [[https://stackoverflow.com/questions/16230886/trying-to-fire-the-onload-event-on-script-tag][javascript - Trying to fire the onload event on script tag - Stack Overflow]]
+   #+BEGIN_SRC js2
+     'use strict';
+     const loader = function(queue, cb){
+       var item = queue.shift();
+       var script = document.createElement("script");
+       document.getElementsByTagName("head")[0].appendChild(script);
+       // console.log(src + ' start ' + new Date().getTime());
+       script.onload = function(){
+         // console.log(src + ' loaded ' + new Date().getTime());
+         if(queue.length){
+           return loader(queue, cb);
+         }
+         // console.log('all loaded');
+         return cb();
+       };
+       script.src = item.src + (item.useCache ? '' : "?ts=" + new Date().getTime());
+     };
+     const parallel = [
+       {src: '//cdn.jsdelivr.net/npm/vue@2/dist/vue.min.js', useCache: true},
+       {src: '//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js', useCache: true},
+       {src: '//cdn.jsdelivr.net/npm/semantic-ui@2/dist/semantic.min.js', useCache: true}
+     ];
+     var finish = parallel.length;
+     const queue = [
+       {src: './first.js', useCache: false},
+       {src: './second.js', useCache: false},
+     ];
+
+     const loadQueue = function(){
+       finish -= 1;
+       if(finish === 0){
+         loader(queue, function(){});
+       }
+     };
+     parallel.map(function(e, i, a){
+       loader([e], loadQueue);
+     });
+   #+END_SRC
+** DOM add/remove class
+   #+BEGIN_SRC js
+     document.getElementById('app').classList.remove('loading');
+   #+END_SRC
+** detect event
+*** te
+    #+BEGIN_SRC js
+      $._data($("#click1").get(0), "events");
+    #+END_SRC
+** prevent page move/unload
+   - [[https://developer.mozilla.org/en-US/docs/Web/API/WindowEventHandlers/onbeforeunload][WindowEventHandlers.onbeforeunload - Web APIs | MDN]]
+   - [[https://stackoverflow.com/questions/11844256/alert-for-unsaved-changes-in-form][javascript - Alert for unsaved changes in form - Stack Overflow]]
+   #+BEGIN_SRC js
+     var modified = false;
+     window.addEventListener('beforeunload', function (e) {
+       if(!modified){
+         return;
+       }
+       var message = "You have unsaved changes on this page. Do you want to leave this page and discard your changes or stay on this page?";
+       e.returnValue = message;
+       return message;
+     });
+     document.querySelectorAll('input').forEach(function(input) {
+       input.addEventListener('change', function (e) {
+         window.modified = true;
+       });
+     });
+   #+END_SRC
+** sequencial promise queue
+*** sample
+    #+BEGIN_SRC js
+      var proceed = function(){
+        console.log('proceeding queue length', queue.length);
+        if(queue.length <= 0){
+          return null;
+        }
+        var p = queue.shift();
+        if(!p){
+          console.log('not promise');
+          return proceed();
+        }
+        return new Promise(p)
+          .then(proceed)
+          .catch(function(){
+            queue.unshift(p);
+            return proceed();
+          });
+      };
+      var retry = true;
+      var queue = [1,2,3].map(e => {
+        return function(resolve, reject){
+          console.log('promise created', [e, (new Date()).getTime()]);
+          setTimeout(function(){
+            console.log('promose called', [e, (new Date()).getTime()]);
+            if(e == 2 && retry){
+              console.log('promose reject', [e, (new Date()).getTime()]);
+              retry = false;
+              return reject(e);
+            }
+            console.log('promose resolve', [e, (new Date()).getTime()]);
+            return resolve(e);
+          }, 1000);
+        };
+      });
+      proceed().then(function(){
+        console.log('finished');
+      });
+    #+END_SRC
+*** template
+    #+BEGIN_SRC js
+      var proceed = function(){
+        if(queue.length <= 0){
+          return null;
+        }
+        var p = queue.shift();
+        if(!p){
+          return proceed();
+        }
+        return new Promise(p)
+          .then(proceed)
+          .catch(function(){
+            queue.unshift(p);
+            return proceed();
+          });
+      };
+
+      var queue = [1,2,3].map(e => {
+        return function(resolve, reject){
+
+          setTimeout(function(){
+            return resolve(e);
+          }, 1000);
+
+        };
+      });
+
+      proceed().then(function(){
+        console.log('finished');
+      });
+    #+END_SRC
+** fetch
+   [[https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch][Using Fetch - Web APIs | MDN]]
+*** simple
+    #+BEGIN_SRC js
+      fetch('http://example.com/movies.json')
+        .then(function(response) {
+          return response.json();
+        })
+        .then(function(myJson) {
+          console.log(myJson);
+        });
+    #+END_SRC
+*** request object
+    #+BEGIN_SRC js
+      postData('http://example.com/answer', {answer: 42})
+        .then(data => console.log(data)) // JSON from `response.json()` call
+        .catch(error => console.error(error))
+
+      function postData(url, data) {
+        // Default options are marked with *
+        return fetch(url, {
+          body: JSON.stringify(data), // must match 'Content-Type' header
+          cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+          credentials: 'same-origin', // include, same-origin, *omit
+          headers: {
+            'user-agent': 'Mozilla/4.0 MDN Example',
+            'content-type': 'application/json'
+          },
+          method: 'POST', // *GET, POST, PUT, DELETE, etc.
+          mode: 'cors', // no-cors, cors, *same-origin
+          redirect: 'follow', // *manual, follow, error
+          referrer: 'no-referrer', // *client, no-referrer
+        })
+          .then(response => response.json()) // parses response to JSON
+      }
+    #+END_SRC
+*** post json
+    #+BEGIN_SRC js
+      var url = 'https://example.com/profile';
+      var data = {username: 'example'};
+
+      fetch(url, {
+        method: 'POST', // or 'PUT'
+        body: JSON.stringify(data), // data can be `string` or {object}!
+        headers: new Headers({
+          'Content-Type': 'application/json'
+        })
+      }).then(res => res.json())
+        .catch(error => console.error('Error:', error))
+        .then(response => console.log('Success:', response));
+    #+END_SRC
+*** post file from input tag
+    #+BEGIN_SRC js
+      var formData = new FormData();
+      var fileField = document.querySelector("input[type='file']");
+
+      formData.append('username', 'abc123');
+      formData.append('avatar', fileField.files[0]);
+
+      fetch('https://example.com/profile/avatar', {
+        method: 'PUT',
+        body: formData
+      })
+        .then(response => response.json())
+        .catch(error => console.error('Error:', error))
+        .then(response => console.log('Success:', response));
+    #+END_SRC
+*** set header and request object
+    #+BEGIN_SRC js
+      var myHeaders = new Headers();
+
+      var myInit = { method: 'GET',
+                     headers: myHeaders,
+                     mode: 'cors',
+                     cache: 'default' };
+
+      var myRequest = new Request('flowers.jpg', myInit);
+
+      fetch(myRequest)
+        .then(function(response) {
+          return response.blob();
+        }).then(function(myBlob) {
+          var objectURL = URL.createObjectURL(myBlob);
+          myImage.src = objectURL;
+        });
+    #+END_SRC
+*** fetch and download
+    #+BEGIN_SRC js2
+      // https://stackoverflow.com/a/42274086/514411
+      const download_by_blob=function(blob,filename){
+        const a=document.createElement('a');
+        document.body.appendChild(a);
+        a.style='display: none';
+        const url=window.URL.createObjectURL(blob);
+        a.href=url;
+        a.download=filename;
+        a.click();
+        window.URL.revokeObjectURL(url);
+        a.remove();
+      };
+      const fetch_download=function(url, filename){
+        fetch(url)
+          .then(e=>e.blob())
+          .then(blob => download_by_blob(blob, filename));
+      };
+      // create blob from string
+      // const blob=new Blob([data], {type: 'octet/stream'});
+    #+END_SRC
+** reverse array functionary
+   #+BEGIN_SRC js
+     [].concat(myArray).reverse()
+   #+END_SRC
+** create modal from js
+   #+BEGIN_SRC js2
+     /*
+       # References
+
+       - https://medium.com/@andrejsabrickis/a-fullscreen-modal-with-fixed-header-footer-and-a-scrollable-content-1656845c8171
+     ,*/
+     const genmodal = (id) => {
+       let modal = document.getElementById(id);
+       if(!modal){
+         modal = document.createElement('div');
+         modal.id = id;
+         document.body.appendChild(modal);
+         window[id + '__close'] = function(e){e.parentNode.parentNode.parentNode.classList.remove('open');};
+       }
+       modal.classList.add(id + '__modal');
+       modal.classList.add('open');
+       modal.innerHTML = `<div class="${id}__modal__header"><h4>header<button onclick="${id}__close(this)">x</button></h4></div>
+         <div class="${id}__modal__content">content</div>
+         <div class="${id}__modal__footer">footer</div>`;
+     };
+
+     const genmodalstyle = (id) => {
+       let modalStyle = document.getElementById(id + '_style');
+       if(!modalStyle){
+         modalStyle = document.createElement('style');
+         modalStyle.type = 'text/css';
+         modalStyle.id = id + '_style';
+         document.head.appendChild(modalStyle);
+       }
+       modalStyle.innerHTML = `.${id}__modal {
+           display: none;
+           background-color: rgba(5, 179, 255, 0.63);
+           position: fixed;
+           z-index: 10;
+           top: 10vh;
+           height: 80vh;
+           left: 10vw;
+           width: 80vw;
+           padding: 20px;
+         }
+         .${id}__modal.open {
+           display: grid;
+           grid-template-rows: 100px auto 100px;
+         }
+         .${id}__modal__content {
+           overflow-y: auto;
+         }`;
+     };
+
+     const attachVue = (id) => {
+       return new Vue({
+         el: '#' + id
+       });
+     };
+
+     const start = () => {
+       const id = 'myModal';
+       genmodal(id);
+       genmodalstyle(id);
+       window.debugmodal = attachVue(id);
+     };
+
+
+     var v = new Vue({
+       el: "#app",
+       name: "modal",
+       data: {
+         header: "Modal Header",
+         modal: { open: false },
+         modal2: { open: false },
+         modal3: { open: false },
+         form: {
+           note: {
+             multiline: true
+           }
+         }
+       },
+       methods: {
+         genModal() {
+           start();
+         }
+       }
+     });
+   #+END_SRC
+** read and write xml
+   #+BEGIN_SRC js2
+     // https://tutorialedge.net/javascript/nodejs/editing-xml-files-with-nodejs/
+     var fs = require('fs'),
+         parseString = require('xml2js').parseString,
+         xml2js = require('xml2js');
+
+     fs.readFile('test.xml', 'utf-8', function (err, data){
+       if(err) console.log(err);
+       // we log out the readFile results
+       console.log(data);
+       // we then pass the data to our method here
+       parseString(data, function(err, result){
+         if(err) console.log(err);
+         // here we log the results of our xml string conversion
+         console.log(result);
+
+         var json = result;
+
+         json.root.graph[0].node[0].weight = "99";
+
+         // create a new builder object and then convert
+         // our json back to xml.
+         var builder = new xml2js.Builder();
+         var xml = builder.buildObject(json);
+
+         fs.writeFile('edited-test.xml', xml, function(err, data){
+           if (err) console.log(err);
+
+           console.log("successfully written our update xml to file");
+         });
+
+       });
+     });
+   #+END_SRC
+** get local ip
+*** os
+    #+BEGIN_SRC js2
+      function getLocalIP () {
+        const ifs = require('os').networkInterfaces();
+        return Object.keys(ifs).reduce(
+          (a, e, i) => {
+            const interface = ifs[e].filter(f=>f.family == 'IPv4' && !f.internal);
+            if(interface.length == 0){
+              return a;
+            }
+            a.push(interface.pop());
+            return a;
+          },
+          []
+        ).reduce(
+          (a, e) => e.address,
+          '');
+      }
+    #+END_SRC
+*** ip package
+    #+BEGIN_SRC js2
+      var ip = require('ip');
+      ip.address();
+    #+END_SRC

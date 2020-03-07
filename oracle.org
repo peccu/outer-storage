@@ -1,3 +1,30 @@
 * oracle
 ** show tables
    =SELECT owner, table_name FROM dba_tables=
+** &で入力できる。(置換変数。DEFINEで定義ORプロンプトで入力)
+   →define mail=hogehoge
+   →select ... some_column = '&mail'
+   defineで定義済置換変数を参照できる
+** @fileでファイルを実行
+   →@file hoge fuga とすると、&1=hoge、&2=fuga となる
+** PL/SQLとSQL*Plusで値のやり取りをするならバインド変数
+   →:mail の形。var mail 型名 などと宣言
+   →print mail で表示
+** PL/SQLでfor文とか
+** edit fileでエディタで編集できる。
+   →実行は@file
+** update format
+   set pagesize 200
+   set linesize 1000
+   [[https://docs.oracle.com/cd/B19306_01/server.102/b14357/ch6.htm][Formatting SQL*Plus Reports]]
+   col 列名 format 9999
+   col 列名 format A5
+** string date to date
+   http://www.sqlines.com/oracle-to-sql-server/to_date
+   TO_DATE(colname, 'YYYY-MM-DD')
+** weekday/weekend
+   [[https://asktom.oracle.com/pls/apex/f?p=100:11:::NO:RP:P11_QUESTION_ID:9534725800346231781][Ask TOM "How to find out if the date is a weekend or weekda..."]]
+   case when to_char(d,'DY') in ('SAT','SUN') then 'Weekend' end
+** null to default value
+   select decode(colname, null, 'default value', colname) from t
+

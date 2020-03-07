@@ -11,3 +11,8 @@
    #+BEGIN_SRC sh
      git config credential.helper store
    #+END_SRC
+** highlight whitespace
+   =git config --global color.diff.whitespace "red reverse"=
+   [[https://stackoverflow.com/a/5259137/514411][colors - Coloring white space in git-diff's output - Stack Overflow]]
+** change name, email all commit
+   =git filter-branch --commit-filter 'if [ "$GIT_AUTHOR_NAME" = "old name" ];then GIT_AUTHOR_NAME="new name";GIT_AUTHOR_EMAIL="new mail";GIT_COMMITTER_NAME=$GIT_AUTHOR_NAME;GIT_COMMITTER_EMAIL=$GIT_AUTHOR_EMAIL;git commit-tree "$@";else git commit-tree "$@"; fi' HEAD=
